@@ -9,21 +9,30 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.giza.purshasingmanagement.kafka.KafkaTopicConfig.TOPIC_NAME;
+
 @RestController
 public class PurchasingController {
 
     private final Logger logger = LoggerFactory.getLogger(PurchasingController.class);
 
-    private PurchaseService purchaseService;
+    private final PurchaseService purchaseService;
+    private final KafkaTemplate<String, Purchase> kafkaTemplate;
 
     @Autowired
-    public PurchasingController(PurchaseService purchaseService) { this.purchaseService = purchaseService; }
+    public PurchasingController(
+            PurchaseService purchaseService,
+            KafkaTemplate<String, Purchase> kafkaTemplate) {
+        this.purchaseService = purchaseService;
+        this.kafkaTemplate = kafkaTemplate;
+    }
 
     @GetMapping("/sell-product")
     public ResponseEntity<String> sellProduct() {
@@ -38,16 +47,13 @@ public class PurchasingController {
             logger.error("No purchase found");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        /*if (purchase.getProducts().size() == 0) {
-            logger.error("No products found in " + purchase);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }*/
         logger.info(purchase.toString());
         purchase.setPurchaseTime(LocalDateTime.now());
         long id = purchaseService.save(purchase);
         purchase.setId(id);
         IncreasePurchasingResponse response = new IncreasePurchasingResponse();
         response.setPurchase(purchase);
+        kafkaTemplate.send(TOPIC_NAME, purchase);
         response.setMessage("Successful Purchase");
         logger.info("Increased purchase with id " + id);
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
