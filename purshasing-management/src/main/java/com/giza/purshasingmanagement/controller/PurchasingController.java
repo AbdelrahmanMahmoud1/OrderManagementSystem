@@ -3,20 +3,18 @@ package com.giza.purshasingmanagement.controller;
 import com.giza.purshasingmanagement.controller.response.GetPurchasingResponse;
 import com.giza.purshasingmanagement.controller.response.IncreasePurchasingResponse;
 import com.giza.purshasingmanagement.entity.Purchase;
+import com.giza.purshasingmanagement.kafka.KafkaProducer;
 import com.giza.purshasingmanagement.service.PurchaseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-import static com.giza.purshasingmanagement.kafka.KafkaTopicConfig.TOPIC_NAME;
 
 @RestController
 public class PurchasingController {
@@ -24,14 +22,14 @@ public class PurchasingController {
     private final Logger logger = LoggerFactory.getLogger(PurchasingController.class);
 
     private final PurchaseService purchaseService;
-    private final KafkaTemplate<String, Purchase> kafkaTemplate;
+    private final KafkaProducer<Purchase> kafkaProducer;
 
     @Autowired
     public PurchasingController(
             PurchaseService purchaseService,
-            KafkaTemplate<String, Purchase> kafkaTemplate) {
+            KafkaProducer<Purchase> kafkaProducer) {
         this.purchaseService = purchaseService;
-        this.kafkaTemplate = kafkaTemplate;
+        this.kafkaProducer = kafkaProducer;
     }
 
     @GetMapping("/sell-product")
@@ -53,7 +51,7 @@ public class PurchasingController {
         purchase.setId(id);
         IncreasePurchasingResponse response = new IncreasePurchasingResponse();
         response.setPurchase(purchase);
-        kafkaTemplate.send(TOPIC_NAME, purchase);
+        kafkaProducer.sendMessage(purchase);
         response.setMessage("Successful Purchase");
         logger.info("Increased purchase with id " + id);
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);

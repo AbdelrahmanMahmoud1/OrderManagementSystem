@@ -2,7 +2,7 @@ package com.giza.purshasingmanagement.entity;
 
 import jakarta.persistence.*;
 
-import java.io.Serializable;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +68,7 @@ public class Purchase implements Serializable {
                 "id=" + id +
                 ", purchaseTime=" + purchaseTime +
                 ", products=" + products +
+                ", user=" + user +
                 '}';
     }
 }
