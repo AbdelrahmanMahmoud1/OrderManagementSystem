@@ -5,7 +5,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.hibernate.cfg.SchemaToolingSettings;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -31,13 +30,7 @@ public class JwtService {
     }
     public String generateToken(UserDetails userDetails){
           return generateToken(new HashMap<>(), userDetails) ;
-//        Jwts.builder()
-//                .setClaims(extraClaims)
-//                .setSubject(userDetails.getUsername())
-//                .setIssuedAt(new Date(System.currentTimeMillis()))
-//                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*24))
-//                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
-//                .compact();
+
     }
 
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails){
@@ -56,7 +49,7 @@ public class JwtService {
         return (email.equals(userDetails.getUsername())) && !isTokenExpired(jwtToken);
     }
 
-    private boolean isTokenExpired(String jwtToken) {
+    public boolean isTokenExpired(String jwtToken) {
         return extractExpirationDate(jwtToken).before(new Date());
     }
 

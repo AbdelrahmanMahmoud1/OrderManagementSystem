@@ -20,26 +20,33 @@ public class AuthenticationService {
 
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
 
 
-    public  AuthenticationResponse authenticate(AuthenticationRequest request) {
-        authenticationManager.authenticate(
-               new UsernamePasswordAuthenticationToken(
-                       request.getEmail(),
-                       request.getPassword()
-               )
-        );
+    public  User authenticate(AuthenticationRequest request) {
 
-        var user = userService.findByEmail(request.getEmail()).orElseThrow();
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getEmail(),
+                            request.getPassword()
+                    )
+            );
 
-        var jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse.builder().token(jwtToken).build();
+            var user = userService.findByEmail(request.getEmail()).orElseThrow();
+            System.out.println(user);
+            return user;
+
+        }catch (Exception e){
+            System.out.println("User not found");
+            return null;
+        }
+
+
     }
 
-    public  AuthenticationResponse register(RegisterRequest request) {
+    public  User register(RegisterRequest request) {
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -48,7 +55,8 @@ public class AuthenticationService {
                 .role(Role.ADMIN)
                 .build();
         userService.saveUser(user);
-        var jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse.builder().token(jwtToken).build();
+
+        return user;
+
     }
 }
