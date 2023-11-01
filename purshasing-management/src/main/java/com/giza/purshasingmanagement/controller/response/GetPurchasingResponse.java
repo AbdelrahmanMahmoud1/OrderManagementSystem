@@ -7,7 +7,7 @@ import java.util.List;
 public class GetPurchasingResponse {
 
     private List<Purchase> purchases;
-    private int purchaseCount;
+    private int productsPurchased;
 
     public List<Purchase> getPurchases() {
         return purchases;
@@ -15,10 +15,10 @@ public class GetPurchasingResponse {
 
     public void setPurchases(List<Purchase> purchases) {
         this.purchases = purchases;
-        this.purchaseCount = purchases.size();
+        this.productsPurchased = purchases.size();
     }
 
-    public int getPurchaseCount() {
-        return purchaseCount;
+    public int getProductsPurchased() {
+        return productsPurchased;
     }
 }

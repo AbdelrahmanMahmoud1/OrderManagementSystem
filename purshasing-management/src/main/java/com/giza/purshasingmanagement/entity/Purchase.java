@@ -2,10 +2,7 @@ package com.giza.purshasingmanagement.entity;
 
 import jakarta.persistence.*;
 
-import java.io.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "purchase")
@@ -13,62 +10,44 @@ public class Purchase implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private long id;
+    @Column(name = "product_id")
+    private long productId;
 
-    @Column(name = "purchase_time")
-    private LocalDateTime purchaseTime;
+    @Column(name = "purchase_count")
+    private long purchaseCount;
 
-    @Column(name = "product_list")
-    @ElementCollection(targetClass = Product.class)
-    private List<Product> products;
+    @Column(name = "product_revenue")
+    private long productRevenue;
 
-    @Column(name = "user_info")
-    private User user;
-
-    public Purchase() {
-        products = new ArrayList<>();
+    public long getProductId() {
+        return productId;
     }
 
-    public long getId() {
-        return id;
+    public void setProductId(long productId) {
+        this.productId = productId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public long getPurchaseCount() {
+        return purchaseCount;
     }
 
-    public LocalDateTime getPurchaseTime() {
-        return purchaseTime;
+    public double increasePurchase(long purchaseCount, double price) {
+        this.purchaseCount += purchaseCount;
+        double revenue = purchaseCount * price;
+        this.productRevenue += revenue;
+        return revenue;
     }
 
-    public void setPurchaseTime(LocalDateTime purchaseTime) {
-        this.purchaseTime = purchaseTime;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public long getProductRevenue() {
+        return productRevenue;
     }
 
     @Override
     public String toString() {
         return "Purchase{" +
-                "id=" + id +
-                ", purchaseTime=" + purchaseTime +
-                ", products=" + products +
-                ", user=" + user +
+                "productId=" + productId +
+                ", purchaseCount=" + purchaseCount +
+                ", productRevenue=" + productRevenue +
                 '}';
     }
 }

@@ -1,20 +1,18 @@
 package com.giza.purshasingmanagement.controller.response;
 
-import com.giza.purshasingmanagement.entity.Purchase;
-
-import java.util.List;
+import java.util.Map;
 
 public class IncreasePurchasingResponse {
 
-    private Purchase purchase;
+    private Map<Long, Double> productRevenuePair;
     private String message;
 
-    public Purchase getPurchase() {
-        return purchase;
+    public Map<Long, Double> getProductRevenuePair() {
+        return productRevenuePair;
     }
 
-    public void setPurchase(Purchase purchase) {
-        this.purchase = purchase;
+    public void setProductRevenuePair(Map<Long, Double> productRevenuePair) {
+        this.productRevenuePair = productRevenuePair;
     }
 
     public String getMessage() {

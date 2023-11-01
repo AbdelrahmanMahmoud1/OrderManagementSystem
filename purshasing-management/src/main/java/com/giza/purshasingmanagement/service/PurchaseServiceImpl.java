@@ -1,5 +1,6 @@
 package com.giza.purshasingmanagement.service;
 
+import com.giza.purshasingmanagement.entity.Product;
 import com.giza.purshasingmanagement.entity.Purchase;
 import com.giza.purshasingmanagement.repository.PurchaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,15 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
-    public long save(Purchase purchase) {
-        return purchaseRepository.save(purchase).getId();
+    public double save(Product product) {
+        Purchase purchase = findById(product.getId());
+        if (purchase == null){
+            purchase = new Purchase();
+            purchase.setProductId(product.getId());
+        }
+        double revenue = purchase.increasePurchase(product.getQuantity(), product.getPrice());
+        purchaseRepository.save(purchase);
+        return revenue;
     }
 
     @Override

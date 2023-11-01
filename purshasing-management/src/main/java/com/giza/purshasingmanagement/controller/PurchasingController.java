@@ -2,6 +2,7 @@ package com.giza.purshasingmanagement.controller;
 
 import com.giza.purshasingmanagement.controller.response.GetPurchasingResponse;
 import com.giza.purshasingmanagement.controller.response.IncreasePurchasingResponse;
+import com.giza.purshasingmanagement.entity.Order;
 import com.giza.purshasingmanagement.entity.Purchase;
 import com.giza.purshasingmanagement.kafka.KafkaProducer;
 import com.giza.purshasingmanagement.service.PurchaseService;
@@ -13,8 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class PurchasingController {
@@ -32,38 +34,43 @@ public class PurchasingController {
         this.kafkaProducer = kafkaProducer;
     }
 
-    @GetMapping("/sell-product")
-    public ResponseEntity<String> sellProduct() {
-        logger.info("Selling product");
-        return new ResponseEntity<>("Product Sold", HttpStatus.OK);
+    @PostMapping("/increase-purchasing")
+    public ResponseEntity<IncreasePurchasingResponse> increasePurchasing(@RequestBody Order order) {
+        checkOrderValidity(order);
+        logger.info("Received: " + order);
+        Map<Long, Double> pairs = new HashMap<>();
+        order.getProducts().forEach(product -> {
+            double revenue = purchaseService.save(product);
+            pairs.put((long)product.getId(), revenue);
+            logger.info("Increased " + product.getQuantity() + " to product with id " + product.getId());
+        });
+        IncreasePurchasingResponse response = new IncreasePurchasingResponse();
+        response.setProductRevenuePair(pairs);
+//        kafkaProducer.sendMessage(pa);
+        response.setMessage("Successful Purchase");
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/increase-purchasing")
-    public ResponseEntity<IncreasePurchasingResponse> increasePurchasing(@RequestBody Purchase purchase) {
-        logger.info("Increasing purchase");
-        if (purchase == null) {
-            logger.error("No purchase found");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+    private void checkOrderValidity(Order order) {
+        if (order == null || order.getProducts() == null) {
+            logger.error("Order with no products");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order with no products");
         }
-        logger.info(purchase.toString());
-        purchase.setPurchaseTime(LocalDateTime.now());
-        long id = purchaseService.save(purchase);
-        purchase.setId(id);
-        IncreasePurchasingResponse response = new IncreasePurchasingResponse();
-        response.setPurchase(purchase);
-        kafkaProducer.sendMessage(purchase);
-        response.setMessage("Successful Purchase");
-        logger.info("Increased purchase with id " + id);
-        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+        order.getProducts().forEach(product ->  {
+            if (product.getQuantity() <= 0 || product.getPrice() <= 0) {
+                logger.error("Invalid price/quantity");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid price/quantity");
+            }
+        });
     }
 
     @GetMapping("/get-purchasing")
     public ResponseEntity<GetPurchasingResponse> getPurchasing() {
-        logger.info("Getting all purchases ");
+        logger.info("Getting all purchases");
         GetPurchasingResponse response = new GetPurchasingResponse();
         List<Purchase> allPurchases = purchaseService.findAll();
         response.setPurchases(allPurchases);
-        logger.info("Found " + response.getPurchaseCount() + " purchases");
+        logger.info("Found " + response.getProductsPurchased() + " purchases");
         return new ResponseEntity<>(response, HttpStatus.FOUND);
     }
 
