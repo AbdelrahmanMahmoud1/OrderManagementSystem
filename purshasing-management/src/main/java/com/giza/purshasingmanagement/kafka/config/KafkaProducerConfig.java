@@ -1,6 +1,6 @@
 package com.giza.purshasingmanagement.kafka.config;
 
-import com.giza.purshasingmanagement.entity.Purchase;
+import com.giza.purshasingmanagement.entity.ProductRevenue;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,12 +29,12 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public ProducerFactory<String, Purchase> producerFactory() {
+    public ProducerFactory<String, ProductRevenue> producerFactory() {
         return new DefaultKafkaProducerFactory<>(producerConfig());
     }
 
     @Bean
-    public KafkaTemplate<String, Purchase> kafkaTemplate(ProducerFactory<String, Purchase> producerFactory) {
+    public KafkaTemplate<String, ProductRevenue> kafkaTemplate(ProducerFactory<String, ProductRevenue> producerFactory) {
         return new KafkaTemplate<>(producerFactory);
     }
 }

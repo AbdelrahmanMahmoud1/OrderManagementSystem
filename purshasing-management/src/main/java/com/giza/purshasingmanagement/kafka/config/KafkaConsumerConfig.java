@@ -1,6 +1,6 @@
 package com.giza.purshasingmanagement.kafka.config;
 
-import com.giza.purshasingmanagement.entity.Purchase;
+import com.giza.purshasingmanagement.entity.ProductRevenue;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,15 +32,15 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public ConsumerFactory<String, Purchase> consumerFactory() {
+    public ConsumerFactory<String, ProductRevenue> consumerFactory() {
         return new DefaultKafkaConsumerFactory<>(consumerConfig(), new StringDeserializer(), new JsonDeserializer<>(), true);
     }
 
     @Bean
-    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, Purchase>> factory(
-            ConsumerFactory<String, Purchase> consumerFactory
+    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, ProductRevenue>> factory(
+            ConsumerFactory<String, ProductRevenue> consumerFactory
     ) {
-        ConcurrentKafkaListenerContainerFactory<String, Purchase> factory =
+        ConcurrentKafkaListenerContainerFactory<String, ProductRevenue> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory);
         return factory;

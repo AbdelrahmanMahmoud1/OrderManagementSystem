@@ -1,15 +1,15 @@
 package com.giza.purshasingmanagement.service;
 
 import com.giza.purshasingmanagement.entity.Product;
-import com.giza.purshasingmanagement.entity.Purchase;
+import com.giza.purshasingmanagement.entity.ProductRevenue;
 
 import java.util.List;
 
-public interface PurchaseService {
+public interface RevenueService {
 
-    List<Purchase> findAll();
+    List<ProductRevenue> findAll();
 
-    Purchase findById(long id);
+    ProductRevenue findById(long id);
 
     double save(Product product);
 

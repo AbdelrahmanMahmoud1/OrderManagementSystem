@@ -1,11 +1,11 @@
 package com.giza.purshasingmanagement.controller;
 
-import com.giza.purshasingmanagement.controller.response.GetPurchasingResponse;
+import com.giza.purshasingmanagement.controller.response.RevenueSummaryResponse;
 import com.giza.purshasingmanagement.controller.response.IncreasePurchasingResponse;
 import com.giza.purshasingmanagement.entity.Order;
-import com.giza.purshasingmanagement.entity.Purchase;
+import com.giza.purshasingmanagement.entity.ProductRevenue;
 import com.giza.purshasingmanagement.kafka.KafkaProducer;
-import com.giza.purshasingmanagement.service.PurchaseService;
+import com.giza.purshasingmanagement.service.RevenueService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,33 +23,40 @@ public class PurchasingController {
 
     private final Logger logger = LoggerFactory.getLogger(PurchasingController.class);
 
-    private final PurchaseService purchaseService;
+    private final RevenueService revenueService;
     private final KafkaProducer<Map<Long, Double>> kafkaProducer;
 
     @Autowired
     public PurchasingController(
-            PurchaseService purchaseService,
+            RevenueService revenueService,
             KafkaProducer<Map<Long, Double>> kafkaProducer) {
-        this.purchaseService = purchaseService;
+        this.revenueService = revenueService;
         this.kafkaProducer = kafkaProducer;
     }
 
-    @PostMapping("/increase-purchasing")
-    public ResponseEntity<IncreasePurchasingResponse> increasePurchasing(@RequestBody Order order) {
+    @PostMapping("/submit-order")
+    public ResponseEntity<IncreasePurchasingResponse> submitOrder(@RequestBody Order order) {
         checkOrderValidity(order);
         logger.info("Received: " + order);
-        Map<Long, Double> pairs = new HashMap<>();
-        order.getProducts().forEach(product -> pairs.put((long) product.getId(), 0.0));
+        Map<Long, Double> pRevenuePairs = calculateProductRevenuePairs(order);
+        kafkaProducer.sendMessage(pRevenuePairs);
+        IncreasePurchasingResponse response = new IncreasePurchasingResponse();
+        response.setProductRevenuePair(pRevenuePairs);
+        response.setMessage("Successful Order Purchase");
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+
+    private Map<Long, Double> calculateProductRevenuePairs(Order order) {
+        Map<Long, Double> pRevenuePairs = new HashMap<>();
+        // Set initial value for each productId
+        order.getProducts().forEach(product -> pRevenuePairs.put((long) product.getId(), 0.0));
+        // Add to the present value the revenue
         order.getProducts().forEach(product -> {
-            double revenue = purchaseService.save(product);
-            pairs.put((long) product.getId(), pairs.get((long) product.getId()) + revenue);
+            double revenue = revenueService.save(product);
+            pRevenuePairs.put((long) product.getId(), pRevenuePairs.get((long) product.getId()) + revenue);
             logger.info("Increased " + product.getQuantity() + " to product with id " + product.getId());
         });
-        IncreasePurchasingResponse response = new IncreasePurchasingResponse();
-        response.setProductRevenuePair(pairs);
-        kafkaProducer.sendMessage(pairs);
-        response.setMessage("Successful Purchase");
-        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+        return pRevenuePairs;
     }
 
     private void checkOrderValidity(Order order) {
@@ -65,26 +72,14 @@ public class PurchasingController {
         });
     }
 
-    @GetMapping("/get-purchasing")
-    public ResponseEntity<GetPurchasingResponse> getPurchasing() {
-        logger.info("Getting all purchases");
-        GetPurchasingResponse response = new GetPurchasingResponse();
-        List<Purchase> allPurchases = purchaseService.findAll();
-        response.setPurchases(allPurchases);
-        logger.info("Found " + response.getProductsPurchased() + " purchases");
+    @GetMapping("/get-revenue-summary")
+    public ResponseEntity<RevenueSummaryResponse> getPurchasing() {
+        logger.info("Getting revenue summary");
+        RevenueSummaryResponse response = new RevenueSummaryResponse();
+        List<ProductRevenue> revenues = revenueService.findAll();
+        response.setProductsRevenues(revenues);
+        logger.info("Found " + response.getProductsPurchasedCount()
+                + " products purchased, with a total revenue of " + response.getTotalRevenue());
         return new ResponseEntity<>(response, HttpStatus.FOUND);
-    }
-
-    @DeleteMapping("/delete-purchasing")
-    public ResponseEntity<String> deletePurchasing(@RequestParam("purchaseId") long purchaseId) {
-        logger.info("Trying to delete purchase with id " + purchaseId);
-        Purchase purchase = purchaseService.findById(purchaseId);
-        if (purchase == null) {
-            logger.error("Cannot find purchase with id " + purchaseId);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        purchaseService.deleteById(purchaseId);
-        logger.info("Deleted purchase with id " + purchaseId);
-        return new ResponseEntity<>("Deleted purchase with id " + purchaseId, HttpStatus.CREATED);
     }
 }
