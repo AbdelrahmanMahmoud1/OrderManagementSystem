@@ -24,12 +24,12 @@ public class PurchasingController {
     private final Logger logger = LoggerFactory.getLogger(PurchasingController.class);
 
     private final PurchaseService purchaseService;
-    private final KafkaProducer<Purchase> kafkaProducer;
+    private final KafkaProducer<Map<Long, Double>> kafkaProducer;
 
     @Autowired
     public PurchasingController(
             PurchaseService purchaseService,
-            KafkaProducer<Purchase> kafkaProducer) {
+            KafkaProducer<Map<Long, Double>> kafkaProducer) {
         this.purchaseService = purchaseService;
         this.kafkaProducer = kafkaProducer;
     }
@@ -46,7 +46,7 @@ public class PurchasingController {
         });
         IncreasePurchasingResponse response = new IncreasePurchasingResponse();
         response.setProductRevenuePair(pairs);
-//        kafkaProducer.sendMessage(pa);
+        kafkaProducer.sendMessage(pairs);
         response.setMessage("Successful Purchase");
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
