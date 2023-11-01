@@ -39,9 +39,10 @@ public class PurchasingController {
         checkOrderValidity(order);
         logger.info("Received: " + order);
         Map<Long, Double> pairs = new HashMap<>();
+        order.getProducts().forEach(product -> pairs.put((long) product.getId(), 0.0));
         order.getProducts().forEach(product -> {
             double revenue = purchaseService.save(product);
-            pairs.put((long)product.getId(), revenue);
+            pairs.put((long) product.getId(), pairs.get((long) product.getId()) + revenue);
             logger.info("Increased " + product.getQuantity() + " to product with id " + product.getId());
         });
         IncreasePurchasingResponse response = new IncreasePurchasingResponse();
@@ -56,7 +57,7 @@ public class PurchasingController {
             logger.error("Order with no products");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order with no products");
         }
-        order.getProducts().forEach(product ->  {
+        order.getProducts().forEach(product -> {
             if (product.getQuantity() <= 0 || product.getPrice() <= 0) {
                 logger.error("Invalid price/quantity");
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid price/quantity");
