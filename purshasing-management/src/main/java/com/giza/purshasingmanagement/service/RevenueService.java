@@ -12,6 +12,4 @@ public interface RevenueService {
     ProductRevenue findById(long id);
 
     double save(Product product);
-
-    void deleteById(long id);
 }

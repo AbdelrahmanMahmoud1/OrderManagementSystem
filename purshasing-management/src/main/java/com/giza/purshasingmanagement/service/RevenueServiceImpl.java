@@ -43,9 +43,4 @@ public class RevenueServiceImpl implements RevenueService {
         revenueRepository.save(productRevenue);
         return revenue;
     }
-
-    @Override
-    public void deleteById(long id) {
-        revenueRepository.deleteById(id);
-    }
 }
