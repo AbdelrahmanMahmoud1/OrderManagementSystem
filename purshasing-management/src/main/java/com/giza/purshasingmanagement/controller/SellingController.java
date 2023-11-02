@@ -26,16 +26,17 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-public class PurchasingController {
+@RequestMapping("/selling")
+public class SellingController {
 
-    private final Logger logger = LoggerFactory.getLogger(PurchasingController.class);
+    private final Logger logger = LoggerFactory.getLogger(SellingController.class);
 
     private final RevenueService revenueService;
     private final PurchaseService purchaseService;
     private final KafkaProducer<Map<Long, Double>> kafkaProducer;
 
     @Autowired
-    public PurchasingController(
+    public SellingController(
             RevenueService revenueService,
             PurchaseService purchaseService,
             KafkaProducer<Map<Long, Double>> kafkaProducer) {

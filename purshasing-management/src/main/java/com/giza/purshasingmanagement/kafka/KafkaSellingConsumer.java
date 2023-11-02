@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 
 @Service
-public class KafkaConsumer {
+public class KafkaSellingConsumer {
     @KafkaListener(topics = AppConstants.TOPIC_NAME, groupId = "groupId")
     void consumer(Map<Long, Double> data) {
         System.out.println("Message received: " + data);
