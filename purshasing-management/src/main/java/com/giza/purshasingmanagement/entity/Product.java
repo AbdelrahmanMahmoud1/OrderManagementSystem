@@ -7,7 +7,7 @@ public class Product implements Serializable {
     private String name;
     private int quantity;
     private float price;
-    private String category;
+    private Category category;
 
     Product() {
     }
@@ -50,11 +50,11 @@ public class Product implements Serializable {
         this.quantity = quantity;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
