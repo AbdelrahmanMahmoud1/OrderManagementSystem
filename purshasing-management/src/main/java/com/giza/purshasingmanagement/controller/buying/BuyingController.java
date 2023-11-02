@@ -1,8 +1,11 @@
 package com.giza.purshasingmanagement.controller.buying;
 
 import com.giza.purshasingmanagement.entity.Order;
+import com.giza.purshasingmanagement.service.buying.BuyingService;
+import com.giza.purshasingmanagement.service.buying.CostService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +18,17 @@ import org.springframework.web.server.ResponseStatusException;
 public class BuyingController {
 
     private final Logger logger = LoggerFactory.getLogger(BuyingController.class);
+
+    private final CostService costService;
+    private final BuyingService buyingService;
+
+    @Autowired
+    public BuyingController(
+            CostService costService,
+            BuyingService buyingService) {
+        this.costService = costService;
+        this.buyingService = buyingService;
+    }
 
     @PostMapping("/buying")
     public String buyItems(@RequestBody Order order) {
