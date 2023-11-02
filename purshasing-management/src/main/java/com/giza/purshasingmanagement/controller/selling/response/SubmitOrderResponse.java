@@ -1,4 +1,4 @@
-package com.giza.purshasingmanagement.controller.response;
+package com.giza.purshasingmanagement.controller.selling.response;
 
 import java.util.Map;
 

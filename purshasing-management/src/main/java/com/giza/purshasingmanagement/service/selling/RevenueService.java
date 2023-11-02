@@ -1,7 +1,7 @@
-package com.giza.purshasingmanagement.service;
+package com.giza.purshasingmanagement.service.selling;
 
 import com.giza.purshasingmanagement.entity.Product;
-import com.giza.purshasingmanagement.entity.ProductRevenue;
+import com.giza.purshasingmanagement.entity.selling.ProductRevenue;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
-package com.giza.purshasingmanagement.service;
+package com.giza.purshasingmanagement.service.selling;
 
 import com.giza.purshasingmanagement.entity.Product;
-import com.giza.purshasingmanagement.entity.ProductRevenue;
-import com.giza.purshasingmanagement.repository.RevenueRepository;
+import com.giza.purshasingmanagement.entity.selling.ProductRevenue;
+import com.giza.purshasingmanagement.repository.selling.RevenueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

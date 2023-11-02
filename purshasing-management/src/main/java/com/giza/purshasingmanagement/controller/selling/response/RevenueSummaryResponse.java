@@ -1,6 +1,6 @@
-package com.giza.purshasingmanagement.controller.response;
+package com.giza.purshasingmanagement.controller.selling.response;
 
-import com.giza.purshasingmanagement.entity.ProductRevenue;
+import com.giza.purshasingmanagement.entity.selling.ProductRevenue;
 
 import java.util.List;
 

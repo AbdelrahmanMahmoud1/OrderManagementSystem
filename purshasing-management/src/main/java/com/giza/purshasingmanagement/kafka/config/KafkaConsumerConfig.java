@@ -1,6 +1,6 @@
 package com.giza.purshasingmanagement.kafka.config;
 
-import com.giza.purshasingmanagement.entity.ProductRevenue;
+import com.giza.purshasingmanagement.entity.selling.ProductRevenue;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;

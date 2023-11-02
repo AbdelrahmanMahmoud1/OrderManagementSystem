@@ -1,4 +1,4 @@
-package com.giza.purshasingmanagement.entity;
+package com.giza.purshasingmanagement.entity.selling;
 
 import jakarta.persistence.*;
 

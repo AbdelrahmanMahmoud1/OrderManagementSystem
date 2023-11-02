@@ -1,15 +1,15 @@
-package com.giza.purshasingmanagement.controller;
+package com.giza.purshasingmanagement.controller.selling;
 
-import com.giza.purshasingmanagement.controller.response.PurchaseDetailsResponse;
-import com.giza.purshasingmanagement.controller.response.RevenueSummaryResponse;
-import com.giza.purshasingmanagement.controller.response.SubmitOrderResponse;
+import com.giza.purshasingmanagement.controller.selling.response.PurchaseDetailsResponse;
+import com.giza.purshasingmanagement.controller.selling.response.RevenueSummaryResponse;
+import com.giza.purshasingmanagement.controller.selling.response.SubmitOrderResponse;
 import com.giza.purshasingmanagement.entity.Order;
 import com.giza.purshasingmanagement.entity.Product;
-import com.giza.purshasingmanagement.entity.ProductRevenue;
-import com.giza.purshasingmanagement.entity.Purchase;
+import com.giza.purshasingmanagement.entity.selling.ProductRevenue;
+import com.giza.purshasingmanagement.entity.selling.SellingPurchase;
 import com.giza.purshasingmanagement.kafka.KafkaProducer;
-import com.giza.purshasingmanagement.service.PurchaseService;
-import com.giza.purshasingmanagement.service.RevenueService;
+import com.giza.purshasingmanagement.service.selling.SellingService;
+import com.giza.purshasingmanagement.service.selling.RevenueService;
 import org.antlr.v4.runtime.misc.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,16 +32,16 @@ public class SellingController {
     private final Logger logger = LoggerFactory.getLogger(SellingController.class);
 
     private final RevenueService revenueService;
-    private final PurchaseService purchaseService;
+    private final SellingService sellingService;
     private final KafkaProducer<Map<Long, Double>> kafkaProducer;
 
     @Autowired
     public SellingController(
             RevenueService revenueService,
-            PurchaseService purchaseService,
+            SellingService sellingService,
             KafkaProducer<Map<Long, Double>> kafkaProducer) {
         this.revenueService = revenueService;
-        this.purchaseService = purchaseService;
+        this.sellingService = sellingService;
         this.kafkaProducer = kafkaProducer;
     }
 
@@ -49,7 +49,7 @@ public class SellingController {
     public ResponseEntity<SubmitOrderResponse> submitOrder(@RequestBody Order order) {
         checkOrderValidity(order);
         logger.info("Received: " + order);
-        Purchase purchase = createPurchaseRecord(order);
+        SellingPurchase purchase = createPurchaseRecord(order);
         Map<Long, Double> pRevenuePairs = calculateProductRevenuePairs(purchase);
         kafkaProducer.sendMessage(pRevenuePairs);
         SubmitOrderResponse response = new SubmitOrderResponse();
@@ -60,7 +60,7 @@ public class SellingController {
     }
 
     /** Creating purchase record by processing the order id, date and products **/
-    private Purchase createPurchaseRecord(Order order) {
+    private SellingPurchase createPurchaseRecord(Order order) {
         HashMap<Integer, Pair<Integer, Float>> uniqueProductMap = new HashMap<>();
         order.getProducts().forEach(p -> uniqueProductMap.put(p.getId(), new Pair<>(0, 0.0f)));
         order.getProducts().forEach(p -> {
@@ -69,7 +69,7 @@ public class SellingController {
                     p.getId(),
                     new Pair<>(p.getQuantity() + quantityPrice.a, p.getPrice() + quantityPrice.b));
         });
-        Purchase purchase = new Purchase();
+        SellingPurchase purchase = new SellingPurchase();
         purchase.setOrderId(order.getId());
         purchase.setPurchaseDate(new Date(System.currentTimeMillis()));
         List<Product> products = new ArrayList<>();
@@ -83,13 +83,13 @@ public class SellingController {
         }
         purchase.setProducts(products);
         purchase.setRevenue(revenue);
-        long purchaseId = purchaseService.save(purchase);
+        long purchaseId = sellingService.save(purchase);
         purchase.setPurchaseId(purchaseId);
         return purchase;
     }
 
     /** Creating purchase record by processing the order id, date and products **/
-    private Map<Long, Double> calculateProductRevenuePairs(Purchase purchase) {
+    private Map<Long, Double> calculateProductRevenuePairs(SellingPurchase purchase) {
         Map<Long, Double> pRevenuePairs = new HashMap<>();
         purchase.getProducts().forEach(product -> {
             double revenue = revenueService.save(product);
@@ -116,7 +116,7 @@ public class SellingController {
     @GetMapping("/get-purchase-details")
     public PurchaseDetailsResponse getPurchaseDetails() {
         logger.info("Getting purchase details");
-        List<Purchase> purchaseList = purchaseService.findAll();
+        List<SellingPurchase> purchaseList = sellingService.findAll();
         PurchaseDetailsResponse response = new PurchaseDetailsResponse();
         response.setPurchaseList(purchaseList);
         return response;

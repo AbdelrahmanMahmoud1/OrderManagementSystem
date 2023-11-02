@@ -1,5 +1,6 @@
-package com.giza.purshasingmanagement.entity;
+package com.giza.purshasingmanagement.entity.buying;
 
+import com.giza.purshasingmanagement.entity.Product;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -7,16 +8,13 @@ import java.sql.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "purchase")
-public class Purchase implements Serializable {
+@Table(name = "buying-purchase")
+public class BuyingPurchase implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "purchase_id")
     private long purchaseId;
-
-    @Column(name = "order_id")
-    private long orderId;
 
     @Column(name = "purchase_date")
     private Date purchaseDate;
@@ -25,8 +23,8 @@ public class Purchase implements Serializable {
     @ElementCollection(targetClass = Product.class)
     private List<Product> products;
 
-    @Column(name = "revenue")
-    private double revenue;
+    @Column(name = "cost")
+    private double cost;
 
     public long getPurchaseId() {
         return purchaseId;
@@ -34,14 +32,6 @@ public class Purchase implements Serializable {
 
     public void setPurchaseId(long purchaseId) {
         this.purchaseId = purchaseId;
-    }
-
-    public long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(long orderId) {
-        this.orderId = orderId;
     }
 
     public Date getPurchaseDate() {
@@ -60,11 +50,11 @@ public class Purchase implements Serializable {
         this.products = products;
     }
 
-    public double getRevenue() {
-        return revenue;
+    public double getCost() {
+        return cost;
     }
 
-    public void setRevenue(double revenue) {
-        this.revenue = revenue;
+    public void setCost(double cost) {
+        this.cost = cost;
     }
 }
