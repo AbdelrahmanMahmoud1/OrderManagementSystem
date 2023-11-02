@@ -7,6 +7,7 @@ public class Product implements Serializable {
     private String name;
     private int quantity;
     private float price;
+    private String category;
 
     Product() {
     }
@@ -47,6 +48,14 @@ public class Product implements Serializable {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     @Override
