@@ -56,7 +56,7 @@ public class SellingController {
         response.setPurchaseId(purchase.getPurchaseId());
         response.setProductRevenuePair(pRevenuePairs);
         response.setMessage("Successful Order Purchase");
-        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
 
     /** Creating purchase record by processing the order id, date and products **/
@@ -114,12 +114,12 @@ public class SellingController {
     }
 
     @GetMapping("/get-purchase-details")
-    public PurchaseDetailsResponse getPurchaseDetails() {
+    public ResponseEntity<PurchaseDetailsResponse> getPurchaseDetails() {
         logger.info("Getting purchase details");
         List<SellingPurchase> purchaseList = sellingService.findAll();
         PurchaseDetailsResponse response = new PurchaseDetailsResponse();
         response.setPurchaseList(purchaseList);
-        return response;
+        return ResponseEntity.status(HttpStatus.FOUND).body(response);
     }
 
     @GetMapping("/get-revenue-summary")
