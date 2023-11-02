@@ -2,9 +2,10 @@ package com.giza.purshasingmanagement.controller.response;
 
 import java.util.Map;
 
-public class IncreasePurchasingResponse {
+public class SubmitOrderResponse {
 
     private Map<Long, Double> productRevenuePair;
+    private long purchaseId;
     private String message;
 
     public Map<Long, Double> getProductRevenuePair() {
@@ -21,5 +22,13 @@ public class IncreasePurchasingResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public long getPurchaseId() {
+        return purchaseId;
+    }
+
+    public void setPurchaseId(long purchaseId) {
+        this.purchaseId = purchaseId;
     }
 }
