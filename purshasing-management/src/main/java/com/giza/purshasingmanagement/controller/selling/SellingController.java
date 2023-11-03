@@ -4,7 +4,6 @@ import com.giza.purshasingmanagement.controller.selling.response.PurchaseDetails
 import com.giza.purshasingmanagement.controller.selling.response.RevenueSummaryResponse;
 import com.giza.purshasingmanagement.controller.selling.response.SubmitOrderResponse;
 import com.giza.purshasingmanagement.entity.Order;
-import com.giza.purshasingmanagement.entity.Product;
 import com.giza.purshasingmanagement.entity.db.ProductDB;
 import com.giza.purshasingmanagement.entity.selling.ProductRevenue;
 import com.giza.purshasingmanagement.entity.selling.SellingPurchase;
