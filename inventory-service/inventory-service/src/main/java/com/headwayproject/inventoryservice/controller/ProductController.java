@@ -3,8 +3,10 @@ package com.headwayproject.inventoryservice.controller;
 
 import com.headwayproject.inventoryservice.entity.Category;
 import com.headwayproject.inventoryservice.entity.Product;
+import com.headwayproject.inventoryservice.response.InventoryResponse;
 import com.headwayproject.inventoryservice.service.CategoryService;
 import com.headwayproject.inventoryservice.service.ProductService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,7 +41,7 @@ public class ProductController {
     }
 
     @PostMapping("/purchased")
-    public List<Product> addPurchasedItems(@RequestBody List<Product> products){
+    public ResponseEntity<InventoryResponse> addPurchasedItems(@RequestBody List<Product> products){
         for (Product value : products) {
             Product product = productService.getProductByName(value.getName());
             if (product!=null) {
@@ -69,7 +71,9 @@ public class ProductController {
 
             }
         }
-        return products;
+        InventoryResponse response = new InventoryResponse();
+        response.setProducts(products);
+        return ResponseEntity.ok().body(response);
     }
 
     @PostMapping("/selling")
