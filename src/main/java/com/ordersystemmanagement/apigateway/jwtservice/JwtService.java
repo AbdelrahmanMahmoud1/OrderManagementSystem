@@ -20,6 +20,7 @@ import io.jsonwebtoken.security.Keys;
 @Service
 public class JwtService {
 
+
     private static final String SECRET_KEY = "1E66D4D5D79AB473DD4FE24221AF6596EC9E7D177C52AC25346DB4F88C";
 
 
@@ -52,15 +53,20 @@ public class JwtService {
         return (email.equals(userDetails.getEmail())) && !isTokenExpired(jwtToken);
     }
 
-    private boolean isTokenExpired(String jwtToken) {
+    public boolean isTokenValid(String jwtToken){
+
+        return !isTokenExpired(jwtToken);
+    }
+
+    public boolean isTokenExpired(String jwtToken) {
         return extractExpirationDate(jwtToken).before(new Date());
     }
 
-    private Date extractExpirationDate(String jwtToken) {
+    public Date extractExpirationDate(String jwtToken) {
         return extractClaim(jwtToken, Claims::getExpiration);
     }
 
-    private Claims extractAllClaims(String jwtToken){
+    public Claims extractAllClaims(String jwtToken){
         return Jwts.parserBuilder()
                 .setSigningKey(getSignInKey())
                 .build()
