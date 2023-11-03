@@ -1,6 +1,6 @@
 package com.giza.purshasingmanagement.service.selling;
 
-import com.giza.purshasingmanagement.entity.Product;
+import com.giza.purshasingmanagement.entity.db.ProductDB;
 import com.giza.purshasingmanagement.entity.selling.ProductRevenue;
 import com.giza.purshasingmanagement.repository.selling.RevenueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class RevenueServiceImpl implements RevenueService {
     }
 
     @Override
-    public double save(Product product) {
+    public double save(ProductDB product) {
         ProductRevenue productRevenue = findById(product.getId());
         if (productRevenue == null){
             productRevenue = new ProductRevenue();

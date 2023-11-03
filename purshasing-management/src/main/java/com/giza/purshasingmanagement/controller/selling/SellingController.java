@@ -5,6 +5,7 @@ import com.giza.purshasingmanagement.controller.selling.response.RevenueSummaryR
 import com.giza.purshasingmanagement.controller.selling.response.SubmitOrderResponse;
 import com.giza.purshasingmanagement.entity.Order;
 import com.giza.purshasingmanagement.entity.Product;
+import com.giza.purshasingmanagement.entity.db.ProductDB;
 import com.giza.purshasingmanagement.entity.selling.ProductRevenue;
 import com.giza.purshasingmanagement.entity.selling.SellingPurchase;
 import com.giza.purshasingmanagement.kafka.KafkaProducer;
@@ -72,13 +73,13 @@ public class SellingController {
         SellingPurchase purchase = new SellingPurchase();
         purchase.setOrderId(order.getId());
         purchase.setPurchaseDate(new Date(System.currentTimeMillis()));
-        List<Product> products = new ArrayList<>();
+        List<ProductDB> products = new ArrayList<>();
         double revenue = 0;
         for (Map.Entry<Integer, Pair<Integer, Float>> entry : uniqueProductMap.entrySet()) {
             int id = entry.getKey();
             int quantity = entry.getValue().a;
             float price = entry.getValue().b;
-            products.add(new Product(id, quantity, price));
+            products.add(new ProductDB(id, quantity, price));
             revenue += quantity * price;
         }
         purchase.setProducts(products);
@@ -115,7 +116,7 @@ public class SellingController {
 
     @GetMapping("/get-purchase-details")
     public ResponseEntity<PurchaseDetailsResponse> getPurchaseDetails() {
-        logger.info("Getting purchase details");
+        logger.info("Selling: Getting purchase details");
         List<SellingPurchase> purchaseList = sellingService.findAll();
         PurchaseDetailsResponse response = new PurchaseDetailsResponse();
         response.setPurchaseList(purchaseList);

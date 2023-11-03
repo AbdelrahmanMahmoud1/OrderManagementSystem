@@ -1,6 +1,6 @@
 package com.giza.purshasingmanagement.entity.selling;
 
-import com.giza.purshasingmanagement.entity.Product;
+import com.giza.purshasingmanagement.entity.db.ProductDB;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -23,8 +23,8 @@ public class SellingPurchase implements Serializable {
     private Date purchaseDate;
 
     @Column(name = "products")
-    @ElementCollection(targetClass = Product.class)
-    private List<Product> products;
+    @ElementCollection(targetClass = ProductDB.class)
+    private List<ProductDB> products;
 
     @Column(name = "revenue")
     private double revenue;
@@ -53,11 +53,11 @@ public class SellingPurchase implements Serializable {
         this.purchaseDate = purchaseDate;
     }
 
-    public List<Product> getProducts() {
+    public List<ProductDB> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Product> products) {
+    public void setProducts(List<ProductDB> products) {
         this.products = products;
     }
 

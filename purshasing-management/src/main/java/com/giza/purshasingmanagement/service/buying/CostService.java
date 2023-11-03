@@ -1,7 +1,7 @@
 package com.giza.purshasingmanagement.service.buying;
 
-import com.giza.purshasingmanagement.entity.Product;
 import com.giza.purshasingmanagement.entity.buying.ProductCost;
+import com.giza.purshasingmanagement.entity.db.ProductDB;
 
 import java.util.List;
 
@@ -11,5 +11,5 @@ public interface CostService {
 
     ProductCost findById(long id);
 
-    double save(Product product);
+    double save(ProductDB product);
 }

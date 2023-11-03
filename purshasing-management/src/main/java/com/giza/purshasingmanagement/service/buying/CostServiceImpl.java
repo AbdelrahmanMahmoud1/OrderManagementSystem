@@ -1,7 +1,7 @@
 package com.giza.purshasingmanagement.service.buying;
 
-import com.giza.purshasingmanagement.entity.Product;
 import com.giza.purshasingmanagement.entity.buying.ProductCost;
+import com.giza.purshasingmanagement.entity.db.ProductDB;
 import com.giza.purshasingmanagement.repository.buying.CostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ public class CostServiceImpl implements CostService {
     }
 
     @Override
-    public double save(Product product) {
+    public double save(ProductDB product) {
         ProductCost productCost = findById(product.getId());
         if (productCost == null){
             productCost = new ProductCost();
