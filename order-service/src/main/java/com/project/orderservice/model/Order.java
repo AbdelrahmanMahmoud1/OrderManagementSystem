@@ -16,20 +16,20 @@ public class Order {
     private String OrderNumber;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
-    private List<OrderLineItems>orderLineItemsList;
+    private List<OrderLineItems> products;
 
     public Order() {
     }
 
-    public Order(int id, String orderNumber, List<OrderLineItems> orderLineItemsList) {
+    public Order(int id, String orderNumber, List<OrderLineItems> products) {
         this.id = id;
         OrderNumber = orderNumber;
-        this.orderLineItemsList = orderLineItemsList;
+        this.products = products;
     }
 
-    public Order(String orderNumber, List<OrderLineItems> orderLineItemsList) {
+    public Order(String orderNumber, List<OrderLineItems> products) {
         OrderNumber = orderNumber;
-        this.orderLineItemsList = orderLineItemsList;
+        this.products = products;
     }
 
     public int getId() {
@@ -48,11 +48,11 @@ public class Order {
         OrderNumber = orderNumber;
     }
 
-    public List<OrderLineItems> getOrderLineItemsList() {
-        return orderLineItemsList;
+    public List<OrderLineItems> getProducts() {
+        return products;
     }
 
-    public void setOrderLineItemsList(List<OrderLineItems> orderLineItemsList) {
-        this.orderLineItemsList = orderLineItemsList;
+    public void setProducts(List<OrderLineItems> products) {
+        this.products = products;
     }
 }

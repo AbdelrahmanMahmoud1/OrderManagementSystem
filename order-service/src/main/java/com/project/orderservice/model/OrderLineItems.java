@@ -13,7 +13,7 @@ public class OrderLineItems {
     private int id;
 
     @Column(name = "skucode")
-    private String skuCode;
+    private String name;
     @Column(name = "price")
     private BigDecimal price;
     @Column(name = "quantity")
@@ -21,9 +21,9 @@ public class OrderLineItems {
 
 
 
-    public OrderLineItems(int id, String skuCode, BigDecimal price, Integer quantity) {
+    public OrderLineItems(int id, String name, BigDecimal price, Integer quantity) {
         this.id = id;
-        this.skuCode = skuCode;
+        this.name = name;
         this.price = price;
         this.quantity = quantity;
     }
@@ -31,8 +31,8 @@ public class OrderLineItems {
     public OrderLineItems() {
     }
 
-    public OrderLineItems(String skuCode, BigDecimal price, Integer quantity) {
-        this.skuCode = skuCode;
+    public OrderLineItems(String name, BigDecimal price, Integer quantity) {
+        this.name = name;
         this.price = price;
         this.quantity = quantity;
     }
@@ -45,12 +45,12 @@ public class OrderLineItems {
         this.id = id;
     }
 
-    public String getSkuCode() {
-        return skuCode;
+    public String getName() {
+        return name;
     }
 
-    public void setSkuCode(String skuCode) {
-        this.skuCode = skuCode;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public BigDecimal getPrice() {

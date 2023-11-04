@@ -4,6 +4,7 @@ import com.project.orderservice.dto.OrderRequest;
 import com.project.orderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,8 +20,20 @@ public class Ordercontroller {
 
     @PostMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public String placeOrder(@RequestBody OrderRequest orderRequest){
-        orderService.placeOrder(orderRequest); //whenever a user places an order it will be save to the db and return this text
-        return  "Order placed Successfully";
+    public String placeOrder(@RequestBody OrderRequest orderRequest) {
+        try {
+            orderService.placeOrder(orderRequest);
+
+            return "Order placed Successfully";
+        } catch (Exception e) {
+            // Log the exception for debugging
+            e.printStackTrace();
+            return "Order placement failed: " + e.getMessage();
+        }
+    }
+
+    @GetMapping("/hello")
+    public String hello() {
+        return "Hello";
     }
 }

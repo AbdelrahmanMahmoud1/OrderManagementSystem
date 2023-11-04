@@ -1,26 +1,22 @@
 package com.project.orderservice.dto;
-import com.project.orderservice.model.OrderLineItems;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
 import java.math.BigDecimal;
-import java.util.List;
+
 public class OrderLineItemsDto {
     private int id;
-    private String skuCode;
+    private String name;
     private BigDecimal price;
     private Integer quantity;
 
-    public OrderLineItemsDto(int id, String skuCode, BigDecimal price, Integer quantity) {
+    public OrderLineItemsDto(int id, String name, BigDecimal price, Integer quantity) {
         this.id = id;
-        this.skuCode = skuCode;
+        this.name = name;
         this.price = price;
         this.quantity = quantity;
     }
 
-    public OrderLineItemsDto(String skuCode, BigDecimal price, Integer quantity) {
-        this.skuCode = skuCode;
+    public OrderLineItemsDto(String name, BigDecimal price, Integer quantity) {
+        this.name = name;
         this.price = price;
         this.quantity = quantity;
     }
@@ -36,12 +32,12 @@ public class OrderLineItemsDto {
         this.id = id;
     }
 
-    public String getSkuCode() {
-        return skuCode;
+    public String getName() {
+        return name;
     }
 
-    public void setSkuCode(String skuCode) {
-        this.skuCode = skuCode;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public BigDecimal getPrice() {
