@@ -28,7 +28,12 @@ public class LoggingGlobalPreFilter implements GlobalFilter {
         if (!routerValidator.isSecured.test(exchange.getRequest())){
             return chain.filter(exchange);
         }
-        String authHeader= Objects.requireNonNull(exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0));
+//
+//        if (exchange.getRequest().getHeaders().containsKey(HttpHeaders.AUTHORIZATION) != null){
+//            throw new RuntimeException("No Auth Header ");
+//
+//        }
+//        String authHeader= Objects.requireNonNull(exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0));
 
 
         return chain.filter(exchange);

@@ -23,6 +23,18 @@ public class GatewayConfig {
                 .route( r -> r.path("/api/demo")
 //                        .filters(f -> f.filter(filter))
                         .uri("lb://user-management"))
+                .route( r -> r.path("/products/**")
+//                        .filters(f -> f.filter(filter))
+                        .uri("lb://inventory-service"))
+                .route( r -> r.path("/categories/**")
+//                        .filters(f -> f.filter(filter))
+                        .uri("lb://inventory-service"))
+                .route( r -> r.path("/buying/**")
+//                        .filters(f -> f.filter(filter))
+                        .uri("lb://purchasing-management-service"))
+                .route( r -> r.path("/selling/**")
+//                        .filters(f -> f.filter(filter))
+                        .uri("lb://purchasing-management-service"))
                 .build();
     }
 
