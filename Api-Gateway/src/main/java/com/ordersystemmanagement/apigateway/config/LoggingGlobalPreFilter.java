@@ -5,11 +5,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 @Component
@@ -28,12 +33,18 @@ public class LoggingGlobalPreFilter implements GlobalFilter {
         if (!routerValidator.isSecured.test(exchange.getRequest())){
             return chain.filter(exchange);
         }
-//
-//        if (exchange.getRequest().getHeaders().containsKey(HttpHeaders.AUTHORIZATION) != null){
-//            throw new RuntimeException("No Auth Header ");
-//
-//        }
-//        String authHeader= Objects.requireNonNull(exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0));
+        try {
+            String authHeader= Objects.requireNonNull(exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0));
+
+        }catch (NullPointerException e){
+            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+            byte[] bytes = "Auth Header is empty".getBytes(StandardCharsets.UTF_8);
+            DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(bytes);
+            return exchange.getResponse().writeWith(Flux.just(buffer));
+
+//            return exchange.getResponse().setComplete();
+
+        }
 
 
         return chain.filter(exchange);
