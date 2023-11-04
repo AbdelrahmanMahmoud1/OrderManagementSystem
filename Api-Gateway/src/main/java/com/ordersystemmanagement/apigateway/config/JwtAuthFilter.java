@@ -1,6 +1,9 @@
 //package com.ordersystemmanagement.apigateway.config;
 //
 //
+//import com.ordermanagementsystem.usermanagement.user.SystemUser;
+//import com.ordersystemmanagement.apigateway.entity.AuthenticatedUsers;
+//import com.ordersystemmanagement.apigateway.entity.User;
 //import com.ordersystemmanagement.apigateway.jwtservice.JwtService;
 //import jakarta.servlet.FilterChain;
 //import jakarta.servlet.ServletException;
@@ -10,7 +13,6 @@
 //import org.springframework.lang.NonNull;
 //import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 //import org.springframework.security.core.context.SecurityContextHolder;
-//import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.core.userdetails.UserDetailsService;
 //import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 //import org.springframework.stereotype.Component;
@@ -23,7 +25,7 @@
 //public class JwtAuthFilter extends OncePerRequestFilter {
 //
 //    private final JwtService jwtService;
-//    private final UserDetailsService userDetailsService;
+////    private final UserDetailsService userDetailsService;
 //
 //
 //
@@ -46,8 +48,8 @@
 //
 //    userEmail = jwtService.extractUserEmail(jwt);
 //
-//    if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null){
-//        UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+//    if (userEmail != null ){
+//        User userDetails = AuthenticatedUsers.findByUserName(userEmail);
 //        if (jwtService.isTokenValid(jwt, userDetails)){
 //            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
 //                    userDetails,null,userDetails.getAuthorities()

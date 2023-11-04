@@ -1,6 +1,7 @@
 //package com.ordersystemmanagement.apigateway.config;
 //
-//import com.ordersystemmanagement.apigateway.api.UserManagementProxy;
+////import com.ordersystemmanagement.apigateway.api.UserManagementProxy;
+//import com.ordersystemmanagement.apigateway.entity.AuthenticatedUsers;
 //import lombok.RequiredArgsConstructor;
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
@@ -18,13 +19,13 @@
 //@RequiredArgsConstructor
 //public class ApplicationConfig {
 //
-//    private final UserManagementProxy userManagementProxy;
+////    private final UserManagementProxy userManagementProxy;
 //
 //
 //
 //    @Bean
 //    public UserDetailsService userDetailsService() {
-//        return username -> userManagementProxy.getUser(username);
+//        return username -> AuthenticatedUsers.findByUserName(username);
 //    }
 //
 ////    @Bean

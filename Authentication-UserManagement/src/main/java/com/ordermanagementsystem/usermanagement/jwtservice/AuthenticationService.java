@@ -4,11 +4,9 @@ package com.ordermanagementsystem.usermanagement.jwtservice;
 import com.ordermanagementsystem.usermanagement.user.Role;
 import com.ordermanagementsystem.usermanagement.user.User;
 import com.ordermanagementsystem.usermanagement.userservice.AuthenticationRequest;
-import com.ordermanagementsystem.usermanagement.userservice.AuthenticationResponse;
 import com.ordermanagementsystem.usermanagement.userservice.RegisterRequest;
 import com.ordermanagementsystem.usermanagement.userservice.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,10 +19,11 @@ public class AuthenticationService {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
 
 
-    public  User authenticate(AuthenticationRequest request) {
+    public String authenticate(AuthenticationRequest request) {
 
         try {
             authenticationManager.authenticate(
@@ -36,7 +35,8 @@ public class AuthenticationService {
 
             var user = userService.findByEmail(request.getEmail()).orElseThrow();
             System.out.println(user);
-            return user;
+
+            return jwtService.generateToken(user);
 
         }catch (Exception e){
             System.out.println("User not found");
@@ -46,7 +46,7 @@ public class AuthenticationService {
 
     }
 
-    public  User register(RegisterRequest request) {
+    public  String register(RegisterRequest request) {
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -56,7 +56,7 @@ public class AuthenticationService {
                 .build();
         userService.saveUser(user);
 
-        return user;
+        return jwtService.generateToken(user);
 
     }
 }

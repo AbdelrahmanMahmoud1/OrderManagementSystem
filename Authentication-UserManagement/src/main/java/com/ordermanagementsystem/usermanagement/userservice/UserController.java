@@ -21,7 +21,7 @@ public class UserController {
 
 
     @PostMapping("/register")
-    public User register(
+    public String register(
             @RequestBody RegisterRequest request
 
     ){
@@ -31,7 +31,7 @@ public class UserController {
     }
 
     @PostMapping("/authenticate")
-    public User register(
+    public String register(
             @RequestBody AuthenticationRequest request
     ){
         return authenticationService.authenticate(request);

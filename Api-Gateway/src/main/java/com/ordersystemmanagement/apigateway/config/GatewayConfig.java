@@ -11,15 +11,18 @@ import org.springframework.context.annotation.Configuration;
 public class GatewayConfig {
 
 
-    AuthenticationFilter filter;
+//    AuthenticationFilter filter;
 
     @Bean
     public RouteLocator routes(RouteLocatorBuilder builder) {
         return builder.routes()
 
-                .route("user-management", r -> r.path("/api/v1/auth/**")
-                        .filters(f -> f.filter(filter))
-                        .uri("lb://auth-service"))
+                .route( r -> r.path("/api/v1/auth/**")
+//                        .filters(f -> f.filter(filter))
+                        .uri("lb://user-management"))
+                .route( r -> r.path("/api/demo")
+//                        .filters(f -> f.filter(filter))
+                        .uri("lb://user-management"))
                 .build();
     }
 
