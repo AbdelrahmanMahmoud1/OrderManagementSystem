@@ -35,7 +35,13 @@ public class GatewayConfig {
                 .route( r -> r.path("/selling/**")
 //                        .filters(f -> f.filter(filter))
                         .uri("lb://purchasing-management-service"))
+                .route( r -> r.path("/api/order")
+//                        .filters(f -> f.filter(filter))
+                        .uri("lb://order-service"))
                 .build();
+
+
+
     }
 
 }

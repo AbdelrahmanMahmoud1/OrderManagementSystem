@@ -1,5 +1,6 @@
 package com.ordersystemmanagement.apigateway.config;
 
+import com.ordersystemmanagement.apigateway.jwtservice.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +23,7 @@ import java.util.Objects;
 public class LoggingGlobalPreFilter implements GlobalFilter {
 
     private final RouterValidator routerValidator;
+    private final JwtService jwtService;
 
     final Logger logger =
             LoggerFactory.getLogger(LoggingGlobalPreFilter.class);
@@ -30,13 +32,14 @@ public class LoggingGlobalPreFilter implements GlobalFilter {
     public Mono<Void> filter(
             ServerWebExchange exchange,
             GatewayFilterChain chain) {
-        if (!routerValidator.isSecured.test(exchange.getRequest())){
+        if (!routerValidator.isSecured.test(exchange.getRequest())) {
             return chain.filter(exchange);
         }
+        String authHeader;
         try {
-            String authHeader= Objects.requireNonNull(exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0));
+            authHeader = Objects.requireNonNull(exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0));
 
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
             byte[] bytes = "Auth Header is empty".getBytes(StandardCharsets.UTF_8);
             DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(bytes);
@@ -46,8 +49,24 @@ public class LoggingGlobalPreFilter implements GlobalFilter {
 
         }
 
+        authHeader = authHeader.substring(7);
 
-        return chain.filter(exchange);
+
+        try{
+            jwtService.isTokenValid(authHeader);
+            return chain.filter(exchange);
+        }catch (Exception e){
+            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+            byte[] bytes = "Auth Token is invalid".getBytes(StandardCharsets.UTF_8);
+            DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(bytes);
+            return exchange.getResponse().writeWith(Flux.just(buffer));
+        }
+
+
+
+
+
+
     }
 }
 
