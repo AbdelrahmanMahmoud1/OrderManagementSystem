@@ -9,7 +9,7 @@ public interface CostService {
 
     List<ProductCost> findAll();
 
-    ProductCost findById(long id);
+    ProductCost findByName(String id);
 
     double save(ProductDB product);
 }

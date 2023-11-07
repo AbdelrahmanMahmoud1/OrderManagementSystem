@@ -24,8 +24,8 @@ public class RevenueServiceImpl implements RevenueService {
     }
 
     @Override
-    public ProductRevenue findById(long id) {
-        Optional<ProductRevenue> repoResult = revenueRepository.findById(id);
+    public ProductRevenue findByName(String name) {
+        Optional<ProductRevenue> repoResult = revenueRepository.findById(name);
         ProductRevenue productRevenue = null;
         if (repoResult.isPresent())
             productRevenue = repoResult.get();
@@ -34,10 +34,10 @@ public class RevenueServiceImpl implements RevenueService {
 
     @Override
     public double save(ProductDB product) {
-        ProductRevenue productRevenue = findById(product.getId());
+        ProductRevenue productRevenue = findByName(product.getName());
         if (productRevenue == null){
             productRevenue = new ProductRevenue();
-            productRevenue.setProductId(product.getId());
+            productRevenue.setProductName(product.getName());
         }
         double revenue = productRevenue.increasePurchase(product.getQuantity(), product.getPrice());
         revenueRepository.save(productRevenue);

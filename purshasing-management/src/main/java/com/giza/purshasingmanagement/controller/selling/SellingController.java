@@ -33,13 +33,13 @@ public class SellingController {
 
     private final RevenueService revenueService;
     private final SellingService sellingService;
-    private final KafkaProducer<Map<Long, Double>> kafkaProducer;
+    private final KafkaProducer<Map<String, Double>> kafkaProducer;
 
     @Autowired
     public SellingController(
             RevenueService revenueService,
             SellingService sellingService,
-            KafkaProducer<Map<Long, Double>> kafkaProducer) {
+            KafkaProducer<Map<String, Double>> kafkaProducer) {
         this.revenueService = revenueService;
         this.sellingService = sellingService;
         this.kafkaProducer = kafkaProducer;
@@ -50,7 +50,7 @@ public class SellingController {
         checkOrderValidity(order);
         logger.info("Received: " + order);
         SellingPurchase purchase = createPurchaseRecord(order);
-        Map<Long, Double> pRevenuePairs = calculateProductRevenuePairs(purchase);
+        Map<String, Double> pRevenuePairs = calculateProductRevenuePairs(purchase);
         kafkaProducer.sendMessage(pRevenuePairs);
         SubmitOrderResponse response = new SubmitOrderResponse();
         response.setPurchaseId(purchase.getPurchaseId());
@@ -61,12 +61,12 @@ public class SellingController {
 
     /** Creating purchase record by processing the order id, date and products **/
     private SellingPurchase createPurchaseRecord(Order order) {
-        HashMap<Integer, Pair<Integer, Float>> uniqueProductMap = new HashMap<>();
-        order.getProducts().forEach(p -> uniqueProductMap.put(p.getId(), new Pair<>(0, 0.0f)));
+        HashMap<String, Pair<Integer, Float>> uniqueProductMap = new HashMap<>();
+        order.getProducts().forEach(p -> uniqueProductMap.put(p.getName(), new Pair<>(0, 0.0f)));
         order.getProducts().forEach(p -> {
-            Pair<Integer, Float> quantityPrice = uniqueProductMap.get(p.getId());
+            Pair<Integer, Float> quantityPrice = uniqueProductMap.get(p.getName());
             uniqueProductMap.put(
-                    p.getId(),
+                    p.getName(),
                     new Pair<>(p.getQuantity() + quantityPrice.a, p.getPrice() + quantityPrice.b));
         });
         SellingPurchase purchase = new SellingPurchase();
@@ -74,11 +74,11 @@ public class SellingController {
         purchase.setPurchaseDate(new Date(System.currentTimeMillis()));
         List<ProductDB> products = new ArrayList<>();
         double revenue = 0;
-        for (Map.Entry<Integer, Pair<Integer, Float>> entry : uniqueProductMap.entrySet()) {
-            int id = entry.getKey();
+        for (Map.Entry<String, Pair<Integer, Float>> entry : uniqueProductMap.entrySet()) {
+            String name = entry.getKey();
             int quantity = entry.getValue().a;
             float price = entry.getValue().b;
-            products.add(new ProductDB(id, quantity, price));
+            products.add(new ProductDB(name, quantity, price));
             revenue += quantity * price;
         }
         purchase.setProducts(products);
@@ -89,12 +89,12 @@ public class SellingController {
     }
 
     /** Creating purchase record by processing the order id, date and products **/
-    private Map<Long, Double> calculateProductRevenuePairs(SellingPurchase purchase) {
-        Map<Long, Double> pRevenuePairs = new HashMap<>();
+    private Map<String, Double> calculateProductRevenuePairs(SellingPurchase purchase) {
+        Map<String, Double> pRevenuePairs = new HashMap<>();
         purchase.getProducts().forEach(product -> {
             double revenue = revenueService.save(product);
-            pRevenuePairs.put((long) product.getId(), revenue);
-            logger.info("Increased " + product.getQuantity() + " to product with id " + product.getId());
+            pRevenuePairs.put(product.getName(), revenue);
+            logger.info("Increased " + product.getQuantity() + " to product with id " + product.getName());
         });
         return pRevenuePairs;
     }

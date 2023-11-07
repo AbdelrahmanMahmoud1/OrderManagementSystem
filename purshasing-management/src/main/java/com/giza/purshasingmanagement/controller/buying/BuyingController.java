@@ -83,23 +83,23 @@ public class BuyingController {
 
     /** Creating purchase record by processing the incoming inventory products added **/
     private BuyingPurchase createPurchaseRecord(List<Product> inventoryProducts) {
-        HashMap<Integer, Pair<Integer, Float>> uniqueProductMap = new HashMap<>();
-        inventoryProducts.forEach(p -> uniqueProductMap.put(p.getId(), new Pair<>(0, 0.0f)));
+        HashMap<String, Pair<Integer, Float>> uniqueProductMap = new HashMap<>();
+        inventoryProducts.forEach(p -> uniqueProductMap.put(p.getName(), new Pair<>(0, 0.0f)));
         inventoryProducts.forEach(p -> {
-            Pair<Integer, Float> quantityPrice = uniqueProductMap.get(p.getId());
+            Pair<Integer, Float> quantityPrice = uniqueProductMap.get(p.getName());
             uniqueProductMap.put(
-                    p.getId(),
+                    p.getName(),
                     new Pair<>(p.getQuantity() + quantityPrice.a, p.getPrice() + quantityPrice.b));
         });
         BuyingPurchase purchase = new BuyingPurchase();
         purchase.setPurchaseDate(new Date(System.currentTimeMillis()));
         List<ProductDB> products = new ArrayList<>();
         double cost = 0;
-        for (Map.Entry<Integer, Pair<Integer, Float>> entry : uniqueProductMap.entrySet()) {
-            int id = entry.getKey();
+        for (Map.Entry<String, Pair<Integer, Float>> entry : uniqueProductMap.entrySet()) {
+            String name = entry.getKey();
             int quantity = entry.getValue().a;
             float price = entry.getValue().b;
-            products.add(new ProductDB(id, quantity, price));
+            products.add(new ProductDB(name, quantity, price));
             cost += quantity * price;
         }
         purchase.setProducts(products);
@@ -110,12 +110,12 @@ public class BuyingController {
     }
 
     /** Creating purchase record by processing the order id, date and products **/
-    private Map<Long, Double> calculateProductCostPairs(BuyingPurchase purchase) {
-        Map<Long, Double> pCostPairs = new HashMap<>();
+    private Map<String, Double> calculateProductCostPairs(BuyingPurchase purchase) {
+        Map<String, Double> pCostPairs = new HashMap<>();
         purchase.getProducts().forEach(product -> {
             double revenue = costService.save(product);
-            pCostPairs.put((long) product.getId(), revenue);
-            logger.info("Bought " + product.getQuantity() + " of product with id " + product.getId());
+            pCostPairs.put(product.getName(), revenue);
+            logger.info("Bought " + product.getQuantity() + " of product with id " + product.getName());
         });
         return pCostPairs;
     }

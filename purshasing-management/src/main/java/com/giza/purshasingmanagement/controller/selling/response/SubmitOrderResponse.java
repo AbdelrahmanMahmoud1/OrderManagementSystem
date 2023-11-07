@@ -4,15 +4,15 @@ import java.util.Map;
 
 public class SubmitOrderResponse {
 
-    private Map<Long, Double> productRevenuePair;
+    private Map<String, Double> productRevenuePair;
     private long purchaseId;
     private String message;
 
-    public Map<Long, Double> getProductRevenuePair() {
+    public Map<String, Double> getProductRevenuePair() {
         return productRevenuePair;
     }
 
-    public void setProductRevenuePair(Map<Long, Double> productRevenuePair) {
+    public void setProductRevenuePair(Map<String, Double> productRevenuePair) {
         this.productRevenuePair = productRevenuePair;
     }
 

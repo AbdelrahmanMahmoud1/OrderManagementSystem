@@ -24,7 +24,7 @@ public class CostServiceImpl implements CostService {
     }
 
     @Override
-    public ProductCost findById(long id) {
+    public ProductCost findByName(String id) {
         Optional<ProductCost> repoResult = costRepository.findById(id);
         ProductCost productCost = null;
         if (repoResult.isPresent())
@@ -34,10 +34,10 @@ public class CostServiceImpl implements CostService {
 
     @Override
     public double save(ProductDB product) {
-        ProductCost productCost = findById(product.getId());
+        ProductCost productCost = findByName(product.getName());
         if (productCost == null){
             productCost = new ProductCost();
-            productCost.setProductId(product.getId());
+            productCost.setProductName(product.getName());
         }
         double cost = productCost.increasePurchase(product.getQuantity(), product.getPrice());
         costRepository.save(productCost);

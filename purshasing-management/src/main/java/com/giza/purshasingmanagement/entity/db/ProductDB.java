@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class ProductDB implements Serializable {
 
-    private int id;
+    private String name;
     private int quantity;
     private float price;
 
@@ -12,18 +12,18 @@ public class ProductDB implements Serializable {
 
     }
 
-    public ProductDB(int id, int quantity, float price) {
-        this.id = id;
+    public ProductDB(String name, int quantity, float price) {
+        this.name = name;
         this.quantity = quantity;
         this.price = price;
     }
 
-    public int getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getQuantity() {

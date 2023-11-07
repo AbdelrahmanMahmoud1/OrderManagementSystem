@@ -9,9 +9,8 @@ import java.io.Serializable;
 public class ProductCost implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
-    private long productId;
+    @Column(name = "product_name")
+    private String productName;
 
     @Column(name = "purchase_count")
     private long purchaseCount;
@@ -19,12 +18,12 @@ public class ProductCost implements Serializable {
     @Column(name = "cost")
     private long cost;
 
-    public long getProductId() {
-        return productId;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setProductId(long productId) {
-        this.productId = productId;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public long getPurchaseCount() {
@@ -45,7 +44,7 @@ public class ProductCost implements Serializable {
     @Override
     public String toString() {
         return "Purchase{" +
-                "productId=" + productId +
+                "productName=" + productName +
                 ", purchaseCount=" + purchaseCount +
                 ", cost=" + cost +
                 '}';

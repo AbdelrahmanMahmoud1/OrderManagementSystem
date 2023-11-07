@@ -9,7 +9,7 @@ public interface RevenueService {
 
     List<ProductRevenue> findAll();
 
-    ProductRevenue findById(long id);
+    ProductRevenue findByName(String name);
 
     double save(ProductDB product);
 }
