@@ -104,7 +104,7 @@ public class OrderService {
     @Transactional
     private SubmitOrderResponse confirmPurchase(Order orderWithAvailability) {
         ResponseEntity<SubmitOrderResponse> response = new RestTemplate().postForEntity(
-                "http://localhost:4560/buying/submit-order",
+                "http://localhost:4560/selling/submit-order",
                 orderWithAvailability,
                 SubmitOrderResponse.class
         );
