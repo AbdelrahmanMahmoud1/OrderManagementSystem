@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: user-management
+          uri: http://localhost:8000
+          predicates:
+            - Path=/api/**
+          filters:
+            - AuthenticationFilter
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
+    reactor.netty.http.client: TRACE

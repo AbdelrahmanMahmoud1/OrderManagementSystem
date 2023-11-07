@@ -77,21 +77,37 @@ public class ProductController {
     }
 
     @PostMapping("/selling")
-    public List<Product> checkItemsAvailability(@RequestBody List<Product> products){
+    public ResponseEntity<InventoryResponse> checkItemsAvailability(@RequestBody List<Product> products){
         products.forEach(product -> {
             Product productInStock = productService.getProductByName(product.getName());
             if(productInStock!=null){
                 if (productInStock.getQuantity() > 0) {
                     productService.deductQuantityWhenSelling(product);
-                    product.setId(productInStock.getId());
+//                    product.setId(productInStock.getId());
                     product.setCategory(productInStock.getCategory());
                 } else {
                     products.remove(product);
                 }
             }
         });
-        return products;
+        InventoryResponse response =new InventoryResponse();
+        response.setProducts(products);
+        return ResponseEntity.ok().body(response);
     }
+
+
+//    @PostMapping("/selling")
+//    public ResponseEntity<InventoryResponse> checkItemsAvailability(@RequestBody List<Product> products){
+//        products.forEach(product -> {
+//            Product productInStock = productService.getProductByName(product.getName());
+//            if(productInStock!=null){
+//                if (productInStock.getQuantity() > 0) {
+//                    productService.deductQuantityWhenSelling(product);
+//                    product.setCategory(productInStock.getCategory());
+
+
+
+
     @PostMapping
     public void saveProduct(@RequestBody Product product){
         productService.addProduct(product);

@@ -22,26 +22,15 @@ public class Product {
 
     @Column(name = "quantity")
     private int quantity;
-    @Column(name = "image")
 
-    private String image;
     public Product() {
     }
 
-    public Product(String name, Category category, float price, int quantity, String image) {
+    public Product(String name, Category category, float price, int quantity) {
         this.name = name;
         this.category = category;
         this.price = price;
         this.quantity = quantity;
-        this.image = image;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public int getId() {
