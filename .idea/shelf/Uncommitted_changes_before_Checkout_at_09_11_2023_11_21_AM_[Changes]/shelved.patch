@@ -1,0 +1,88 @@
+Index: notification-service/src/main/java/com/programming/notificationservice/NotificationService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.programming.notificationservice;\r\n\r\nimport com.programming.notificationservice.Repository.NotificationEventRepository;\r\nimport org.springframework.stereotype.Service;\r\n\r\n@Service\r\npublic class NotificationService {\r\n    private final EmailNotificationService emailNotificationService;\r\n    private final NotificationEventRepository notificationEventRepository;\r\n\r\n    public NotificationService(EmailNotificationService emailNotificationService, NotificationEventRepository notificationEventRepository) {\r\n        this.emailNotificationService = emailNotificationService;\r\n        this.notificationEventRepository = notificationEventRepository;\r\n    }\r\n\r\n    public void saveNotificationEvent(OrderPlacedEvent event) {\r\n        OrderPlacedEvent orderPlacedEvent = new OrderPlacedEvent();\r\n        orderPlacedEvent.setOrderNumber(event.getOrderNumber());\r\n        orderPlacedEvent.setStatus(event.getStatus());\r\n        orderPlacedEvent.setMessage(event.getMessage());\r\n        notificationEventRepository.save(orderPlacedEvent);\r\n    }\r\n}\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/notification-service/src/main/java/com/programming/notificationservice/NotificationService.java b/notification-service/src/main/java/com/programming/notificationservice/NotificationService.java
+--- a/notification-service/src/main/java/com/programming/notificationservice/NotificationService.java	(revision dbcda934f1aa271851156de6967d913674e40cca)
++++ b/notification-service/src/main/java/com/programming/notificationservice/NotificationService.java	(date 1699521401471)
+@@ -1,26 +1,14 @@
+ package com.programming.notificationservice;
+ 
+-import com.programming.notificationservice.Repository.NotificationEventRepository;
+ import org.springframework.stereotype.Service;
++import com.programming.notificationservice.EmailNotificationService;
+ 
+ @Service
+ public class NotificationService {
+     private final EmailNotificationService emailNotificationService;
+-    private final NotificationEventRepository notificationEventRepository;
+ 
+-    public NotificationService(EmailNotificationService emailNotificationService, NotificationEventRepository notificationEventRepository) {
++    public NotificationService(EmailNotificationService emailNotificationService) {
+         this.emailNotificationService = emailNotificationService;
+-        this.notificationEventRepository = notificationEventRepository;
+     }
+ 
+-    public void saveNotificationEvent(OrderPlacedEvent event) {
+-        OrderPlacedEvent orderPlacedEvent = new OrderPlacedEvent();
+-        orderPlacedEvent.setOrderNumber(event.getOrderNumber());
+-        orderPlacedEvent.setStatus(event.getStatus());
+-        orderPlacedEvent.setMessage(event.getMessage());
+-        notificationEventRepository.save(orderPlacedEvent);
+-    }
+ }
+-
+-
+-
+Index: notification-service/pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n\txsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd\">\r\n\t<modelVersion>4.0.0</modelVersion>\r\n\t<parent>\r\n\t\t<groupId>org.springframework.boot</groupId>\r\n\t\t<artifactId>spring-boot-starter-parent</artifactId>\r\n\t\t<version>3.1.5</version>\r\n\t\t<relativePath/> <!-- lookup parent from repository -->\r\n\t</parent>\r\n\t<groupId>com.programming</groupId>\r\n\t<artifactId>notification-service</artifactId>\r\n\t<version>0.0.1-SNAPSHOT</version>\r\n\t<name>notification-service</name>\r\n\t<description>Demo project for Spring Boot</description>\r\n\t<properties>\r\n\t\t<java.version>17</java.version>\r\n\t\t<spring-cloud.version>2022.0.4</spring-cloud.version>\r\n\t</properties>\r\n\t<dependencies>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.boot</groupId>\r\n\t\t\t<artifactId>spring-boot-starter-actuator</artifactId>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.boot</groupId>\r\n\t\t\t<artifactId>spring-boot-starter-web</artifactId>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>io.micrometer</groupId>\r\n\t\t\t<artifactId>micrometer-tracing-bridge-brave</artifactId>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>com.sun.mail</groupId>\r\n\t\t\t<artifactId>javax.mail</artifactId>\r\n\t\t\t<version>1.6.2</version>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.boot</groupId>\r\n\t\t\t<artifactId>spring-boot-starter-mail</artifactId>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>io.zipkin.reporter2</groupId>\r\n\t\t\t<artifactId>zipkin-reporter-brave</artifactId>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.cloud</groupId>\r\n\t\t\t<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.cloud</groupId>\r\n\t\t\t<artifactId>spring-cloud-starter-sleuth</artifactId>\r\n\t\t\t<version>3.1.9</version>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.kafka</groupId>\r\n\t\t\t<artifactId>spring-kafka</artifactId>\r\n\t\t</dependency>\r\n\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.projectlombok</groupId>\r\n\t\t\t<artifactId>lombok</artifactId>\r\n\t\t\t<optional>true</optional>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.boot</groupId>\r\n\t\t\t<artifactId>spring-boot-starter-test</artifactId>\r\n\t\t\t<scope>test</scope>\r\n\t\t</dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.springframework.kafka</groupId>\r\n\t\t\t<artifactId>spring-kafka-test</artifactId>\r\n\t\t\t<scope>test</scope>\r\n\t\t</dependency>\r\n        <dependency>\r\n            <groupId>org.springframework.data</groupId>\r\n            <artifactId>spring-data-jpa</artifactId>\r\n            <version>3.1.5</version>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.apache.kafka</groupId>\r\n            <artifactId>kafka_2.13</artifactId>\r\n        </dependency>\r\n\t\t<dependency>\r\n\t\t\t<groupId>org.aspectj</groupId>\r\n\t\t\t<artifactId>aspectjweaver</artifactId>\r\n\t\t\t<version>1.9.20</version>\r\n\t\t</dependency>\r\n        <dependency>\r\n            <groupId>xerces</groupId>\r\n            <artifactId>xercesImpl</artifactId>\r\n            <version>2.9.1</version>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>dom4j</groupId>\r\n            <artifactId>dom4j</artifactId>\r\n            <version>1.1</version>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>jakarta.persistence</groupId>\r\n            <artifactId>jakarta.persistence-api</artifactId>\r\n            <version>3.1.0</version>\r\n        </dependency>\r\n    </dependencies>\r\n\t<dependencyManagement>\r\n\t\t<dependencies>\r\n\t\t\t<dependency>\r\n\t\t\t\t<groupId>org.springframework.cloud</groupId>\r\n\t\t\t\t<artifactId>spring-cloud-dependencies</artifactId>\r\n\t\t\t\t<version>${spring-cloud.version}</version>\r\n\t\t\t\t<type>pom</type>\r\n\t\t\t\t<scope>import</scope>\r\n\t\t\t</dependency>\r\n\t\t</dependencies>\r\n\t</dependencyManagement>\r\n\r\n\t<build>\r\n\t\t<plugins>\r\n\t\t\t<plugin>\r\n\t\t\t\t<groupId>org.springframework.boot</groupId>\r\n\t\t\t\t<artifactId>spring-boot-maven-plugin</artifactId>\r\n\t\t\t\t<configuration>\r\n\t\t\t\t\t<excludes>\r\n\t\t\t\t\t\t<exclude>\r\n\t\t\t\t\t\t\t<groupId>org.projectlombok</groupId>\r\n\t\t\t\t\t\t\t<artifactId>lombok</artifactId>\r\n\t\t\t\t\t\t</exclude>\r\n\t\t\t\t\t</excludes>\r\n\t\t\t\t</configuration>\r\n\t\t\t</plugin>\r\n\t\t</plugins>\r\n\t</build>\r\n\r\n</project>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/notification-service/pom.xml b/notification-service/pom.xml
+--- a/notification-service/pom.xml	(revision dbcda934f1aa271851156de6967d913674e40cca)
++++ b/notification-service/pom.xml	(date 1699521432990)
+@@ -47,11 +47,11 @@
+ 			<groupId>org.springframework.cloud</groupId>
+ 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+ 		</dependency>
+-		<dependency>
+-			<groupId>org.springframework.cloud</groupId>
+-			<artifactId>spring-cloud-starter-sleuth</artifactId>
+-			<version>3.1.9</version>
+-		</dependency>
++<!--		<dependency>-->
++<!--			<groupId>org.springframework.cloud</groupId>-->
++<!--			<artifactId>spring-cloud-starter-sleuth</artifactId>-->
++<!--			<version>3.1.9</version>-->
++<!--		</dependency>-->
+ 		<dependency>
+ 			<groupId>org.springframework.kafka</groupId>
+ 			<artifactId>spring-kafka</artifactId>
+Index: notification-service/src/main/java/com/programming/notificationservice/EmailNotificationService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.programming.notificationservice;\r\nimport jakarta.mail.internet.MimeMessage;\r\nimport org.springframework.mail.javamail.JavaMailSender;\r\nimport org.springframework.mail.javamail.MimeMessageHelper;\r\n\r\nimport javax.mail.MessagingException;\r\n\r\npublic class EmailNotificationService {\r\n\r\n\r\n    private final JavaMailSender javaMailSender;\r\n\r\n    public EmailNotificationService(JavaMailSender javaMailSender) {\r\n        this.javaMailSender = javaMailSender;\r\n    }\r\n\r\n    public void sendOrderConfirmationEmail(String recipient, String orderNumber) throws jakarta.mail.MessagingException {\r\n        MimeMessage mimeMessage = javaMailSender.createMimeMessage();\r\n        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);\r\n\r\n        // Set the recipient email address\r\n        helper.setTo(recipient);\r\n\r\n        // Set the subject of the email\r\n        helper.setSubject(\"Order Confirmation\");\r\n\r\n        // Set the content of the email\r\n        String emailContent = \"Your order with order number \" + orderNumber + \" has been confirmed.\";\r\n        helper.setText(emailContent, true); // 'true' indicates HTML content\r\n\r\n        // Send the email\r\n        javaMailSender.send(mimeMessage);\r\n\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/notification-service/src/main/java/com/programming/notificationservice/EmailNotificationService.java b/notification-service/src/main/java/com/programming/notificationservice/EmailNotificationService.java
+--- a/notification-service/src/main/java/com/programming/notificationservice/EmailNotificationService.java	(revision dbcda934f1aa271851156de6967d913674e40cca)
++++ b/notification-service/src/main/java/com/programming/notificationservice/EmailNotificationService.java	(date 1699521432971)
+@@ -2,9 +2,11 @@
+ import jakarta.mail.internet.MimeMessage;
+ import org.springframework.mail.javamail.JavaMailSender;
+ import org.springframework.mail.javamail.MimeMessageHelper;
++import org.springframework.stereotype.Service;
+ 
+ import javax.mail.MessagingException;
+ 
++@Service
+ public class EmailNotificationService {
+ 
+ 
