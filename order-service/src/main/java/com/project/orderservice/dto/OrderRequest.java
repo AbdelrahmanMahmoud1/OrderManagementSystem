@@ -9,7 +9,8 @@ public class OrderRequest {
         this.orderLineItemsDtoList = orderLineItemsDtoList;
     }
 
-
+    public OrderRequest() {
+    }
 
     public List<OrderLineItemsDto> getOrderLineItemsDtoList() {
         return orderLineItemsDtoList;

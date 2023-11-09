@@ -10,7 +10,7 @@ import com.project.orderservice.repository.OrderRepository;
 import com.project.orderservice.responses.InventoryResponse;
 import com.project.orderservice.responses.SubmitOrderResponse;
 import jakarta.transaction.Transactional;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -38,7 +38,7 @@ public class OrderService {
     }
 
     @Transactional
-    public void placeOrder(OrderRequest orderRequest){//recieving the order request from the client to the controller 1
+    public void placeOrder(OrderRequest orderRequest, String auth){//recieving the order request from the client to the controller 1
         // controller passing the order request to the order service 2
              Order order= new Order();
              order.setOrderNumber(UUID.randomUUID().toString());
@@ -54,16 +54,16 @@ public class OrderService {
 
 
         // Check product availability by making a request to the inventory service
-        Order orderWithAvailability = checkProductAvailabilityAndCreateOrder(order);
+        Order orderWithAvailability = checkProductAvailabilityAndCreateOrder(order, auth);
         System.out.println(orderWithAvailability);
         System.out.println(orderWithAvailability.getOrderNumber());
         System.out.println(orderWithAvailability.getProducts().get(0).getQuantity());
 
         // Save the order to the repo (assuming the order is valid)
         orderRepository.save(orderWithAvailability);
-      ////////  kafkaTemplate.send("notificationTopic",new OrderPlacedEvent(order.getOrderNumber())); //kafka sends orderPlacedEvent as a message to notification topic
+        kafkaTemplate.send("notificationTopic",new OrderPlacedEvent(order.getOrderNumber())); //kafka sends orderPlacedEvent as a message to notification topic
 
-        System.out.println(confirmPurchase(orderWithAvailability));
+        System.out.println(confirmPurchase(orderWithAvailability, auth));
     }
 
 
@@ -76,43 +76,63 @@ public class OrderService {
 
     }
 
-    private Order checkProductAvailabilityAndCreateOrder(Order order) {
+    private Order checkProductAvailabilityAndCreateOrder(Order order, String auth) {
         List<OrderLineItems> checkedProducts;
-        checkedProducts = getAvailableProductsFromInventory(order.getProducts());
+        checkedProducts = getAvailableProductsFromInventory(order.getProducts(), auth);
         order.setProducts(checkedProducts);
 
         return order;
     }
     private ProductResponse getProductAvailabilityById(String name) {
         return webClient.get()
-                .uri("http://localhost:8080/products/product/{name}", name)
+                .uri("http://localhost:8765/products/product/{name}", name)
                 .retrieve()
                 .bodyToMono(ProductResponse.class).block(); // Return false if there is an error (e.g., product not found or out of stock)
     }
 
-    private List<OrderLineItems> getAvailableProductsFromInventory(List<OrderLineItems> products) {
-        ResponseEntity<InventoryResponse> response = new RestTemplate().postForEntity(
-                "http://localhost:8080/products/selling",
-                products,
-                InventoryResponse.class
-        );
-        if (response.getBody() != null)
-            return response.getBody().getProducts();
+    private List<OrderLineItems> getAvailableProductsFromInventory(List<OrderLineItems> products, String auth) {
+
+
+
+        RestTemplate response = new RestTemplate();
+        HttpHeaders authHeader = new HttpHeaders();
+        authHeader.add(HttpHeaders.AUTHORIZATION, auth);
+        HttpEntity<List<OrderLineItems>> postRequest = new HttpEntity<>(products, authHeader);
+
+        InventoryResponse inventoryResponse = response.exchange("http://localhost:8765/products/selling", HttpMethod.POST, postRequest,InventoryResponse.class).getBody();
+
+        if (inventoryResponse != null)
+            return inventoryResponse.getProducts();
+
         return new ArrayList<>();
     }
 
     @Transactional
-    private SubmitOrderResponse confirmPurchase(Order orderWithAvailability) {
-        ResponseEntity<SubmitOrderResponse> response = new RestTemplate().postForEntity(
-                "http://localhost:4560/selling/submit-order",
-                orderWithAvailability,
-                SubmitOrderResponse.class
-        );
+    private HttpStatusCode confirmPurchase(Order orderWithAvailability, String auth) {
 
-        if (response.getBody() != null)
-            return response.getBody();
-        else
-            return new SubmitOrderResponse();
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders authHeader = new HttpHeaders();
+        authHeader.add(HttpHeaders.AUTHORIZATION, auth);
+        HttpEntity<Order> postRequest = new HttpEntity<>(orderWithAvailability, authHeader);
+
+        HttpStatus submitOrderResponse = restTemplate.exchange("http://localhost:8765/selling/submit-order", HttpMethod.POST, postRequest,HttpStatus.class).getBody();
+        if (submitOrderResponse != null){
+            return submitOrderResponse;
+        }else {
+            return  HttpStatus.NOT_FOUND;
+        }
+
+//        ResponseEntity<SubmitOrderResponse> response = new RestTemplate().postForEntity(
+//                "http://localhost:8765/selling/submit-order",
+//                orderWithAvailability,
+//                SubmitOrderResponse.class
+//        );
+//
+//        if (response.getBody() != null)
+//            return response.getBody();
+//        else
+//            return new SubmitOrderResponse();
     }
 }
 

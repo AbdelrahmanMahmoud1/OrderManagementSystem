@@ -1,6 +1,5 @@
 package com.project.orderservice.config;
 
-
 import com.project.orderservice.event.OrderPlacedEvent;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.slf4j.Logger;
@@ -28,7 +27,7 @@ public class OrderProducer {
 
     public void sendMessage(OrderPlacedEvent event){
         LOGGER.info(String.format("Order event =>%s",event.toString()));
-        Message<OrderPlacedEvent>message = MessageBuilder
+        Message<OrderPlacedEvent> message = MessageBuilder
                 .withPayload(event)
                 .setHeader(KafkaHeaders.TOPIC, topic.name())
                 .build();
