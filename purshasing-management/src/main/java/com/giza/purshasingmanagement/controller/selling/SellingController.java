@@ -7,7 +7,6 @@ import com.giza.purshasingmanagement.entity.Order;
 import com.giza.purshasingmanagement.entity.db.ProductDB;
 import com.giza.purshasingmanagement.entity.selling.ProductRevenue;
 import com.giza.purshasingmanagement.entity.selling.SellingPurchase;
-import com.giza.purshasingmanagement.kafka.KafkaProducer;
 import com.giza.purshasingmanagement.service.selling.SellingService;
 import com.giza.purshasingmanagement.service.selling.RevenueService;
 import org.antlr.v4.runtime.misc.Pair;
@@ -33,16 +32,11 @@ public class SellingController {
 
     private final RevenueService revenueService;
     private final SellingService sellingService;
-    private final KafkaProducer<Map<String, Double>> kafkaProducer;
 
     @Autowired
-    public SellingController(
-            RevenueService revenueService,
-            SellingService sellingService,
-            KafkaProducer<Map<String, Double>> kafkaProducer) {
+    public SellingController(RevenueService revenueService, SellingService sellingService) {
         this.revenueService = revenueService;
         this.sellingService = sellingService;
-        this.kafkaProducer = kafkaProducer;
     }
 
     @PostMapping("/submit-order")
@@ -51,7 +45,6 @@ public class SellingController {
         logger.info("Received: " + order);
         SellingPurchase purchase = createPurchaseRecord(order);
         Map<String, Double> pRevenuePairs = calculateProductRevenuePairs(purchase);
-        kafkaProducer.sendMessage(pRevenuePairs);
         SubmitOrderResponse response = new SubmitOrderResponse();
         response.setPurchaseId(purchase.getPurchaseId());
         response.setProductRevenuePair(pRevenuePairs);
