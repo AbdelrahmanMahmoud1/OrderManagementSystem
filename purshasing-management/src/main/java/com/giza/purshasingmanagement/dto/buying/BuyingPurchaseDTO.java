@@ -1,38 +1,17 @@
-package com.giza.purshasingmanagement.entity.buying;
+package com.giza.purshasingmanagement.dto.buying;
 
 import com.giza.purshasingmanagement.entity.Product;
-import jakarta.persistence.*;
+import com.giza.purshasingmanagement.entity.buying.BuyingPurchase;
 
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
-@Entity
-@Table(name = "buying-purchase")
-public class BuyingPurchase implements Serializable {
+public class BuyingPurchaseDTO implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "purchase_id")
-    private long purchaseId;
-
-    @Column(name = "purchase_date")
     private Date purchaseDate;
-
-    @Column(name = "products")
-    @ElementCollection(targetClass = Product.class)
     private List<Product> products;
-
-    @Column(name = "cost")
     private double cost;
-
-    public long getPurchaseId() {
-        return purchaseId;
-    }
-
-    public void setPurchaseId(long purchaseId) {
-        this.purchaseId = purchaseId;
-    }
 
     public Date getPurchaseDate() {
         return purchaseDate;
@@ -56,5 +35,13 @@ public class BuyingPurchase implements Serializable {
 
     public void setCost(double cost) {
         this.cost = cost;
+    }
+
+    static public BuyingPurchaseDTO entityToDTO(BuyingPurchase entity) {
+        BuyingPurchaseDTO dto = new BuyingPurchaseDTO();
+        dto.purchaseDate = entity.getPurchaseDate();
+        dto.cost = entity.getCost();
+        dto.products = entity.getProducts();
+        return dto;
     }
 }

@@ -5,7 +5,6 @@ import java.util.Map;
 public class SubmitOrderResponse {
 
     private Map<String, Double> productRevenuePair;
-    private long purchaseId;
     private String message;
 
     public Map<String, Double> getProductRevenuePair() {
@@ -22,13 +21,5 @@ public class SubmitOrderResponse {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public long getPurchaseId() {
-        return purchaseId;
-    }
-
-    public void setPurchaseId(long purchaseId) {
-        this.purchaseId = purchaseId;
     }
 }

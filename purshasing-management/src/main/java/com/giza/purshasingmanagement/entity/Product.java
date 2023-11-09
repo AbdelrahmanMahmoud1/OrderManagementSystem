@@ -3,21 +3,19 @@ package com.giza.purshasingmanagement.entity;
 import java.io.Serializable;
 
 public class Product implements Serializable {
-    private int id;
+
     private String name;
     private int quantity;
     private float price;
-    private Category category;
 
-    Product() {
+    public Product(){
+
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public Product(String name, int quantity, float price) {
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
     }
 
     public String getName() {
@@ -28,14 +26,6 @@ public class Product implements Serializable {
         this.name = name;
     }
 
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
     public int getQuantity() {
         return quantity;
     }
@@ -44,20 +34,11 @@ public class Product implements Serializable {
         this.quantity = quantity;
     }
 
-    public Category getCategory() {
-        return category;
+    public float getPrice() {
+        return price;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                '}';
+    public void setPrice(float price) {
+        this.price = price;
     }
 }

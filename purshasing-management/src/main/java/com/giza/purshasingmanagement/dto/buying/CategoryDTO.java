@@ -1,8 +1,8 @@
-package com.giza.purshasingmanagement.entity;
+package com.giza.purshasingmanagement.dto.buying;
 
 import java.io.Serializable;
 
-public class Category implements Serializable {
+public class CategoryDTO implements Serializable {
     private int id;
     private String name;
 

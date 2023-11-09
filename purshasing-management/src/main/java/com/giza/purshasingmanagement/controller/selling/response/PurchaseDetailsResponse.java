@@ -1,24 +1,24 @@
 package com.giza.purshasingmanagement.controller.selling.response;
 
-import com.giza.purshasingmanagement.entity.selling.SellingPurchase;
+import com.giza.purshasingmanagement.dto.selling.SellingPurchaseDTO;
 
 import java.util.List;
 
 public class PurchaseDetailsResponse {
 
-    private List<SellingPurchase> purchaseList;
+    private List<SellingPurchaseDTO> purchaseList;
     private int purchaseCount;
     private double totalRevenue;
 
-    public List<SellingPurchase> getPurchaseList() {
+    public List<SellingPurchaseDTO> getPurchaseList() {
         return purchaseList;
     }
 
-    public void setPurchaseList(List<SellingPurchase> purchaseList) {
+    public void setPurchaseList(List<SellingPurchaseDTO> purchaseList) {
         this.purchaseList = purchaseList;
         this.purchaseCount = purchaseList.size();
         this.totalRevenue = 0;
-        for (SellingPurchase purchase : purchaseList)
+        for (SellingPurchaseDTO purchase : purchaseList)
             totalRevenue += purchase.getRevenue();
     }
 

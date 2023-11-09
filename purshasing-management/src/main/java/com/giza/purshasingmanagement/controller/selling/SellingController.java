@@ -3,8 +3,10 @@ package com.giza.purshasingmanagement.controller.selling;
 import com.giza.purshasingmanagement.controller.selling.response.PurchaseDetailsResponse;
 import com.giza.purshasingmanagement.controller.selling.response.RevenueSummaryResponse;
 import com.giza.purshasingmanagement.controller.selling.response.SubmitOrderResponse;
-import com.giza.purshasingmanagement.entity.Order;
-import com.giza.purshasingmanagement.entity.db.ProductDB;
+import com.giza.purshasingmanagement.dto.buying.OrderDTO;
+import com.giza.purshasingmanagement.dto.selling.RevenueDTO;
+import com.giza.purshasingmanagement.dto.selling.SellingPurchaseDTO;
+import com.giza.purshasingmanagement.entity.Product;
 import com.giza.purshasingmanagement.entity.selling.ProductRevenue;
 import com.giza.purshasingmanagement.entity.selling.SellingPurchase;
 import com.giza.purshasingmanagement.service.selling.SellingService;
@@ -40,20 +42,19 @@ public class SellingController {
     }
 
     @PostMapping("/submit-order")
-    public ResponseEntity<SubmitOrderResponse> submitOrder(@RequestBody Order order) {
+    public ResponseEntity<SubmitOrderResponse> submitOrder(@RequestBody OrderDTO order) {
         checkOrderValidity(order);
         logger.info("Received: " + order);
         SellingPurchase purchase = createPurchaseRecord(order);
         Map<String, Double> pRevenuePairs = calculateProductRevenuePairs(purchase);
         SubmitOrderResponse response = new SubmitOrderResponse();
-        response.setPurchaseId(purchase.getPurchaseId());
         response.setProductRevenuePair(pRevenuePairs);
         response.setMessage("Successful Order Purchase");
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
 
     /** Creating purchase record by processing the order id, date and products **/
-    private SellingPurchase createPurchaseRecord(Order order) {
+    private SellingPurchase createPurchaseRecord(OrderDTO order) {
         HashMap<String, Pair<Integer, Float>> uniqueProductMap = new HashMap<>();
         order.getProducts().forEach(p -> uniqueProductMap.put(p.getName(), new Pair<>(0, 0.0f)));
         order.getProducts().forEach(p -> {
@@ -65,13 +66,13 @@ public class SellingController {
         SellingPurchase purchase = new SellingPurchase();
         purchase.setOrderId(order.getId());
         purchase.setPurchaseDate(new Date(System.currentTimeMillis()));
-        List<ProductDB> products = new ArrayList<>();
+        List<Product> products = new ArrayList<>();
         double revenue = 0;
         for (Map.Entry<String, Pair<Integer, Float>> entry : uniqueProductMap.entrySet()) {
             String name = entry.getKey();
             int quantity = entry.getValue().a;
             float price = entry.getValue().b;
-            products.add(new ProductDB(name, quantity, price));
+            products.add(new Product(name, quantity, price));
             revenue += quantity * price;
         }
         purchase.setProducts(products);
@@ -87,13 +88,13 @@ public class SellingController {
         purchase.getProducts().forEach(product -> {
             double revenue = revenueService.save(product);
             pRevenuePairs.put(product.getName(), revenue);
-            logger.info("Increased " + product.getQuantity() + " to product with id " + product.getName());
+            logger.info("Increased " + product.getQuantity() + " to product: " + product.getName());
         });
         return pRevenuePairs;
     }
 
     /** Checking order validity through products **/
-    private void checkOrderValidity(Order order) {
+    private void checkOrderValidity(OrderDTO order) {
         if (order == null || order.getProducts() == null) {
             logger.error("Order with no products");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order with no products");
@@ -110,8 +111,10 @@ public class SellingController {
     public ResponseEntity<PurchaseDetailsResponse> getPurchaseDetails() {
         logger.info("Selling: Getting purchase details");
         List<SellingPurchase> purchaseList = sellingService.findAll();
+        List<SellingPurchaseDTO> purchaseListDTO = new ArrayList<>();
+        purchaseList.forEach(p -> purchaseListDTO.add(SellingPurchaseDTO.entityToDTO(p)));
         PurchaseDetailsResponse response = new PurchaseDetailsResponse();
-        response.setPurchaseList(purchaseList);
+        response.setPurchaseList(purchaseListDTO);
         return ResponseEntity.status(HttpStatus.FOUND).body(response);
     }
 
@@ -120,7 +123,9 @@ public class SellingController {
         logger.info("Getting revenue summary");
         RevenueSummaryResponse response = new RevenueSummaryResponse();
         List<ProductRevenue> revenues = revenueService.findAll();
-        response.setProductsRevenues(revenues);
+        List<RevenueDTO> revenueDTOs = new ArrayList<>();
+        revenues.forEach(r -> revenueDTOs.add(RevenueDTO.entityToDTO(r)));
+        response.setProductsRevenues(revenueDTOs);
         logger.info("Found " + response.getProductsPurchasedCount()
                 + " product(s) purchased, with a total revenue of " + response.getTotalRevenue());
         return new ResponseEntity<>(response, HttpStatus.FOUND);

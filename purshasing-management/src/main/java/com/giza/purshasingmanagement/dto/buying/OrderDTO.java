@@ -1,18 +1,17 @@
-package com.giza.purshasingmanagement.entity;
+package com.giza.purshasingmanagement.dto.buying;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Order implements Serializable {
+public class OrderDTO implements Serializable {
 
     private long id;
     private LocalDateTime purchaseTime;
-    private List<Product> products;
-    private User user;
+    private List<BuyingProductDTO> products;
 
-    public Order() {
+    public OrderDTO() {
         products = new ArrayList<>();
     }
 
@@ -32,20 +31,12 @@ public class Order implements Serializable {
         this.purchaseTime = purchaseTime;
     }
 
-    public List<Product> getProducts() {
+    public List<BuyingProductDTO> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Product> products) {
+    public void setProducts(List<BuyingProductDTO> products) {
         this.products = products;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     @Override
@@ -54,7 +45,6 @@ public class Order implements Serializable {
                 "id=" + id +
                 ", purchaseTime=" + purchaseTime +
                 ", products=" + products +
-                ", user=" + user +
                 '}';
     }
 }

@@ -1,16 +1,16 @@
 package com.giza.purshasingmanagement.controller.buying.response;
 
-import com.giza.purshasingmanagement.entity.buying.BuyingPurchase;
+import com.giza.purshasingmanagement.dto.buying.BuyingPurchaseDTO;
 
 public class BuyItemsResponse {
-    private BuyingPurchase purchase;
+    private BuyingPurchaseDTO purchase;
     private String inventoryMessage;
 
-    public BuyingPurchase getPurchase() {
+    public BuyingPurchaseDTO getPurchase() {
         return purchase;
     }
 
-    public void setPurchase(BuyingPurchase purchase) {
+    public void setPurchase(BuyingPurchaseDTO purchase) {
         this.purchase = purchase;
     }
 

@@ -1,24 +1,24 @@
 package com.giza.purshasingmanagement.controller.buying.response;
 
-import com.giza.purshasingmanagement.entity.buying.BuyingPurchase;
+import com.giza.purshasingmanagement.dto.buying.BuyingPurchaseDTO;
 
 import java.util.List;
 
 public class PurchaseDetailsResponse {
 
-    private List<BuyingPurchase> purchaseList;
+    private List<BuyingPurchaseDTO> purchaseList;
     private int purchaseCount;
     private double totalCost;
 
-    public List<BuyingPurchase> getPurchaseList() {
+    public List<BuyingPurchaseDTO> getPurchaseList() {
         return purchaseList;
     }
 
-    public void setPurchaseList(List<BuyingPurchase> purchaseList) {
+    public void setPurchaseList(List<BuyingPurchaseDTO> purchaseList) {
         this.purchaseList = purchaseList;
         this.purchaseCount = purchaseList.size();
         this.totalCost = 0;
-        for (BuyingPurchase purchase : purchaseList)
+        for (BuyingPurchaseDTO purchase : purchaseList)
             totalCost += purchase.getCost();
     }
 

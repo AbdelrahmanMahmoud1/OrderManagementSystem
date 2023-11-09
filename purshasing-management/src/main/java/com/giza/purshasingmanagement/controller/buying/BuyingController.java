@@ -4,11 +4,13 @@ import com.giza.purshasingmanagement.controller.buying.response.BuyItemsResponse
 import com.giza.purshasingmanagement.controller.buying.response.CostSummaryResponse;
 import com.giza.purshasingmanagement.controller.buying.response.InventoryStockResponse;
 import com.giza.purshasingmanagement.controller.buying.response.PurchaseDetailsResponse;
-import com.giza.purshasingmanagement.entity.Order;
-import com.giza.purshasingmanagement.entity.Product;
+import com.giza.purshasingmanagement.dto.buying.BuyingPurchaseDTO;
+import com.giza.purshasingmanagement.dto.buying.CostDTO;
+import com.giza.purshasingmanagement.dto.buying.OrderDTO;
+import com.giza.purshasingmanagement.dto.buying.BuyingProductDTO;
 import com.giza.purshasingmanagement.entity.buying.BuyingPurchase;
 import com.giza.purshasingmanagement.entity.buying.ProductCost;
-import com.giza.purshasingmanagement.entity.db.ProductDB;
+import com.giza.purshasingmanagement.entity.Product;
 import com.giza.purshasingmanagement.service.buying.BuyingService;
 import com.giza.purshasingmanagement.service.buying.CostService;
 import org.antlr.v4.runtime.misc.Pair;
@@ -47,7 +49,7 @@ public class BuyingController {
     }
 
     @PostMapping("/submit-order")
-    public ResponseEntity<BuyItemsResponse> submitOrder(@RequestBody Order order) {
+    public ResponseEntity<BuyItemsResponse> submitOrder(@RequestBody OrderDTO order) {
         checkOrderValidity(order);
         ResponseEntity<InventoryStockResponse> inventoryResponse = new RestTemplate().postForEntity(
                 INVENTORY_BASE_URL + "products/purchased",
@@ -57,7 +59,7 @@ public class BuyingController {
         BuyItemsResponse response = new BuyItemsResponse();
 
         if (inventoryResponse.getStatusCode() == HttpStatus.OK) {
-            List<Product> products;
+            List<BuyingProductDTO> products;
             if (inventoryResponse.getBody() != null && inventoryResponse.getBody().getProducts() != null)
                 products = inventoryResponse.getBody().getProducts();
             else
@@ -66,10 +68,9 @@ public class BuyingController {
             BuyingPurchase purchase = createPurchaseRecord(products);
             calculateProductCostPairs(purchase);
 
-            response.setPurchase(purchase);
+            response.setPurchase(BuyingPurchaseDTO.entityToDTO(purchase));
             response.setInventoryMessage("Successfully added to Inventory");
             long purchaseId = buyingService.save(purchase);
-            purchase.setPurchaseId(purchaseId);
 
             return ResponseEntity.accepted().body(response);
         }
@@ -82,7 +83,7 @@ public class BuyingController {
     }
 
     /** Creating purchase record by processing the incoming inventory products added **/
-    private BuyingPurchase createPurchaseRecord(List<Product> inventoryProducts) {
+    private BuyingPurchase createPurchaseRecord(List<BuyingProductDTO> inventoryProducts) {
         HashMap<String, Pair<Integer, Float>> uniqueProductMap = new HashMap<>();
         inventoryProducts.forEach(p -> uniqueProductMap.put(p.getName(), new Pair<>(0, 0.0f)));
         inventoryProducts.forEach(p -> {
@@ -93,13 +94,13 @@ public class BuyingController {
         });
         BuyingPurchase purchase = new BuyingPurchase();
         purchase.setPurchaseDate(new Date(System.currentTimeMillis()));
-        List<ProductDB> products = new ArrayList<>();
+        List<Product> products = new ArrayList<>();
         double cost = 0;
         for (Map.Entry<String, Pair<Integer, Float>> entry : uniqueProductMap.entrySet()) {
             String name = entry.getKey();
             int quantity = entry.getValue().a;
             float price = entry.getValue().b;
-            products.add(new ProductDB(name, quantity, price));
+            products.add(new Product(name, quantity, price));
             cost += quantity * price;
         }
         purchase.setProducts(products);
@@ -121,7 +122,7 @@ public class BuyingController {
     }
 
     /** Checking order validity through products **/
-    private void checkOrderValidity(Order order) {
+    private void checkOrderValidity(OrderDTO order) {
         if (order == null || order.getProducts() == null) {
             logger.error("Order with no products");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order with no products");
@@ -143,7 +144,9 @@ public class BuyingController {
         logger.info("Buying: Getting purchase details");
         List<BuyingPurchase> purchaseList = buyingService.findAll();
         PurchaseDetailsResponse response = new PurchaseDetailsResponse();
-        response.setPurchaseList(purchaseList);
+        List<BuyingPurchaseDTO> purchaseDTOs = new ArrayList<>();
+        purchaseList.forEach(p -> purchaseDTOs.add(BuyingPurchaseDTO.entityToDTO(p)));
+        response.setPurchaseList(purchaseDTOs);
         return ResponseEntity.status(HttpStatus.FOUND).body(response);
     }
 
@@ -152,7 +155,9 @@ public class BuyingController {
         logger.info("Getting cost summary");
         CostSummaryResponse response = new CostSummaryResponse();
         List<ProductCost> costs = costService.findAll();
-        response.setProductsCosts(costs);
+        List<CostDTO> costDTOs = new ArrayList<>();
+        costs.forEach(c -> costDTOs.add(CostDTO.entityToDTO(c)));
+        response.setProductsCosts(costDTOs);
         logger.info("Found " + response.getProductsPurchasedCount()
                 + " product(s) purchased, with a total cost of " + response.getTotalCost());
         return new ResponseEntity<>(response, HttpStatus.FOUND);

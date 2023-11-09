@@ -1,21 +1,13 @@
-package com.giza.purshasingmanagement.entity.buying;
+package com.giza.purshasingmanagement.dto.buying;
 
-import jakarta.persistence.*;
+import com.giza.purshasingmanagement.entity.buying.ProductCost;
 
 import java.io.Serializable;
 
-@Entity
-@Table(name = "product_cost")
-public class ProductCost implements Serializable {
+public class CostDTO implements Serializable {
 
-    @Id
-    @Column(name = "product_name")
     private String productName;
-
-    @Column(name = "purchase_count")
     private long purchaseCount;
-
-    @Column(name = "cost")
     private long cost;
 
     public String getProductName() {
@@ -48,5 +40,13 @@ public class ProductCost implements Serializable {
                 ", purchaseCount=" + purchaseCount +
                 ", cost=" + cost +
                 '}';
+    }
+
+    static public CostDTO entityToDTO(ProductCost entity) {
+        CostDTO dto = new CostDTO();
+        dto.productName = entity.getProductName();
+        dto.purchaseCount = entity.getPurchaseCount();
+        dto.cost = entity.getCost();
+        return dto;
     }
 }
