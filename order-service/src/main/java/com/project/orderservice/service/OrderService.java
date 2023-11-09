@@ -61,7 +61,7 @@ public class OrderService {
 
         // Save the order to the repo (assuming the order is valid)
         orderRepository.save(orderWithAvailability);
-        kafkaTemplate.send("notificationTopic",new OrderPlacedEvent(order.getOrderNumber())); //kafka sends orderPlacedEvent as a message to notification topic
+     //kafka sends orderPlacedEvent as a message to notification topic
 
         System.out.println(confirmPurchase(orderWithAvailability, auth));
     }
