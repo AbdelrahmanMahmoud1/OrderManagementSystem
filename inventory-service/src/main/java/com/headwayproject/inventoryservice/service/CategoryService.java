@@ -8,6 +8,9 @@ import java.util.List;
 
 @Service
 public class CategoryService {
+    // TODO: 11/11/2023 use lombok @Getter and @Setter and @RequiredArgsConstructor https://www.baeldung.com/intro-to-project-lombok
+    // TODO: 11/11/2023 for constructor autowiring you can do this @RequiredArgsConstructor(onConstructor = @__(@Autowired)) but not needed
+
     private final CategoryRepository categoryRepository;
 
     public List<Category> findAll(){
@@ -18,6 +21,7 @@ public class CategoryService {
     }
 
     public String addCategory(Category category){
+        // TODO: 11/11/2023 why have return when its not used?
         categoryRepository.save(category);
         return "Category successfully added";
 
@@ -32,6 +36,8 @@ public class CategoryService {
     }
 
     public String delete (int id){
+        // TODO: 11/11/2023 why have return when its not used?
+
         Category category = categoryRepository.findById(id);
         if(category!=null){
             categoryRepository.deleteById(id);

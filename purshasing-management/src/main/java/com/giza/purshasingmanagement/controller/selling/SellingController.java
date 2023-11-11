@@ -28,6 +28,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("/selling")
 public class SellingController {
+    // TODO: 11/11/2023 use lombok @Getter and @Setter and @RequiredArgsConstructor https://www.baeldung.com/intro-to-project-lombok
+    // TODO: 11/11/2023 for constructor autowiring you can do this @RequiredArgsConstructor(onConstructor = @__(@Autowired)) but not needed
 
     private final Logger logger = LoggerFactory.getLogger(SellingController.class);
 
@@ -47,6 +49,7 @@ public class SellingController {
 
     @PostMapping("/submit-order")
     public HttpStatus submitOrder(@RequestBody Order order) {
+        // TODO: 11/11/2023 move business logic to service class
         checkOrderValidity(order);
         logger.info("Received: " + order);
         SellingPurchase purchase = createPurchaseRecord(order);
@@ -101,6 +104,7 @@ public class SellingController {
     }
 
     /** Checking order validity through products **/
+    // TODO: 11/11/2023 duplicate code extract this and the buyingcontroller one into a utility class to avoid duplication
     private void checkOrderValidity(Order order) {
         if (order == null || order.getProducts() == null) {
             logger.error("Order with no products");

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "product")
 public class Product {
+  // TODO: 11/11/2023 use lombok @Getter and @Setter and @RequiredArgsConstructor https://www.baeldung.com/intro-to-project-lombok
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -10,6 +10,8 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepository;
 
+    // TODO: 11/11/2023 use lombok @Getter and @Setter and @RequiredArgsConstructor https://www.baeldung.com/intro-to-project-lombok
+    // TODO: 11/11/2023 for constructor autowiring you can do this @RequiredArgsConstructor(onConstructor = @__(@Autowired)) but not needed
 
 
     public ProductService(ProductRepository productRepository) {
@@ -30,6 +32,7 @@ public class ProductService {
     }
 
     public String deleteById(int id){
+        // TODO: 11/11/2023 why have return when its not used
       Product product = productRepository.findById(id);
        if(product!=null){
            productRepository.deleteById(id);
@@ -41,7 +44,9 @@ public class ProductService {
     }
 
     public String editById(int id,Product product){
-       Product productToEdit = productRepository.findById(id);
+        // TODO: 11/11/2023 why have return when its not used
+
+        Product productToEdit = productRepository.findById(id);
         if(productToEdit!=null){
             productToEdit.setCategory(product.getCategory());
             productToEdit.setPrice(product.getPrice());

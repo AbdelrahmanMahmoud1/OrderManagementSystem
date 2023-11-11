@@ -3,6 +3,7 @@ package com.giza.purshasingmanagement.controller.selling.response;
 import java.util.Map;
 
 public class SubmitOrderResponse {
+    // TODO: 11/11/2023 use lombok @Getter and @Setter and @RequiredArgsConstructor https://www.baeldung.com/intro-to-project-lombok
 
     private Map<String, Double> productRevenuePair;
     private long purchaseId;

@@ -3,6 +3,8 @@ package com.giza.purshasingmanagement.entity.db;
 import java.io.Serializable;
 
 public class ProductDB implements Serializable {
+    // TODO: 11/11/2023 use lombok @Getter and @Setter and @RequiredArgsConstructor https://www.baeldung.com/intro-to-project-lombok
+
 
     private String name;
     private int quantity;
