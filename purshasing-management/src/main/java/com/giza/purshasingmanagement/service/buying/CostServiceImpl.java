@@ -53,9 +53,9 @@ public class CostServiceImpl implements CostService {
     /** Creating purchase record by processing the order id, date and products **/
     @Override
     public void submitPurchase(BuyingPurchaseDTO purchase) {
-        purchase.getProducts().forEach(p-> {
-            save(p);
-            logger.info("Bought " + p.getQuantity() + " of product " + p.getName());
+        purchase.getProducts().forEach(product -> {
+            save(product);
+            logger.info("Bought " + product.getQuantity() + " of product " + product.getName());
         });
     }
 

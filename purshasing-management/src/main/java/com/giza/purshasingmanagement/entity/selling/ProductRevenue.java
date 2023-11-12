@@ -24,13 +24,12 @@ public class ProductRevenue implements Serializable {
     private long purchaseCount;
 
     @Column(name = "revenue")
-    private long revenue;
+    private double revenue;
 
     // TODO: 11/11/2023 if its a business logic move it to service class
-    public double increasePurchase(long purchaseCount, double price) {
+    public void increasePurchase(long purchaseCount, double price) {
         this.purchaseCount += purchaseCount;
         double revenue = purchaseCount * price;
         this.revenue += revenue;
-        return revenue;
     }
 }
