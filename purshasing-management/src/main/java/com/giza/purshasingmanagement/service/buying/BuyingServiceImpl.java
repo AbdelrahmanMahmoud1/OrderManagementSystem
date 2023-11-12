@@ -14,6 +14,8 @@ import java.util.Optional;
 public class BuyingServiceImpl implements BuyingService {
 
     private final BuyingRepository buyingRepository;
+    // TODO: 11/11/2023 use lombok @Getter and @Setter and @RequiredArgsConstructor https://www.baeldung.com/intro-to-project-lombok
+    // TODO: 11/11/2023 for constructor autowiring you can do this @RequiredArgsConstructor(onConstructor = @__(@Autowired)) but not needed
 
     @Autowired
     public BuyingServiceImpl(BuyingRepository buyingRepository) { this.buyingRepository = buyingRepository; }

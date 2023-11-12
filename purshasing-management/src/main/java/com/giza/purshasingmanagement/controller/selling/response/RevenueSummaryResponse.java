@@ -5,6 +5,7 @@ import com.giza.purshasingmanagement.dto.selling.RevenueDTO;
 import java.util.List;
 
 public class RevenueSummaryResponse {
+    // TODO: 11/11/2023 use lombok @Getter and @Setter and @RequiredArgsConstructor https://www.baeldung.com/intro-to-project-lombok
 
     private List<RevenueDTO> productsRevenues;
     private int productsPurchasedCount;

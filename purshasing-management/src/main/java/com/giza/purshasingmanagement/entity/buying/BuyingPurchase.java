@@ -10,8 +10,10 @@ import java.util.List;
 @Entity
 @Table(name = "buying-purchase")
 public class BuyingPurchase implements Serializable {
+    // TODO: 11/11/2023 use lombok @Getter and @Setter and @RequiredArgsConstructor https://www.baeldung.com/intro-to-project-lombok
 
     @Id
+    // TODO: 11/11/2023 make it Identity instead of auto
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "purchase_id")
     private long purchaseId;
@@ -21,6 +23,7 @@ public class BuyingPurchase implements Serializable {
 
     @Column(name = "products")
     @ElementCollection(targetClass = Product.class)
+    // TODO: 11/11/2023 define relation is it OneToMany or ManyToMany so you can handle cascading https://www.baeldung.com/jpa-many-to-many https://www.baeldung.com/hibernate-one-to-many
     private List<Product> products;
 
     @Column(name = "cost")

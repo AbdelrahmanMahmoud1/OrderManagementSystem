@@ -34,12 +34,13 @@ import static com.giza.purshasingmanagement.AppConstants.INVENTORY_BASE_URL;
 @RestController
 @RequestMapping("/buying")
 public class BuyingController {
-
+    // TODO: 11/11/2023 nice to have use @controllerAdvice for exception and success handelling https://www.baeldung.com/exception-handling-for-rest-with-spring https://www.baeldung.com/spring-security-exceptionhandler
     private final Logger logger = LoggerFactory.getLogger(BuyingController.class);
 
     private final CostService costService;
     private final BuyingService buyingService;
 
+    // TODO: 11/11/2023 use @RequiredArgsConstructor from lombok
     @Autowired
     public BuyingController(
             CostService costService,
@@ -50,6 +51,7 @@ public class BuyingController {
 
     @PostMapping("/submit-order")
     public ResponseEntity<BuyItemsResponse> submitOrder(@RequestBody OrderDTO order) {
+        // TODO: 11/11/2023 move business logic to service class controller only responsibility to call service
         checkOrderValidity(order);
         ResponseEntity<InventoryStockResponse> inventoryResponse = new RestTemplate().postForEntity(
                 INVENTORY_BASE_URL + "products/purchased",
@@ -65,6 +67,7 @@ public class BuyingController {
             else
                 products = new ArrayList<>();
 
+            // TODO: 11/11/2023 move logic to be inside if no need to send an empty list to do nothing
             BuyingPurchase purchase = createPurchaseRecord(products);
             calculateProductCostPairs(purchase);
 
@@ -84,7 +87,9 @@ public class BuyingController {
 
     /** Creating purchase record by processing the incoming inventory products added **/
     private BuyingPurchase createPurchaseRecord(List<BuyingProductDTO> inventoryProducts) {
+        // TODO: 11/11/2023 need to schedule call to discuss what is going on here as it is over-engineering to needed task for it
         HashMap<String, Pair<Integer, Float>> uniqueProductMap = new HashMap<>();
+        // TODO: 11/11/2023 instead of foreach use stream
         inventoryProducts.forEach(p -> uniqueProductMap.put(p.getName(), new Pair<>(0, 0.0f)));
         inventoryProducts.forEach(p -> {
             Pair<Integer, Float> quantityPrice = uniqueProductMap.get(p.getName());
@@ -105,12 +110,14 @@ public class BuyingController {
         }
         purchase.setProducts(products);
         purchase.setCost(cost);
+        // TODO: 11/11/2023 why return id here and set it in the actual entity when .save in jpa returns the whole entity? thats redundant
         long purchaseId = buyingService.save(purchase);
         purchase.setPurchaseId(purchaseId);
         return purchase;
     }
 
     /** Creating purchase record by processing the order id, date and products **/
+    // TODO: 11/11/2023 why have a return value when its not used?
     private Map<String, Double> calculateProductCostPairs(BuyingPurchase purchase) {
         Map<String, Double> pCostPairs = new HashMap<>();
         purchase.getProducts().forEach(product -> {
@@ -122,6 +129,7 @@ public class BuyingController {
     }
 
     /** Checking order validity through products **/
+    // TODO: 11/11/2023 duplicate code extract this and the buyingcontroller one into a utility class to avoid duplication
     private void checkOrderValidity(OrderDTO order) {
         if (order == null || order.getProducts() == null) {
             logger.error("Order with no products");
@@ -141,6 +149,7 @@ public class BuyingController {
 
     @GetMapping("/get-purchase-details")
     public ResponseEntity<PurchaseDetailsResponse> getPurchaseDetails() {
+        // TODO: 11/11/2023 remove logic to business service class not in controller
         logger.info("Buying: Getting purchase details");
         List<BuyingPurchase> purchaseList = buyingService.findAll();
         PurchaseDetailsResponse response = new PurchaseDetailsResponse();
@@ -152,6 +161,7 @@ public class BuyingController {
 
     @GetMapping("/get-cost-summary")
     public ResponseEntity<CostSummaryResponse> getCostSummary() {
+        // TODO: 11/11/2023 remove logic to business service class not in controller
         logger.info("Getting cost summary");
         CostSummaryResponse response = new CostSummaryResponse();
         List<ProductCost> costs = costService.findAll();

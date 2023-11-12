@@ -8,6 +8,7 @@ import java.sql.Date;
 import java.util.List;
 
 public class BuyingPurchaseDTO implements Serializable {
+    // TODO: 11/11/2023 use lombok @Getter and @Setter and @RequiredArgsConstructor https://www.baeldung.com/intro-to-project-lombok
 
     private Date purchaseDate;
     private List<Product> products;

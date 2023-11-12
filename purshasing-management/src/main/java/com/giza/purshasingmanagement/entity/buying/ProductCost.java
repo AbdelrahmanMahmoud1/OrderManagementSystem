@@ -7,8 +7,10 @@ import java.io.Serializable;
 @Entity
 @Table(name = "product_cost")
 public class ProductCost implements Serializable {
+    // TODO: 11/11/2023 use lombok @Getter and @Setter and @RequiredArgsConstructor https://www.baeldung.com/intro-to-project-lombok
 
     @Id
+    // TODO: 11/11/2023 why is name Id?
     @Column(name = "product_name")
     private String productName;
 

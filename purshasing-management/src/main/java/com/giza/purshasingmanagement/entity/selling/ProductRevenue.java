@@ -30,6 +30,7 @@ public class ProductRevenue implements Serializable {
         return purchaseCount;
     }
 
+    // TODO: 11/11/2023 if its a business logic move it to service class
     public double increasePurchase(long purchaseCount, double price) {
         this.purchaseCount += purchaseCount;
         double revenue = purchaseCount * price;
@@ -41,6 +42,7 @@ public class ProductRevenue implements Serializable {
         return revenue;
     }
 
+    // TODO: 11/11/2023 use @ToString lombok
     @Override
     public String toString() {
         return "Purchase{" +

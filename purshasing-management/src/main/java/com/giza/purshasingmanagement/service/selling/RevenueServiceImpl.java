@@ -13,6 +13,8 @@ import java.util.Optional;
 public class RevenueServiceImpl implements RevenueService {
 
     private final RevenueRepository revenueRepository;
+    // TODO: 11/11/2023 use lombok @Getter and @Setter and @RequiredArgsConstructor https://www.baeldung.com/intro-to-project-lombok
+    // TODO: 11/11/2023 for constructor autowiring you can do this @RequiredArgsConstructor(onConstructor = @__(@Autowired)) but not needed
 
     @Autowired
     public RevenueServiceImpl(RevenueRepository revenueRepository) { this.revenueRepository = revenueRepository; }
