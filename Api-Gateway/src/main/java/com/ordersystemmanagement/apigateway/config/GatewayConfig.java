@@ -16,6 +16,7 @@ public class GatewayConfig {
     @Bean
     public RouteLocator routes(RouteLocatorBuilder builder) {
         return builder.routes()
+                // TODO: 11/12/2023 quick tip you can define it in application.yml or application.properties https://stackoverflow.com/questions/75912883/how-to-specify-a-route-in-a-spring-boot-application
 
                 .route( r -> r.path("/api/v1/auth/**")
 //                        .filters(f -> f.filter(filter))

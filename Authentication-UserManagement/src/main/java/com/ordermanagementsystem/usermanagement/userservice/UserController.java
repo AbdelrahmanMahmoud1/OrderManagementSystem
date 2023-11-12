@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
+// TODO: 11/12/2023 remove to controller package
 public class UserController {
 
     private final AuthenticationService authenticationService;
 
+    // TODO: 11/12/2023 remove it
     @GetMapping("/test")
     public String hello(){
         return "hello";

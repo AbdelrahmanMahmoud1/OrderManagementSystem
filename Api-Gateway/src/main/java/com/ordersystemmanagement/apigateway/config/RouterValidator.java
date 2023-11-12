@@ -9,6 +9,7 @@ import java.util.function.Predicate;
 @Component
 public class RouterValidator {
 
+    // TODO: 11/12/2023 extract them to application.properties as a property
     public static final List<String> openApiEndpoints = List.of(
             "api/v1/auth/register",
             "api/v1/auth/authenticate",

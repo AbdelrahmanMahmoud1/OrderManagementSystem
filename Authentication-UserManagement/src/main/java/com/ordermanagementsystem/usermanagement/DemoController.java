@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/demo")
 public class DemoController {
 
+    // TODO: 11/12/2023 delete class if not needed
     @GetMapping
     public ResponseEntity<String> sayHello(){
         return ResponseEntity.ok("Hello from ");

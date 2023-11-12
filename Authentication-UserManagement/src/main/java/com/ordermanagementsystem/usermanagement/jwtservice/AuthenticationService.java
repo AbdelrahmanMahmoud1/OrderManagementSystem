@@ -47,6 +47,7 @@ public class AuthenticationService {
     }
 
     public  String register(RegisterRequest request) {
+        // TODO: 11/12/2023 nice use of var and builder *clap* *clap*
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())

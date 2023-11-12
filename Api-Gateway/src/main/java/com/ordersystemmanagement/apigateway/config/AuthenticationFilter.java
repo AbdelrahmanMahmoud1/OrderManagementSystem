@@ -101,6 +101,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                     throw new RuntimeException("Missing Auth Header");
                 }
                 String authHeader= Objects.requireNonNull(exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0));
+                // TODO: 11/12/2023 you already used Objects.requirenonnull no need for null check
                 if (authHeader!=null && authHeader.startsWith("Bearer")){
                     authHeader=authHeader.substring(7);
                 }

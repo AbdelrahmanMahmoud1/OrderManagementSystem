@@ -38,6 +38,10 @@
 			<groupId>org.springframework.kafka</groupId>
 			<artifactId>spring-kafka</artifactId>
 		</dependency>
+		<!--
+		Neeeeveeer take micros as a dependency neeeever dooo it neever
+		create common module to be shared
+		-->
 		<dependency>
 			<groupId>com.project</groupId>
 			<artifactId>order-service</artifactId>

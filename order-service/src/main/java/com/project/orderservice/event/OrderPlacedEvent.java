@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+// TODO: 11/12/2023 you are using @Data why rest of classes have getters and setters methods :D  and why does this class have getter and setter methods
+
 
 public class OrderPlacedEvent {
 
@@ -15,6 +17,7 @@ public class OrderPlacedEvent {
     private String message;
     private String status;
     private Order order;
+    // TODO: 11/12/2023 use requiredArgsConstructor 
 
     public OrderPlacedEvent() {
     }

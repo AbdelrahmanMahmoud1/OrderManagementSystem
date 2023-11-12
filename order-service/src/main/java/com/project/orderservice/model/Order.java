@@ -7,13 +7,17 @@ import java.util.List;
 @Entity
 @Table(name ="orders")
 public class Order {
+    // TODO: 11/11/2023 use lombok @Getter and @Setter and @RequiredArgsConstructor https://www.baeldung.com/intro-to-project-lombok
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    // TODO: 11/12/2023 never assign id to an int
     private int id;
 
     @Column(name = "number")
     private String OrderNumber;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
     private List<OrderLineItems> products;

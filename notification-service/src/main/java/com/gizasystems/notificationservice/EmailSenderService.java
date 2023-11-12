@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmailSenderService {
-
+    // TODO: 11/12/2023 nice to have use constructor injection with @RequiredArgsConstructor
     @Autowired
     private JavaMailSender mailSender;
     public void sendEmail(String toEmail, String body){

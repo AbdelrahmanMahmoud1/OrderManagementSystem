@@ -31,9 +31,12 @@ public class SecurityConfig {
                             auth -> auth.requestMatchers("/api/v1/auth/**").permitAll()
                                     .anyRequest().authenticated()
                     )
+                    // TODO: 11/12/2023 how do you handle exceptionhandling? where is the entrypoint
                     .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                     .authenticationProvider(authenticationProvider)
                     .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+// TODO: 11/12/2023 if commented remove it
+
 
 //        http.csrf()
 //                .disable()

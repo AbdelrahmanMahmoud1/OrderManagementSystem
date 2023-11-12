@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+// TODO: 11/12/2023 you are using all the lombok and still use getter and setter and constructor methods why? :D also its either @getter @setter or @data not both
 @Data
 @Builder
 @NoArgsConstructor
@@ -15,11 +16,14 @@ import java.util.Collection;
 @Entity
 @Getter
 @Setter
+// TODO: 11/12/2023 why _ before the table name?
 @Table(name = "_user")
 public class User implements UserDetails {
 
     @Id
+    // TODO: 11/12/2023 use identity instead of auto
     @GeneratedValue(strategy = GenerationType.AUTO)
+    // TODO: 11/12/2023 never use integer for primary key
     private Integer id;
     @Getter
     @Column(name = "first_name")

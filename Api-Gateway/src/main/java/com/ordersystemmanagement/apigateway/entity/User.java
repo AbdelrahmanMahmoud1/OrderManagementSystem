@@ -20,6 +20,7 @@ public class User {
     private String password;
     private Role role;
 
+    // TODO: 11/12/2023 not needed
     public User(String firstName, String lastName, String email, String password, Role role) {
         this.firstName = firstName;
         this.lastName = lastName;

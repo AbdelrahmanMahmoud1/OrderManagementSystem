@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+// TODO: 11/12/2023 not used remove 
 public class AuthenticationRequest {
     private String email;
     private String password;

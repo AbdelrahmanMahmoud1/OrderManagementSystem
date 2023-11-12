@@ -26,6 +26,8 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final WebClient webClient; //calling the webclient bean
 
+    // TODO: 11/11/2023 use lombok @Getter and @Setter and @RequiredArgsConstructor https://www.baeldung.com/intro-to-project-lombok
+    // TODO: 11/11/2023 for constructor autowiring you can do this @RequiredArgsConstructor(onConstructor = @__(@Autowired)) but not needed
 
 
     private final KafkaTemplate<String,OrderPlacedEvent> kafkaTemplate;
@@ -54,6 +56,7 @@ public class OrderService {
 
 
         // Check product availability by making a request to the inventory service
+        // TODO: 11/12/2023 why send entity in request?
         Order orderWithAvailability = checkProductAvailabilityAndCreateOrder(order, auth);
         System.out.println(orderWithAvailability);
         System.out.println(orderWithAvailability.getOrderNumber());
@@ -68,6 +71,7 @@ public class OrderService {
 
 
     private OrderLineItems maptodto(OrderLineItemsDto orderLineItemsDto) {
+        // TODO: 11/12/2023 use builder *nice to have*
         OrderLineItems orderLineItems= new OrderLineItems();
         orderLineItems.setPrice(orderLineItemsDto.getPrice());
         orderLineItems.setQuantity(orderLineItemsDto.getQuantity());
@@ -84,6 +88,8 @@ public class OrderService {
         return order;
     }
     private ProductResponse getProductAvailabilityById(String name) {
+        // TODO: 11/12/2023 why use webclient? why not resttemplate or feignclient?
+        // TODO: 11/12/2023 extract url to a variable or constants class
         return webClient.get()
                 .uri("http://localhost:8765/products/product/{name}", name)
                 .retrieve()
@@ -108,20 +114,23 @@ public class OrderService {
     }
 
     @Transactional
-    private HttpStatusCode confirmPurchase(Order orderWithAvailability, String auth) {
+    public HttpStatusCode confirmPurchase(Order orderWithAvailability, String auth) {
 
 
+        // TODO: 11/12/2023 why resttemplate and webclient in the same class?
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders authHeader = new HttpHeaders();
         authHeader.add(HttpHeaders.AUTHORIZATION, auth);
         HttpEntity<Order> postRequest = new HttpEntity<>(orderWithAvailability, authHeader);
-
+        // TODO: 11/12/2023 extract url to a variable or constants class
         HttpStatus submitOrderResponse = restTemplate.exchange("http://localhost:8765/selling/submit-order", HttpMethod.POST, postRequest,HttpStatus.class).getBody();
+        // TODO: 11/12/2023 you can transform it to be like that         return Objects.requireNonNullElse(submitOrderResponse, HttpStatus.NOT_FOUND);
         if (submitOrderResponse != null){
             return submitOrderResponse;
         }else {
             return  HttpStatus.NOT_FOUND;
         }
+        // TODO: 11/12/2023 if its commented its not needed rule of thumb
 
 //        ResponseEntity<SubmitOrderResponse> response = new RestTemplate().postForEntity(
 //                "http://localhost:8765/selling/submit-order",
