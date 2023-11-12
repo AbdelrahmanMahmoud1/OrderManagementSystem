@@ -1,11 +1,19 @@
 package com.giza.purshasingmanagement.entity.selling;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serializable;
 
 @Entity
 @Table(name = "product_revenue")
+@Getter
+@Setter
+@RequiredArgsConstructor
+@ToString
 public class ProductRevenue implements Serializable {
 
     @Id
@@ -18,37 +26,11 @@ public class ProductRevenue implements Serializable {
     @Column(name = "revenue")
     private long revenue;
 
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public long getPurchaseCount() {
-        return purchaseCount;
-    }
-
     // TODO: 11/11/2023 if its a business logic move it to service class
     public double increasePurchase(long purchaseCount, double price) {
         this.purchaseCount += purchaseCount;
         double revenue = purchaseCount * price;
         this.revenue += revenue;
         return revenue;
-    }
-
-    public long getRevenue() {
-        return revenue;
-    }
-
-    // TODO: 11/11/2023 use @ToString lombok
-    @Override
-    public String toString() {
-        return "Purchase{" +
-                "productName=" + productName +
-                ", purchaseCount=" + purchaseCount +
-                ", revenue=" + revenue +
-                '}';
     }
 }
