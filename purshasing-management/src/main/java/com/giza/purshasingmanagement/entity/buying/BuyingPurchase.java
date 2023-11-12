@@ -2,6 +2,9 @@ package com.giza.purshasingmanagement.entity.buying;
 
 import com.giza.purshasingmanagement.entity.Product;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -9,12 +12,12 @@ import java.util.List;
 
 @Entity
 @Table(name = "buying-purchase")
+@Getter
+@Setter
+@RequiredArgsConstructor
 public class BuyingPurchase implements Serializable {
-    // TODO: 11/11/2023 use lombok @Getter and @Setter and @RequiredArgsConstructor https://www.baeldung.com/intro-to-project-lombok
-
     @Id
-    // TODO: 11/11/2023 make it Identity instead of auto
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "purchase_id")
     private long purchaseId;
 
@@ -28,36 +31,4 @@ public class BuyingPurchase implements Serializable {
 
     @Column(name = "cost")
     private double cost;
-
-    public long getPurchaseId() {
-        return purchaseId;
-    }
-
-    public void setPurchaseId(long purchaseId) {
-        this.purchaseId = purchaseId;
-    }
-
-    public Date getPurchaseDate() {
-        return purchaseDate;
-    }
-
-    public void setPurchaseDate(Date purchaseDate) {
-        this.purchaseDate = purchaseDate;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
-    public double getCost() {
-        return cost;
-    }
-
-    public void setCost(double cost) {
-        this.cost = cost;
-    }
 }

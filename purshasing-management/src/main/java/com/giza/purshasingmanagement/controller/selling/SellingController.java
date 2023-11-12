@@ -11,10 +11,12 @@ import com.giza.purshasingmanagement.entity.selling.ProductRevenue;
 import com.giza.purshasingmanagement.entity.selling.SellingPurchase;
 import com.giza.purshasingmanagement.service.selling.SellingService;
 import com.giza.purshasingmanagement.service.selling.RevenueService;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.antlr.v4.runtime.misc.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,20 +30,15 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/selling")
+@Getter
+@Setter
+@RequiredArgsConstructor
 public class SellingController {
-    // TODO: 11/11/2023 use lombok @Getter and @Setter and @RequiredArgsConstructor https://www.baeldung.com/intro-to-project-lombok
-    // TODO: 11/11/2023 for constructor autowiring you can do this @RequiredArgsConstructor(onConstructor = @__(@Autowired)) but not needed
 
     private final Logger logger = LoggerFactory.getLogger(SellingController.class);
 
     private final RevenueService revenueService;
     private final SellingService sellingService;
-
-    @Autowired
-    public SellingController(RevenueService revenueService, SellingService sellingService) {
-        this.revenueService = revenueService;
-        this.sellingService = sellingService;
-    }
 
     @PostMapping("/submit-order")
     public ResponseEntity<SubmitOrderResponse> submitOrder(@RequestBody OrderDTO order) {
