@@ -1,13 +1,19 @@
 package com.giza.purshasingmanagement.service.buying;
 
-import com.giza.purshasingmanagement.entity.buying.ProductCost;
+import com.giza.purshasingmanagement.controller.buying.response.CostSummaryResponse;
+import com.giza.purshasingmanagement.dto.buying.BuyingPurchaseDTO;
+import com.giza.purshasingmanagement.dto.buying.CostDTO;
 import com.giza.purshasingmanagement.entity.Product;
+import com.giza.purshasingmanagement.entity.buying.ProductCost;
 import com.giza.purshasingmanagement.repository.buying.CostRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +22,7 @@ import java.util.Optional;
 @Setter
 @RequiredArgsConstructor
 public class CostServiceImpl implements CostService {
+    private final Logger logger = LoggerFactory.getLogger(CostServiceImpl.class);
 
     private final CostRepository costRepository;
 
@@ -34,14 +41,33 @@ public class CostServiceImpl implements CostService {
     }
 
     @Override
-    public double save(Product product) {
+    public void save(Product product) {
         ProductCost productCost = findByName(product.getName());
         if (productCost == null){
             productCost = new ProductCost();
             productCost.setProductName(product.getName());
         }
-        double cost = productCost.increasePurchase(product.getQuantity(), product.getPrice());
         costRepository.save(productCost);
-        return cost;
+    }
+
+    /** Creating purchase record by processing the order id, date and products **/
+    @Override
+    public void submitPurchase(BuyingPurchaseDTO purchase) {
+        purchase.getProducts().forEach(p-> {
+            save(p);
+            logger.info("Bought " + p.getQuantity() + " of product " + p.getName());
+        });
+    }
+
+    @Override
+    public CostSummaryResponse getCostSummary() {
+        CostSummaryResponse response = new CostSummaryResponse();
+        List<ProductCost> costs = findAll();
+        List<CostDTO> costDTOs = new ArrayList<>();
+        costs.forEach(c -> costDTOs.add(CostDTO.entityToDTO(c)));
+        response.setProductsCosts(costDTOs);
+        logger.info("Found " + response.getProductsPurchasedCount()
+                + " product(s) purchased, with a total cost of " + response.getTotalCost());
+        return response;
     }
 }

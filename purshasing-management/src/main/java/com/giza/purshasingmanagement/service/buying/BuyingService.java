@@ -1,5 +1,8 @@
 package com.giza.purshasingmanagement.service.buying;
 
+import com.giza.purshasingmanagement.controller.buying.response.BuyItemsResponse;
+import com.giza.purshasingmanagement.controller.buying.response.PurchaseDetailsResponse;
+import com.giza.purshasingmanagement.dto.buying.OrderDTO;
 import com.giza.purshasingmanagement.entity.buying.BuyingPurchase;
 
 import java.util.List;
@@ -10,5 +13,9 @@ public interface BuyingService {
 
     BuyingPurchase findByPurchaseId(long id);
 
-    long save(BuyingPurchase purchase);
+    BuyingPurchase save(BuyingPurchase purchase);
+
+    BuyItemsResponse checkAndSubmitOrder(OrderDTO order);
+
+    PurchaseDetailsResponse getPurchaseDetails();
 }

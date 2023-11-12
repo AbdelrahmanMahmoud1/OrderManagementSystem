@@ -17,7 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BuyingPurchase implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //TODO: Ask Mohanad, identity gives an error auto doesn't
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "purchase_id")
     private long purchaseId;
 
