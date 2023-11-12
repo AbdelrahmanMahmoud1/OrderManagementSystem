@@ -13,10 +13,12 @@ import com.giza.purshasingmanagement.entity.buying.ProductCost;
 import com.giza.purshasingmanagement.entity.Product;
 import com.giza.purshasingmanagement.service.buying.BuyingService;
 import com.giza.purshasingmanagement.service.buying.CostService;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.antlr.v4.runtime.misc.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,21 +35,15 @@ import static com.giza.purshasingmanagement.AppConstants.INVENTORY_BASE_URL;
 
 @RestController
 @RequestMapping("/buying")
+@Getter
+@Setter
+@RequiredArgsConstructor
 public class BuyingController {
     // TODO: 11/11/2023 nice to have use @controllerAdvice for exception and success handelling https://www.baeldung.com/exception-handling-for-rest-with-spring https://www.baeldung.com/spring-security-exceptionhandler
     private final Logger logger = LoggerFactory.getLogger(BuyingController.class);
 
     private final CostService costService;
     private final BuyingService buyingService;
-
-    // TODO: 11/11/2023 use @RequiredArgsConstructor from lombok
-    @Autowired
-    public BuyingController(
-            CostService costService,
-            BuyingService buyingService) {
-        this.costService = costService;
-        this.buyingService = buyingService;
-    }
 
     @PostMapping("/submit-order")
     public ResponseEntity<BuyItemsResponse> submitOrder(@RequestBody OrderDTO order) {
