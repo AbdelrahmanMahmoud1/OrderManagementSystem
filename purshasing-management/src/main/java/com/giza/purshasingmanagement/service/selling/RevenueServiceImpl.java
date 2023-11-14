@@ -46,8 +46,13 @@ public class RevenueServiceImpl implements RevenueService {
             productRevenue = new ProductRevenue();
             productRevenue.setProductName(product.getName());
         }
-        productRevenue.increasePurchase(product.getQuantity(), product.getPrice());
+        increasePurchase(productRevenue, product.getQuantity(), product.getPrice());
         revenueRepository.save(productRevenue);
+    }
+
+    void increasePurchase(ProductRevenue productRevenue, int purchaseCount, float price) {
+        productRevenue.setPurchaseCount(purchaseCount + productRevenue.getPurchaseCount());
+        productRevenue.setRevenue(productRevenue.getRevenue() + price + purchaseCount);
     }
 
     @Override

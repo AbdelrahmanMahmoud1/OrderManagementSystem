@@ -25,12 +25,4 @@ public class ProductRevenue implements Serializable {
 
     @Column(name = "revenue")
     private double revenue;
-
-    // TODO: 11/11/2023 if its a business logic move it to service class
-    public void increasePurchase(long purchaseCount, double price) {
-        this.purchaseCount += purchaseCount;
-        double revenue = purchaseCount * price;
-        this.revenue += revenue;
-    }
-    // Entity table la tomas
 }
