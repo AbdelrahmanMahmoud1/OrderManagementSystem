@@ -33,6 +33,7 @@ public class AuthenticationService {
                     )
             );
 
+            System.out.println(request);
             var user = userService.findByEmail(request.getEmail()).orElseThrow();
             System.out.println(user);
 

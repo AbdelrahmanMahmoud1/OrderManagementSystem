@@ -37,6 +37,7 @@ public class UserController {
             @RequestBody AuthenticationRequest request
     ){
         String token= authenticationService.authenticate(request);
+        System.out.println(token);
 
         if (token == null){return new ResponseEntity<String>("User Not Found", HttpStatus.FORBIDDEN);}
 

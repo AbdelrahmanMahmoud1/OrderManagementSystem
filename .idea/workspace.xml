@@ -4,7 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1f4d441a-a21b-43dd-bb0b-51b457edfcad" name="Changes" comment="V2 - APi Gateway (improving Code after comments)" />
+    <list default="true" id="1f4d441a-a21b-43dd-bb0b-51b457edfcad" name="Changes" comment="V2 - APi Gateway (improving Code after comments)">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/src/main/java/com/ordermanagementsystem/usermanagement/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/src/main/java/com/ordermanagementsystem/usermanagement/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/config/ApplicationConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/config/ApplicationConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/config/JwtAuthFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/config/JwtAuthFilter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/config/SecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/jwtservice/JwtService.class" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/jwtservice/JwtService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/user/User$UserBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/user/User$UserBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/user/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/user/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/userservice/AuthenticationRequest$AuthenticationRequestBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/userservice/AuthenticationRequest$AuthenticationRequestBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/userservice/AuthenticationRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/userservice/AuthenticationRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/userservice/AuthenticationResponse$AuthenticationResponseBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/userservice/AuthenticationResponse$AuthenticationResponseBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/userservice/AuthenticationResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/userservice/AuthenticationResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/userservice/RegisterRequest$RegisterRequestBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/userservice/RegisterRequest$RegisterRequestBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/userservice/RegisterRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/userservice/RegisterRequest.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,11 +46,11 @@
                 <list>
                   <RecentBranch>
                     <option name="branchName" value="Integration" />
-                    <option name="lastUsedInstant" value="1699974962" />
+                    <option name="lastUsedInstant" value="1699975204" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="UserManagement-Gateway" />
-                    <option name="lastUsedInstant" value="1699974956" />
+                    <option name="lastUsedInstant" value="1699975193" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="main" />
@@ -75,6 +91,7 @@
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Integration",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2",
@@ -153,7 +170,23 @@
       <option name="project" value="LOCAL" />
       <updated>1699974689300</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="V2 - APi Gateway (improving Code after comments)">
+      <option name="closed" value="true" />
+      <created>1699975169988</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1699975169988</updated>
+    </task>
+    <task id="LOCAL-00008" summary="V2 - APi Gateway (improving Code after comments)">
+      <option name="closed" value="true" />
+      <created>1699975179150</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1699975179150</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -182,7 +215,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="UserManagement-Gateway" />
+                        <option value="origin/UserManagement-Gateway" />
                       </list>
                     </value>
                   </entry>
