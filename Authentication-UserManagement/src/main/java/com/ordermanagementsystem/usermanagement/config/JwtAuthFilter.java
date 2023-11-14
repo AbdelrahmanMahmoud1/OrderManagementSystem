@@ -47,10 +47,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         // check if the auth header is empty or doesn't start with bearer will return and terminate the process
     if (autHeader == null || !autHeader.startsWith("Bearer")){
-//        response.setStatus(HttpStatus.FORBIDDEN.value());
-//        response.getWriter().write("Invalid Token");
-//
-//        return;
+
 
         filterChain.doFilter(request,response);
         return;

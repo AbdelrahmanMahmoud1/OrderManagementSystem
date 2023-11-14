@@ -47,6 +47,9 @@ public class AuthenticationService {
     }
 
     public  String register(RegisterRequest request) {
+
+        if (userService.findByEmail(request.getEmail()).isPresent()){return null;}
+
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
