@@ -47,7 +47,13 @@ public class CostServiceImpl implements CostService {
             productCost = new ProductCost();
             productCost.setProductName(product.getName());
         }
+        increasePurchase(productCost, product.getQuantity(), product.getPrice());
         costRepository.save(productCost);
+    }
+
+    private void increasePurchase(ProductCost productCost, int purchaseCount, float price) {
+        productCost.setPurchaseCount(purchaseCount + productCost.getPurchaseCount());
+        productCost.setCost(productCost.getCost() + purchaseCount * price);
     }
 
     /** Creating purchase record by processing the order id, date and products **/

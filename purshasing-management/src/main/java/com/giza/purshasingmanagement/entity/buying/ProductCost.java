@@ -16,7 +16,6 @@ import java.io.Serializable;
 @ToString
 public class ProductCost implements Serializable {
     @Id
-    // TODO: 11/11/2023 why is name Id?
     @Column(name = "product_name", unique = true)
     private String productName;
     // Not wrong but not considered as best practice
@@ -25,12 +24,5 @@ public class ProductCost implements Serializable {
     private long purchaseCount;
 
     @Column(name = "cost")
-    private long cost;
-
-    public double increasePurchase(long purchaseCount, double price) {
-        this.purchaseCount += purchaseCount;
-        double cost = purchaseCount * price;
-        this.cost += cost;
-        return cost;
-    }
+    private double cost;
 }

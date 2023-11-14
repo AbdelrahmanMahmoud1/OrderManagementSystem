@@ -52,7 +52,7 @@ public class RevenueServiceImpl implements RevenueService {
 
     void increasePurchase(ProductRevenue productRevenue, int purchaseCount, float price) {
         productRevenue.setPurchaseCount(purchaseCount + productRevenue.getPurchaseCount());
-        productRevenue.setRevenue(productRevenue.getRevenue() + price + purchaseCount);
+        productRevenue.setRevenue(productRevenue.getRevenue() + price * purchaseCount);
     }
 
     @Override
