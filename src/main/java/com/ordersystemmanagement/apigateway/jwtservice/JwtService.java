@@ -1,6 +1,9 @@
 package com.ordersystemmanagement.apigateway.jwtservice;
 
 import com.ordersystemmanagement.apigateway.entity.User;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
@@ -21,8 +24,13 @@ import io.jsonwebtoken.security.Keys;
 public class JwtService {
 
 
-    private static final String SECRET_KEY = "1E66D4D5D79AB473DD4FE24221AF6596EC9E7D177C52AC25346DB4F88C";
 
+    private final String SECRET_KEY ;
+
+    @Autowired
+    public JwtService(@Value("${SECRETKEY}") String SECRET_KEY) {
+        this.SECRET_KEY =SECRET_KEY;
+    }
 
     public String extractUserEmail(String jwtToken){
         return extractClaim(jwtToken, Claims::getSubject);
@@ -31,20 +39,6 @@ public class JwtService {
     public <T> T extractClaim(String jwtToken, Function<Claims,T> claimsResolver){
         final Claims claims = extractAllClaims(jwtToken);
         return claimsResolver.apply(claims);
-    }
-    public String generateToken(User userDetails){
-        return generateToken(new HashMap<>(), userDetails) ;
-
-    }
-
-    public String generateToken(Map<String, Object> extraClaims, User userDetails){
-        return Jwts.builder()
-                .setClaims(extraClaims)
-                .setSubject(userDetails.getEmail())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*24))
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
-                .compact();
     }
 
 
