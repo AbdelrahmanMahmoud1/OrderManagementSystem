@@ -32,4 +32,5 @@ public class ProductRevenue implements Serializable {
         double revenue = purchaseCount * price;
         this.revenue += revenue;
     }
+    // Entity table la tomas
 }

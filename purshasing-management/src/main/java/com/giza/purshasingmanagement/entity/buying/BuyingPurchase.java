@@ -18,7 +18,8 @@ import java.util.List;
 public class BuyingPurchase implements Serializable {
     @Id
     //TODO: Ask Mohanad, identity gives an error auto doesn't
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    // Table is not an identity
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "purchase_id")
     private long purchaseId;
 
@@ -29,6 +30,7 @@ public class BuyingPurchase implements Serializable {
     @ElementCollection(targetClass = Product.class)
     // TODO: 11/11/2023 define relation is it OneToMany or ManyToMany so you can handle cascading https://www.baeldung.com/jpa-many-to-many https://www.baeldung.com/hibernate-one-to-many
     private List<Product> products;
+    // Handled using cascade
 
     @Column(name = "cost")
     private double cost;

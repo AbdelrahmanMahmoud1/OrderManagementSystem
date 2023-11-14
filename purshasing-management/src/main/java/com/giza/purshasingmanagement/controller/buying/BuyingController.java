@@ -31,8 +31,6 @@ public class BuyingController {
     public ResponseEntity<BuyItemsResponse> submitOrder(@RequestBody OrderDTO order) {
         logger.info("Order received");
         BuyItemsResponse response = buyingService.checkAndSubmitOrder(order);
-        if (response.getPurchase() != null)
-            costService.submitPurchase(response.getPurchase());
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
 

@@ -5,9 +5,7 @@ import com.giza.purshasingmanagement.controller.selling.response.RevenueSummaryR
 import com.giza.purshasingmanagement.dto.selling.RevenueDTO;
 import com.giza.purshasingmanagement.dto.selling.SellingProductDTO;
 import com.giza.purshasingmanagement.dto.selling.SellingPurchaseDTO;
-import com.giza.purshasingmanagement.entity.Product;
 import com.giza.purshasingmanagement.entity.selling.ProductRevenue;
-import com.giza.purshasingmanagement.entity.selling.SellingPurchase;
 import com.giza.purshasingmanagement.repository.selling.RevenueRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

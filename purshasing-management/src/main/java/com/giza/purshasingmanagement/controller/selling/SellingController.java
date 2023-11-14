@@ -1,6 +1,5 @@
 package com.giza.purshasingmanagement.controller.selling;
 
-import com.giza.purshasingmanagement.Utils;
 import com.giza.purshasingmanagement.controller.selling.response.PurchaseDetailsResponse;
 import com.giza.purshasingmanagement.controller.selling.response.RevenueSummaryResponse;
 import com.giza.purshasingmanagement.controller.selling.response.SellItemsResponse;
@@ -31,11 +30,7 @@ public class SellingController {
     @PostMapping("/submit-order")
     public ResponseEntity<SellItemsResponse> submitOrder(@RequestBody OrderDTO order) {
         logger.info("Received: " + order);
-        Utils.checkOrderValidity(order);
         SellItemsResponse response = sellingService.checkAndSubmitOrder(order);
-        if (response.getPurchase() != null)
-            revenueService.submitPurchase(response.getPurchase());
-
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
 

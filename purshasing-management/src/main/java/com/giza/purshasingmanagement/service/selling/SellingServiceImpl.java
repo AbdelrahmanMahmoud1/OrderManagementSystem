@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 public class SellingServiceImpl implements SellingService {
     private final Logger logger = LoggerFactory.getLogger(SellingServiceImpl.class);
 
+    private final RevenueService revenueService;
     private final SellingRepository sellingRepository;
 
     @Override
@@ -70,6 +71,8 @@ public class SellingServiceImpl implements SellingService {
         SellItemsResponse response = new SellItemsResponse();
         response.setPurchase(SellingPurchaseDTO.entityToDTO(purchase));
         response.setMessage("Successful Order Purchase");
+        if (response.getPurchase() != null)
+            revenueService.submitPurchase(response.getPurchase());
         return response;
     }
 

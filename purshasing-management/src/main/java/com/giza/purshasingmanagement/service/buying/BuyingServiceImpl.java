@@ -32,6 +32,7 @@ import static com.giza.purshasingmanagement.AppConstants.INVENTORY_BASE_URL;
 public class BuyingServiceImpl implements BuyingService {
 
     private final BuyingRepository buyingRepository;
+    private final CostService costService;
 
     @Override
     public BuyItemsResponse checkAndSubmitOrder(OrderDTO order) {
@@ -54,6 +55,9 @@ public class BuyingServiceImpl implements BuyingService {
             response.setPurchase(BuyingPurchaseDTO.entityToDTO(purchase));
             response.setInventoryMessage("Successfully added to Inventory");
             save(purchase);
+
+            if (response.getPurchase() != null)
+                costService.submitPurchase(response.getPurchase());
 
             return response;
         }
