@@ -89,7 +89,7 @@ public class BuyingServiceImpl implements BuyingService {
                         Collectors.toMap(
                                 BuyingProductDTO::getName,
                                 p -> new Pair<>(p.getQuantity(), p.getPrice()),
-                                (p1, p2) -> new Pair<>(p1.a + p2.a, p1.b + p2.b)
+                                (p1, p2) -> new Pair<>(p1.a + p2.a, (p1.a * p1.b + p2.a * p2.b) / (p1.a + p2.a))
                         )
                 );
         BuyingPurchase purchase = new BuyingPurchase();
