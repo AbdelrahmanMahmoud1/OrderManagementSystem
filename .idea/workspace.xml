@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c825e062-9587-4f5c-b6b5-67242f6d337f" name="Changes" comment="V2 - APi Gateway (improving Code after comments)">
-      <change beforePath="$PROJECT_DIR$/Api-Gateway/src/main/java/com/ordersystemmanagement/apigateway/config/RouterValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/Api-Gateway/src/main/java/com/ordersystemmanagement/apigateway/config/RouterValidator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Api-Gateway/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Api-Gateway/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/src/main/java/com/ordermanagementsystem/usermanagement/config/JwtAuthFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/src/main/java/com/ordermanagementsystem/usermanagement/config/JwtAuthFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/src/main/java/com/ordermanagementsystem/usermanagement/jwtservice/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/src/main/java/com/ordermanagementsystem/usermanagement/jwtservice/AuthenticationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/src/main/java/com/ordermanagementsystem/usermanagement/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/src/main/java/com/ordermanagementsystem/usermanagement/user/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/src/main/java/com/ordermanagementsystem/usermanagement/userservice/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/src/main/java/com/ordermanagementsystem/usermanagement/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/src/main/java/com/ordermanagementsystem/usermanagement/userservice/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/src/main/java/com/ordermanagementsystem/usermanagement/userservice/UserService.java" afterDir="false" />
-    </list>
+    <list default="true" id="0211a4dd-a75c-4212-9a85-f3d849efba80" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -87,7 +79,6 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "UserManagement-Gateway",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2",
