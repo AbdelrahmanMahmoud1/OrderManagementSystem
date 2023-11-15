@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @Setter
 @RequiredArgsConstructor
 public class BuyingController {
-    // TODO: 11/11/2023 nice to have use @controllerAdvice for exception and success handelling https://www.baeldung.com/exception-handling-for-rest-with-spring https://www.baeldung.com/spring-security-exceptionhandler
+    // 11/11/2023 nice to have use @controllerAdvice for exception and success handling https://www.baeldung.com/exception-handling-for-rest-with-spring https://www.baeldung.com/spring-security-exceptionhandler
     private final Logger logger = LoggerFactory.getLogger(BuyingController.class);
 
     private final CostService costService;

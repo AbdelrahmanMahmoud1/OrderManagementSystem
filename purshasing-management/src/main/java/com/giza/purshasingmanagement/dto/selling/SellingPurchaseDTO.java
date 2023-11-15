@@ -1,12 +1,18 @@
 package com.giza.purshasingmanagement.dto.selling;
 
 import com.giza.purshasingmanagement.entity.selling.SellingPurchase;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
+@RequiredArgsConstructor
 public class SellingPurchaseDTO implements Serializable {
 
     private long orderId;
@@ -14,38 +20,6 @@ public class SellingPurchaseDTO implements Serializable {
     private List<SellingProductDTO> products;
 
     private double revenue;
-
-    public long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(long orderId) {
-        this.orderId = orderId;
-    }
-
-    public Date getPurchaseDate() {
-        return purchaseDate;
-    }
-
-    public void setPurchaseDate(Date purchaseDate) {
-        this.purchaseDate = purchaseDate;
-    }
-
-    public List<SellingProductDTO> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<SellingProductDTO> products) {
-        this.products = products;
-    }
-
-    public double getRevenue() {
-        return revenue;
-    }
-
-    public void setRevenue(double revenue) {
-        this.revenue = revenue;
-    }
 
     static public SellingPurchaseDTO entityToDTO(SellingPurchase entity) {
         SellingPurchaseDTO dto = new SellingPurchaseDTO();

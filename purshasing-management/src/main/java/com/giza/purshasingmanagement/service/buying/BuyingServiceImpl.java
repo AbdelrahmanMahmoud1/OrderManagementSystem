@@ -79,11 +79,8 @@ public class BuyingServiceImpl implements BuyingService {
     }
 
 
-    /**
-     * Creating purchase record by processing the incoming inventory products added
-     **/
+    /** Creating purchase record by processing the incoming inventory products added **/
     private BuyingPurchase createPurchaseRecord(List<BuyingProductDTO> inventoryProducts) {
-        // TODO: 11/11/2023 need to schedule call to discuss what is going on here as it is over-engineering to needed task for it
         Map<String, Pair<Integer, Float>> uniqueProductMap = inventoryProducts.stream()
                 .collect(
                         Collectors.toMap(

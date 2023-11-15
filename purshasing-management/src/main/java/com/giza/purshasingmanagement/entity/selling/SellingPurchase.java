@@ -2,11 +2,17 @@ package com.giza.purshasingmanagement.entity.selling;
 
 import com.giza.purshasingmanagement.entity.Product;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
+@Getter
+@Setter
+@RequiredArgsConstructor
 @Entity
 @Table(name = "selling-purchase")
 public class SellingPurchase implements Serializable {
@@ -22,50 +28,12 @@ public class SellingPurchase implements Serializable {
     @Column(name = "purchase_date")
     private Date purchaseDate;
 
-    @Column(name = "products")
-    @ElementCollection(targetClass = Product.class)
-    private List<Product> products;
-
     @Column(name = "revenue")
     private double revenue;
 
-    public long getPurchaseId() {
-        return purchaseId;
-    }
-
-    public void setPurchaseId(long purchaseId) {
-        this.purchaseId = purchaseId;
-    }
-
-    public long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(long orderId) {
-        this.orderId = orderId;
-    }
-
-    public Date getPurchaseDate() {
-        return purchaseDate;
-    }
-
-    public void setPurchaseDate(Date purchaseDate) {
-        this.purchaseDate = purchaseDate;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
-    public double getRevenue() {
-        return revenue;
-    }
-
-    public void setRevenue(double revenue) {
-        this.revenue = revenue;
-    }
+    @Column(name = "products")
+    @ElementCollection(targetClass = Product.class)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "selling_purchase_id")
+    private List<Product> products;
 }

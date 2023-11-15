@@ -1,27 +1,27 @@
-package com.giza.purshasingmanagement.dto.selling;
+package com.giza.purshasingmanagement.dto;
 
 import com.giza.purshasingmanagement.entity.Product;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.io.Serializable;
 
 @Getter
 @Setter
-@ToString
 @RequiredArgsConstructor
-public class SellingProductDTO implements Serializable {
+@AllArgsConstructor
+public class ProductDTO implements Serializable {
     private String name;
     private int quantity;
     private float price;
 
-    static public SellingProductDTO entityToDTO(Product entity) {
-        SellingProductDTO dto = new SellingProductDTO();
+    static public ProductDTO entityToDto(Product entity) {
+        ProductDTO dto = new ProductDTO();
         dto.name = entity.getName();
-        dto.price = entity.getPrice();
         dto.quantity = entity.getQuantity();
+        dto.price = entity.getPrice();
         return dto;
     }
 }

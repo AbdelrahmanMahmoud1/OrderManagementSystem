@@ -17,19 +17,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BuyingPurchase implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "purchase_id")
     private long purchaseId;
 
     @Column(name = "purchase_date")
     private Date purchaseDate;
 
-    @Column(name = "products")
-    @ElementCollection(targetClass = Product.class)
-    // TODO: 11/11/2023 define relation is it OneToMany or ManyToMany so you can handle cascading https://www.baeldung.com/jpa-many-to-many https://www.baeldung.com/hibernate-one-to-many
-    private List<Product> products;
-    // Handled using cascade
-
     @Column(name = "cost")
     private double cost;
+
+    @Column(name = "products")
+    @ElementCollection(targetClass = Product.class)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "buying_purchase_id")
+    private List<Product> products;
 }
