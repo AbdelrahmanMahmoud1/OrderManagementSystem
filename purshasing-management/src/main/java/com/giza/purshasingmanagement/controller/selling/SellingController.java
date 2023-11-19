@@ -28,10 +28,11 @@ public class SellingController {
     private final SellingService sellingService;
 
     @PostMapping("/submit-order")
-    public ResponseEntity<SellItemsResponse> submitOrder(@RequestBody OrderDTO order) {
+    public HttpStatus submitOrder(@RequestBody OrderDTO order) {
         logger.info("Received: " + order);
         SellItemsResponse response = sellingService.checkAndSubmitOrder(order);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+//        return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+        return HttpStatus.ACCEPTED;
     }
 
     @GetMapping("/get-purchase-details")
