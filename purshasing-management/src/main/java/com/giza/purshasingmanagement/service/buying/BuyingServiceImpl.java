@@ -23,6 +23,7 @@ import java.sql.Date;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.giza.purshasingmanagement.AppConstants.INVENTORY_ADD_PRODUCTS;
 import static com.giza.purshasingmanagement.AppConstants.INVENTORY_BASE_URL;
 
 @Service
@@ -33,12 +34,13 @@ public class BuyingServiceImpl implements BuyingService {
 
     private final BuyingRepository buyingRepository;
     private final CostService costService;
+    private final RestTemplate restTemplate;
 
     @Override
     public BuyItemsResponse checkAndSubmitOrder(OrderDTO order) {
         Utils.checkOrderValidity(order);
-        ResponseEntity<InventoryStockResponse> inventoryResponse = new RestTemplate().postForEntity(
-                INVENTORY_BASE_URL + "products/purchased",
+        ResponseEntity<InventoryStockResponse> inventoryResponse = restTemplate.postForEntity(
+                INVENTORY_BASE_URL + INVENTORY_ADD_PRODUCTS,
                 order.getProducts(),
                 InventoryStockResponse.class);
 
@@ -58,10 +60,8 @@ public class BuyingServiceImpl implements BuyingService {
 
             if (response.getPurchase() != null)
                 costService.submitPurchase(response.getPurchase());
-
-            return response;
         }
-        if (inventoryResponse.getStatusCode() == HttpStatus.BAD_REQUEST)
+        else if (inventoryResponse.getStatusCode() == HttpStatus.BAD_REQUEST)
             response.setInventoryMessage("Bad Request to Inventory");
         else
             response.setInventoryMessage("Internal Server Error from Inventory");
@@ -77,7 +77,6 @@ public class BuyingServiceImpl implements BuyingService {
         response.setPurchaseList(purchaseDTOs);
         return response;
     }
-
 
     /** Creating purchase record by processing the incoming inventory products added **/
     private BuyingPurchase createPurchaseRecord(List<BuyingProductDTO> inventoryProducts) {
