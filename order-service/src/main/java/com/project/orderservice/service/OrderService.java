@@ -75,13 +75,13 @@ public class OrderService {
     }
 
     @Transactional
-    public HttpStatusCode confirmPurchase(Order orderWithAvailability, String auth) {
+    public HttpStatus confirmPurchase(Order orderWithAvailability, String auth) {
         HttpHeaders authHeader = new HttpHeaders();
         authHeader.add(HttpHeaders.AUTHORIZATION, auth);
         HttpEntity<Order> postRequest = new HttpEntity<>(orderWithAvailability, authHeader);
 
         return new RestTemplate()
-                .exchange("http://localhost:8765/selling/submit-order", HttpMethod.POST, postRequest, HttpStatusCode.class)
+                .exchange("http://localhost:8765/selling/submit-order", HttpMethod.POST, postRequest, HttpStatus.class)
                 .getBody();
     }
 }

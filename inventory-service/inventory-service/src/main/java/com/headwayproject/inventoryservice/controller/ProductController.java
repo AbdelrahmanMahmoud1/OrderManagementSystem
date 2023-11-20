@@ -49,8 +49,11 @@ public class ProductController {
     }
 
     @PostMapping("/selling")
-    public List<ProductDto> checkItemsAvailability(@RequestBody List<ProductDto> products){
-        return productService.checkAvailabilityOfOrderedItems(products);
+    public InventoryResponse checkItemsAvailability(@RequestBody List<ProductDto> products){
+       List<ProductDto> productDto = productService.checkAvailabilityOfOrderedItems(products);
+       InventoryResponse inventoryResponse = new InventoryResponse();
+       inventoryResponse.setProducts(productDto);
+        return inventoryResponse;
     }
     @PostMapping
     public String saveProduct(@RequestBody ProductDto product){

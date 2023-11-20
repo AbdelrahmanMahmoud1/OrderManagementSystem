@@ -4,13 +4,45 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1f4d441a-a21b-43dd-bb0b-51b457edfcad" name="Changes" comment="V3 - APi Gateway (improving Code after comments)" />
+    <list default="true" id="1f4d441a-a21b-43dd-bb0b-51b457edfcad" name="Changes" comment="V4 - integration">
+      <change afterPath="$PROJECT_DIR$/purshasing-management/src/main/java/com/giza/purshasingmanagement/config/RestClientConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/user-management.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory-service/inventory-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/inventory-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory-service/inventory-service/src/main/java/com/headwayproject/inventoryservice/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/inventory-service/src/main/java/com/headwayproject/inventoryservice/controller/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory-service/inventory-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/inventory-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory-service/inventory-service/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/inventory-service/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory-service/inventory-service/target/classes/com/headwayproject/inventoryservice/controller/CategoryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/inventory-service/target/classes/com/headwayproject/inventoryservice/controller/CategoryController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory-service/inventory-service/target/classes/com/headwayproject/inventoryservice/controller/ProductController.class" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/inventory-service/target/classes/com/headwayproject/inventoryservice/controller/ProductController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory-service/inventory-service/target/classes/com/headwayproject/inventoryservice/dto/CategoryDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/inventory-service/target/classes/com/headwayproject/inventoryservice/dto/CategoryDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory-service/inventory-service/target/classes/com/headwayproject/inventoryservice/entity/Category.class" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/inventory-service/target/classes/com/headwayproject/inventoryservice/entity/Category.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory-service/inventory-service/target/classes/com/headwayproject/inventoryservice/service/CategoryService.class" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/inventory-service/target/classes/com/headwayproject/inventoryservice/service/CategoryService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory-service/inventory-service/target/classes/com/headwayproject/inventoryservice/service/ProductService.class" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/inventory-service/target/classes/com/headwayproject/inventoryservice/service/ProductService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/project/orderservice/dto/OrderLineItemsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/project/orderservice/dto/OrderLineItemsDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/project/orderservice/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/project/orderservice/service/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/purshasing-management/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/purshasing-management/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/purshasing-management/src/main/java/com/giza/purshasingmanagement/kafka/KafkaProducer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/purshasing-management/src/main/java/com/giza/purshasingmanagement/kafka/KafkaSellingConsumer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/purshasing-management/src/main/java/com/giza/purshasingmanagement/kafka/config/KafkaConsumerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/purshasing-management/src/main/java/com/giza/purshasingmanagement/kafka/config/KafkaProducerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/purshasing-management/src/main/java/com/giza/purshasingmanagement/kafka/config/KafkaTopicConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/purshasing-management/src/main/java/com/giza/purshasingmanagement/service/buying/BuyingServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/purshasing-management/src/main/java/com/giza/purshasingmanagement/service/buying/BuyingServiceImpl.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ChangesViewManager" show_ignored="true" />
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -163,7 +195,15 @@
       <option name="project" value="LOCAL" />
       <updated>1699975709039</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="V4 - integration">
+      <option name="closed" value="true" />
+      <created>1700475966252</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1700475966252</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -192,7 +232,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/UserManagement-Gateway" />
+                        <option value="Integration" />
                       </list>
                     </value>
                   </entry>
@@ -209,7 +249,8 @@
     <MESSAGE value="V1 - final integration" />
     <MESSAGE value="V2 - APi Gateway (improving Code after comments)" />
     <MESSAGE value="V3 - APi Gateway (improving Code after comments)" />
-    <option name="LAST_COMMIT_MESSAGE" value="V3 - APi Gateway (improving Code after comments)" />
+    <MESSAGE value="V4 - integration" />
+    <option name="LAST_COMMIT_MESSAGE" value="V4 - integration" />
     <option name="GROUP_MULTIFILE_MERGE_BY_DIRECTORY" value="true" />
   </component>
 </project>
