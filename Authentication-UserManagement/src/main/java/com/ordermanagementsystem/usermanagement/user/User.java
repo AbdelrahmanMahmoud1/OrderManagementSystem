@@ -13,7 +13,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "_user")
+@Table(name = "users")
 public class User implements UserDetails {
 
     @Id
@@ -32,15 +32,22 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Getter
     @Column(name = "roles")
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Transient
+    private Collection<? extends GrantedAuthority> authorities;
 
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return authorities;
     }
 
     @Override

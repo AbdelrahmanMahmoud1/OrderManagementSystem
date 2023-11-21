@@ -15,9 +15,19 @@ public class RouterValidator {
           "/api/v1/auth/register","/api/v1/auth/authenticate"
     );
 
+    public static final List<String> securedApiEndpoints = List.of(
+            "/test",
+            "/products"
+    );
+
     public Predicate<ServerHttpRequest> isSecured =
             request -> openApiEndpoints
                     .stream()
                     .noneMatch(uri -> request.getURI().getPath().contains(uri));
+
+    public Predicate<ServerHttpRequest> isSecuredAuthorization =
+            request -> securedApiEndpoints
+                    .stream()
+                    .anyMatch(uri -> request.getURI().getPath().contains(uri));
 
 }

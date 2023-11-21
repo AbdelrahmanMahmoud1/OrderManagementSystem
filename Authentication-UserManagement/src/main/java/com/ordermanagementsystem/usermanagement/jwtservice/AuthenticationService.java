@@ -7,10 +7,16 @@ import com.ordermanagementsystem.usermanagement.userservice.AuthenticationReques
 import com.ordermanagementsystem.usermanagement.userservice.RegisterRequest;
 import com.ordermanagementsystem.usermanagement.userservice.UserService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Request;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 @Service
 @RequiredArgsConstructor
@@ -35,8 +41,26 @@ public class AuthenticationService {
 
             System.out.println(request);
             var user = userService.findByEmail(request.getEmail()).orElseThrow();
+            Collection<? extends GrantedAuthority> authorities = null;
+
+            if (user.getRole() == Role.ADMIN){
+                authorities = Arrays.asList(
+                        new SimpleGrantedAuthority("ROLE_ADMIN")
+
+                );
+            }else if (user.getRole() == Role.USER){
+                authorities = Arrays.asList(
+                        new SimpleGrantedAuthority("ROLE_USER")
+                );
+            }else {
+                authorities = Arrays.asList(
+                        new SimpleGrantedAuthority("ROLE_MANAGER")
+                );
+            }
+
             System.out.println(user);
 
+            user.setAuthorities(authorities);
             return jwtService.generateToken(user);
 
         }catch (Exception e){
@@ -51,12 +75,26 @@ public class AuthenticationService {
 
         if (userService.findByEmail(request.getEmail()).isPresent()){return null;}
 
+        Collection<? extends GrantedAuthority> authorities = null;
+        if (request.getRole() == Role.ADMIN){
+            authorities = Arrays.asList(
+                    new SimpleGrantedAuthority("ROLE_ADMIN")
+
+            );
+        }else{
+             authorities = Arrays.asList(
+                    new SimpleGrantedAuthority("ROLE_USER")
+            );
+        }
+
+
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.ADMIN)
+                .role(request.getRole())
+                .authorities(authorities)
                 .build();
         userService.saveUser(user);
 

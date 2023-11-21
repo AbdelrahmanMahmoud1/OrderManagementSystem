@@ -19,7 +19,7 @@ public class GatewayConfig {
 
                 .route( r -> r.path("/api/v1/auth/**")
                         .uri("lb://user-management"))
-                .route( r -> r.path("/api/demo")
+                .route( r -> r.path("/test/v1")
                         .uri("lb://user-management"))
                 .route( r -> r.path("/products/**")
                         .uri("lb://inventory-service"))

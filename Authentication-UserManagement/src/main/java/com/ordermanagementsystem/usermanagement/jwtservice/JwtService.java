@@ -9,9 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 @Service
@@ -34,12 +32,20 @@ public class JwtService {
     }
 
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails){
+        List<String> roles = new ArrayList<>();
+        Map<String, Object> rolesClaim = new HashMap<>();
+        userDetails.getAuthorities().forEach(a -> roles.add(a.getAuthority()));
+        rolesClaim.put("roles", roles);
+        extraClaims.put("roles", roles);
+
         return Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000*60*24))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+//                .setClaims(rolesClaim)
+//                .claim("roles",userDetails.getAuthorities())
                 .compact();
     }
 

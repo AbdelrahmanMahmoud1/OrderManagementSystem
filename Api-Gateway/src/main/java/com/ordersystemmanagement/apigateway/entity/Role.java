@@ -1,7 +1,7 @@
 package com.ordersystemmanagement.apigateway.entity;
 
 public enum Role {
-    EMPLOYEE,
+    USER,
     ADMIN,
     MANAGER
 }
