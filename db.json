@@ -1,0 +1,137 @@
+{
+  "users": [
+    {
+      "firstName": "Nourallah",
+      "lastName": "Khaled",
+      "email": "nourallahkhaled99@gmail.com",
+      "password": "1234",
+      "role": "manager",
+      "id": 1
+    },
+    {
+      "firstName": "Nourallah",
+      "lastName": "Khaled",
+      "email": "nourallah@gmail.com",
+      "password": "12345",
+      "role": "admin",
+      "id": 2
+    },
+    {
+      "firstName": "Menna",
+      "lastName": "Mohamed",
+      "email": "menna@gmail.com",
+      "password": "1234",
+      "id": 3
+    },
+    {
+      "firstName": "Mai",
+      "lastName": "Hesham",
+      "email": "mai@gmail.com",
+      "password": "1234",
+      "id": 4
+    },
+    {
+      "firstName": "Ghada",
+      "lastName": "Mohamed",
+      "email": "ghada@gmail.com",
+      "password": "1234",
+      "role": "admin",
+      "id": 5
+    }
+  ],
+  "_defaults": {
+    "users": "get"
+  },
+  "products": [
+    {
+      "name": "Tiger Excellence Fried Potato Chips ",
+      "description": "Lime Coriander - 80 gm",
+      "category": "Food",
+      "price": 30,
+      "quantity": 15,
+      "imageUrl": "https://cdnprod.mafretailproxy.com/sys-master-root/h1b/h6b/49273985728542/1700Wx1700H_608662_main.jpg",
+      "id": 1
+    },
+    {
+      "name": "Spiro Spathis",
+      "description": "Apple - 330ml",
+      "category": "Beverages",
+      "price": 20,
+      "quantity": 35,
+      "imageUrl": "https://m.media-amazon.com/images/I/51tskYKfrSS.jpg",
+      "id": 2
+    },
+    {
+      "name": "Spiro Spathis",
+      "price": 20,
+      "description": "Lemon - 330ml",
+      "quantity": 13,
+      "category": "Beverages",
+      "imageUrl": "https://m.media-amazon.com/images/I/518b7GAV9FS.jpg",
+      "id": 3
+    },
+    {
+      "name": "Spiro Spathis",
+      "price": 20,
+      "description": "Pineapple - 330ml",
+      "quantity": 13,
+      "category": "Beverages",
+      "imageUrl": "https://m.media-amazon.com/images/I/51muPcGu5HS.jpg",
+      "id": 4
+    },
+    {
+      "name": "Tiger Excellence Fried Potato Chips ",
+      "imageUrl": "https://cdnprod.mafretailproxy.com/sys-master-root/h9d/h11/49855332089886/480Wx480H_608660_main.jpg",
+      "price": 20,
+      "description": "Sea Salt and Vineger - 80gm",
+      "quantity": 0,
+      "category": "Food",
+      "id": 5
+    },
+    {
+      "name": "Molto Mix Croissants",
+      "imageUrl": "https://cdnprod.mafretailproxy.com/sys-master-root/hab/hdd/10067464683550/439252_main.jpg_480Wx480H",
+      "price": 10,
+      "description": "Filled with Cream and Chocolate - 65 gram",
+      "quantity": 40,
+      "category": "Food",
+      "id": 6
+    },
+    {
+      "name": "Mini Molto Magnum",
+      "price": 50,
+      "description": "Strawberry Extra Filling - 65 gram",
+      "quantity": 13,
+      "category": "Food",
+      "imageUrl": "https://mcprod.hyperone.com.eg/media/catalog/product/cache/1ca275941aea0ae98b372dcb44b7c67a/6/2/6223000552049_mini-mix-magnum---straw.jpg",
+      "id": 7
+    },
+    {
+      "name": "El Shamadan Katakito Chocolate",
+      "imageUrl": "https://cdnprod.mafretailproxy.com/sys-master-root/h64/h10/17582797094942/459570_main.jpg_480Wx480H",
+      "price": 10,
+      "description": "Mini Katakito Wafer Chocolate",
+      "quantity": 130,
+      "category": "Food",
+      "id": 8
+    },
+    {
+      "name": "Freska Fingers Cocoa Wafer Filled with Hazelnut ",
+      "imageUrl": "https://cdnprod.mafretailproxy.com/sys-master-root/h37/he3/49986577793054/480Wx480H_600393_main.jpg",
+      "price": 50,
+      "description": "Freska Fingers Cocoa Wafer Filled with Hazelnut - 10 Pieces",
+      "quantity": 13,
+      "category": "Food",
+      "id": 9
+    },
+    {
+      "name": "Jaguar Tortilla - Mexican salsa",
+      "imageUrl": "https://m.media-amazon.com/images/I/61maVjT9jQL._AC_UF894,1000_QL80_.jpg",
+      "price": 50,
+      "description": "Jaguar Tortilla - Mexican salsa",
+      "quantity": 13,
+      "category": "Food",
+      "id": 10
+    }
+  ]
+}
