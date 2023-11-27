@@ -4,35 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1f4d441a-a21b-43dd-bb0b-51b457edfcad" name="Changes" comment="V4 - integration (Final integration 0.1)">
+    <list default="true" id="1f4d441a-a21b-43dd-bb0b-51b457edfcad" name="Changes" comment="V4 - integration (Final integration 0.2) Added Roles">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Api-Gateway/src/main/java/com/ordersystemmanagement/apigateway/config/GatewayConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Api-Gateway/src/main/java/com/ordersystemmanagement/apigateway/config/GatewayConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Api-Gateway/src/main/java/com/ordersystemmanagement/apigateway/config/GlobalPreFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Api-Gateway/src/main/java/com/ordersystemmanagement/apigateway/config/GlobalPreFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Api-Gateway/src/main/java/com/ordersystemmanagement/apigateway/config/RouterValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/Api-Gateway/src/main/java/com/ordersystemmanagement/apigateway/config/RouterValidator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Api-Gateway/src/main/java/com/ordersystemmanagement/apigateway/entity/AuthenticatedUsers.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Api-Gateway/src/main/java/com/ordersystemmanagement/apigateway/entity/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/Api-Gateway/src/main/java/com/ordersystemmanagement/apigateway/entity/Role.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Api-Gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Api-Gateway/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/src/main/java/com/ordermanagementsystem/usermanagement/DemoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/src/main/java/com/ordermanagementsystem/usermanagement/DemoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/src/main/java/com/ordermanagementsystem/usermanagement/jwtservice/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/src/main/java/com/ordermanagementsystem/usermanagement/jwtservice/AuthenticationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/src/main/java/com/ordermanagementsystem/usermanagement/jwtservice/JwtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/src/main/java/com/ordermanagementsystem/usermanagement/jwtservice/JwtService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/src/main/java/com/ordermanagementsystem/usermanagement/user/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/src/main/java/com/ordermanagementsystem/usermanagement/user/Role.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/src/main/java/com/ordermanagementsystem/usermanagement/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/src/main/java/com/ordermanagementsystem/usermanagement/user/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/src/main/java/com/ordermanagementsystem/usermanagement/userservice/RegisterRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/src/main/java/com/ordermanagementsystem/usermanagement/userservice/RegisterRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/DemoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/DemoController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/config/ApplicationConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/config/ApplicationConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/config/JwtAuthFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/config/JwtAuthFilter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/config/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/jwtservice/AuthenticationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/jwtservice/AuthenticationService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/jwtservice/JwtService.class" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/jwtservice/JwtService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/user/Role.class" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/user/Role.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/user/User$UserBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/user/User$UserBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/user/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/user/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/userservice/AuthenticationRequest$AuthenticationRequestBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/userservice/AuthenticationRequest$AuthenticationRequestBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/userservice/AuthenticationRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/userservice/AuthenticationRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/userservice/AuthenticationResponse$AuthenticationResponseBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/userservice/AuthenticationResponse$AuthenticationResponseBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/userservice/AuthenticationResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/userservice/AuthenticationResponse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/userservice/RegisterRequest$RegisterRequestBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/userservice/RegisterRequest$RegisterRequestBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/userservice/RegisterRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/Authentication-UserManagement/target/classes/com/ordermanagementsystem/usermanagement/userservice/RegisterRequest.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -220,7 +195,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700480849500</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="V4 - integration (Final integration 0.2) Added Roles">
+      <option name="closed" value="true" />
+      <created>1700606013941</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1700606013941</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -268,7 +251,8 @@
     <MESSAGE value="V3 - APi Gateway (improving Code after comments)" />
     <MESSAGE value="V4 - integration" />
     <MESSAGE value="V4 - integration (Final integration 0.1)" />
-    <option name="LAST_COMMIT_MESSAGE" value="V4 - integration (Final integration 0.1)" />
+    <MESSAGE value="V4 - integration (Final integration 0.2) Added Roles" />
+    <option name="LAST_COMMIT_MESSAGE" value="V4 - integration (Final integration 0.2) Added Roles" />
     <option name="GROUP_MULTIFILE_MERGE_BY_DIRECTORY" value="true" />
   </component>
 </project>

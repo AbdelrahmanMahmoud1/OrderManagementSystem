@@ -35,6 +35,8 @@ public class GlobalPreFilter implements GlobalFilter {
             ServerWebExchange exchange,
             GatewayFilterChain chain) {
         logger.info("im applied");
+
+
         if (!routerValidator.isSecured.test(exchange.getRequest())) {
             return chain.filter(exchange);
         }
@@ -75,13 +77,45 @@ public class GlobalPreFilter implements GlobalFilter {
             return exchange.getResponse().writeWith(Flux.just(buffer));
         }
 
+        if (routerValidator.isUserEndPoints.test(exchange.getRequest())){
+            if(roles.get(0).equals("ROLE_USER")){
+                return chain.filter(exchange);
+            }else {
+                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                byte[] bytes = "UnAuthorized access to Resource".getBytes(StandardCharsets.UTF_8);
+                DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(bytes);
+                return exchange.getResponse().writeWith(Flux.just(buffer));
+            }
+        }
+
+        if (routerValidator.isManagerEndPoints.test(exchange.getRequest())){
+            if(roles.get(0).equals("ROLE_MANAGER")){
+                return chain.filter(exchange);
+            }else {
+                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                byte[] bytes = "UnAuthorized access to Resource".getBytes(StandardCharsets.UTF_8);
+                DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(bytes);
+                return exchange.getResponse().writeWith(Flux.just(buffer));
+            }
+        }
 
         if (routerValidator.isSecuredAuthorization.test(exchange.getRequest())){
-//            if(exchange.getRequest().getMethod().equals(HttpMethod.GET)){
-//                return chain.filter(exchange);
-//            }
 
-            if(roles.get(0).equals("ROLE_USER")){
+            if (exchange.getRequest().getPath().toString().equals("/buying") ||  exchange.getRequest().getPath().toString().equals("/selling") ){
+                if(  roles.get(0).equals("ROLE_MANAGER") || roles.get(0).equals("ROLE_ADMIN")){
+                    return chain.filter(exchange);
+                }else {
+                    exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                    byte[] bytes = "UnAuthorized access to Resource".getBytes(StandardCharsets.UTF_8);
+                    DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(bytes);
+                    return exchange.getResponse().writeWith(Flux.just(buffer));
+                }
+            }
+            if(exchange.getRequest().getMethod().equals(HttpMethod.GET)){
+                return chain.filter(exchange);
+            }
+
+            if(  roles.get(0).equals("ROLE_MANAGER") || roles.get(0).equals("ROLE_ADMIN")){
                 return chain.filter(exchange);
             }else {
                 exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
@@ -95,5 +129,8 @@ public class GlobalPreFilter implements GlobalFilter {
 
 
     }
+
+
+
 }
 

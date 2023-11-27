@@ -17,17 +17,36 @@ public class RouterValidator {
 
     public static final List<String> securedApiEndpoints = List.of(
             "/test",
-            "/products"
+            "/products",
+            "/selling",
+            "/buying"
+    );
+    public static final List<String> managerEndPoints = List.of(
+        "/categories"
     );
 
+    public static final List<String> userEndPoints = List.of(
+            "/orders",
+            "/selling/submit-order"
+    );
     public Predicate<ServerHttpRequest> isSecured =
             request -> openApiEndpoints
                     .stream()
                     .noneMatch(uri -> request.getURI().getPath().contains(uri));
 
     public Predicate<ServerHttpRequest> isSecuredAuthorization =
-            request -> securedApiEndpoints
+            request -> managerEndPoints
                     .stream()
                     .anyMatch(uri -> request.getURI().getPath().contains(uri));
+
+    public Predicate<ServerHttpRequest> isManagerEndPoints =
+            request -> securedApiEndpoints
+                    .stream()
+                    .allMatch(uri -> request.getURI().getPath().contains(uri));
+
+    public Predicate<ServerHttpRequest> isUserEndPoints =
+            request -> userEndPoints
+                    .stream()
+                    .allMatch(uri -> request.getURI().getPath().contains(uri));
 
 }
