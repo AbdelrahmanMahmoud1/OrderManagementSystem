@@ -21,6 +21,6 @@ public class OrderConsumer {
     groupId = "${spring.kafka.consumer.group-id}")
     public void consume(OrderPlacedEvent event){
         LOGGER.info(String.format("Order is received => %s", event.toString()));
-        service.sendEmail("mariamosamaanis@gmail.com",event.toString());
+        service.sendEmail(event.getEmail(), event.toString());
     }
 }

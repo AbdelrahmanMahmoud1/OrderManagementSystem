@@ -20,7 +20,6 @@ public class CategoryController {
 
 
     @GetMapping
-    @CrossOrigin()
     public List<CategoryDto> getAll(){
        return categoryService.findAll();
 
@@ -35,13 +34,11 @@ public class CategoryController {
 
 
     @PostMapping
-    @CrossOrigin
     public ResponseEntity<String> addCategory(@RequestBody CategoryDto categoryDto){
         categoryService.addCategory(categoryDto);
         return ResponseEntity.ok().body("{\"message\": \"Category is added\"}");
     }
     @DeleteMapping("/{id}")
-    @CrossOrigin
     public ResponseEntity<String> delete(@PathVariable int id){
         categoryService.delete(id);
         return ResponseEntity.ok().body("{\"message\": \"Category is deleted\"}");

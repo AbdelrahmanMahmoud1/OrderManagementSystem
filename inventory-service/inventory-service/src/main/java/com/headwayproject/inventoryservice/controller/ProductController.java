@@ -26,7 +26,6 @@ public class ProductController {
    CategoryService categoryService;
 
 
-    @CrossOrigin()
     @GetMapping()
     public List<ProductDto> getAll(){
        return productService.getAllProducts();
@@ -44,7 +43,6 @@ public class ProductController {
     }
 
 
-    @CrossOrigin()
     @PostMapping("/purchased")
     public ResponseEntity<InventoryResponse> addPurchasedItems(@RequestBody List<ProductDto> products){
         InventoryResponse response = new InventoryResponse();
@@ -52,7 +50,6 @@ public class ProductController {
         return ResponseEntity.ok().body(response);
     }
 
-    @CrossOrigin()
     @PostMapping("/selling")
     public InventoryResponse checkItemsAvailability(@RequestBody List<ProductDto> products){
         List<ProductDto> productDto = productService.checkAvailabilityOfOrderedItems(products);
@@ -60,21 +57,18 @@ public class ProductController {
         inventoryResponse.setProducts(productDto);
         return inventoryResponse;
     }
-    @CrossOrigin()
     @PostMapping
     public ResponseEntity<String> saveProduct(@RequestBody ProductDto product){
         productService.addProduct(product);
         return ResponseEntity.ok().body("{\"message\": \"Product is added\"}");
     }
 
-    @CrossOrigin()
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable int id){
         productService.deleteById(id);
         return ResponseEntity.ok().body("{\"message\": \"Product is deleted\"}");
     }
 
-    @CrossOrigin()
     @PutMapping("/{id}")
     public ResponseEntity<String> editProduct(@PathVariable int id, @RequestBody ProductDto product){
         productService.editById(id,product);

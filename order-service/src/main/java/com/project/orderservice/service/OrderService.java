@@ -31,7 +31,7 @@ public class OrderService {
     private final KafkaTemplate<String, OrderPlacedEvent> kafkaTemplate;
 
     @Transactional
-    public void placeOrder(OrderRequest orderRequest,String auth) {
+    public Order placeOrder(OrderRequest orderRequest, String auth) {
         Order order = new Order();
         order.setOrderNumber(UUID.randomUUID().toString());
         System.out.println(orderRequest.getOrderLineItemsDtoList().get(0).getName());
@@ -41,6 +41,7 @@ public class OrderService {
         Order orderWithAvailability = checkProductAvailabilityAndCreateOrder(order,auth);
         orderRepository.save(orderWithAvailability);
        log.info("Purchase confirmation: {}", confirmPurchase(orderWithAvailability,auth));
+       return order;
     }
 
     private OrderLineItems mapToDto(OrderLineItemsDto orderLineItemsDto) {
@@ -75,8 +76,9 @@ public class OrderService {
     @Transactional
     public HttpStatus confirmPurchase(Order orderWithAvailability,String auth) {
         HttpHeaders authHeader = new HttpHeaders();
+        System.out.println("auth" + auth);
         authHeader.add(HttpHeaders.AUTHORIZATION,auth);
-        HttpEntity<Order> postRequest = new HttpEntity<>(orderWithAvailability);
+        HttpEntity<Order> postRequest = new HttpEntity<>(orderWithAvailability,authHeader);
 
         return new RestTemplate()
                 .exchange("http://localhost:8765/selling/submit-order", HttpMethod.POST, postRequest, HttpStatus.class)

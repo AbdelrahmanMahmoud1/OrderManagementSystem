@@ -12,7 +12,7 @@ public class RouterValidator {
 
 //    private static String authOpenEndPoint= "/api/v1/auth/**";
     public static final List<String> openApiEndpoints = List.of(
-          "/api/v1/auth/register","/api/v1/auth/authenticate"
+          "/api/v1/auth/register","/api/v1/auth/authenticate", "/api/v1/auth/user"
     );
 
     public static final List<String> securedApiEndpoints = List.of(
