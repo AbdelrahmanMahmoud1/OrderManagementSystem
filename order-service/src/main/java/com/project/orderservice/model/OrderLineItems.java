@@ -28,7 +28,7 @@ public class OrderLineItems {
     @Column(name = "quantity")
     private int quantity;
 
-    public OrderLineItems(String name, BigDecimal price, Integer quantity) {
+    public OrderLineItems(String name, BigDecimal price, int quantity) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;

@@ -16,7 +16,10 @@ public class OrderLineItemsDto {
     private int id;
     private String name;
     private BigDecimal price;
-    private Integer quantity;
+    private int quantity;
+    private String image;
+    private String description;
+
 
 
 }

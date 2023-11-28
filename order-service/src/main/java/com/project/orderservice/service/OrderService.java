@@ -1,6 +1,5 @@
 package com.project.orderservice.service;
 
-import com.project.orderservice.config.ProductResponse;
 import com.project.orderservice.dto.OrderLineItemsDto;
 import com.project.orderservice.dto.OrderRequest;
 import com.project.orderservice.event.OrderPlacedEvent;
@@ -32,23 +31,22 @@ public class OrderService {
     private final KafkaTemplate<String, OrderPlacedEvent> kafkaTemplate;
 
     @Transactional
-    public void placeOrder(OrderRequest orderRequest, String auth) {
+    public void placeOrder(OrderRequest orderRequest,String auth) {
         Order order = new Order();
         order.setOrderNumber(UUID.randomUUID().toString());
-
+        System.out.println(orderRequest.getOrderLineItemsDtoList().get(0).getName());
         List<OrderLineItems> orderLineItems = orderRequest.getOrderLineItemsDtoList().stream()
-                .map(this::mapToDto)
-                .toList();
-
+                .map(this::mapToDto).toList();
         order.setProducts(orderLineItems);
-
-        Order orderWithAvailability = checkProductAvailabilityAndCreateOrder(order, auth);
+        Order orderWithAvailability = checkProductAvailabilityAndCreateOrder(order,auth);
         orderRepository.save(orderWithAvailability);
-
-        log.info("Purchase confirmation: {}", confirmPurchase(orderWithAvailability, auth));
+       log.info("Purchase confirmation: {}", confirmPurchase(orderWithAvailability,auth));
     }
 
     private OrderLineItems mapToDto(OrderLineItemsDto orderLineItemsDto) {
+        System.out.println(orderLineItemsDto.getName());
+        System.out.println(orderLineItemsDto.getPrice());
+        System.out.println(orderLineItemsDto.getQuantity());
         return new OrderLineItems(
                 orderLineItemsDto.getName(),
                 orderLineItemsDto.getPrice(),
@@ -56,29 +54,29 @@ public class OrderService {
         );
     }
 
-    private Order checkProductAvailabilityAndCreateOrder(Order order, String auth) {
-        List<OrderLineItems> checkedProducts = getAvailableProductsFromInventory(order.getProducts(), auth);
+    private Order checkProductAvailabilityAndCreateOrder(Order order,String auth) {
+        List<OrderLineItems> checkedProducts = getAvailableProductsFromInventory(order.getProducts(),auth);
         order.setProducts(checkedProducts);
         return order;
     }
 
-    private List<OrderLineItems> getAvailableProductsFromInventory(List<OrderLineItems> products, String auth) {
+    private List<OrderLineItems> getAvailableProductsFromInventory(List<OrderLineItems> products,String auth) {
         HttpHeaders authHeader = new HttpHeaders();
-        authHeader.add(HttpHeaders.AUTHORIZATION, auth);
-        HttpEntity<List<OrderLineItems>> postRequest = new HttpEntity<>(products, authHeader);
+        authHeader.add(HttpHeaders.AUTHORIZATION,auth);
+        HttpEntity<List<OrderLineItems>> postRequest = new HttpEntity<>(products,authHeader);
 
         InventoryResponse inventoryResponse = new RestTemplate()
-                .exchange("http://localhost:8765/products/selling", HttpMethod.POST, postRequest, InventoryResponse.class)
+                .exchange("http://localhost:8080/products/selling", HttpMethod.POST, postRequest, InventoryResponse.class)
                 .getBody();
 
         return (inventoryResponse != null) ? inventoryResponse.getProducts() : new ArrayList<>();
     }
 
     @Transactional
-    public HttpStatus confirmPurchase(Order orderWithAvailability, String auth) {
+    public HttpStatus confirmPurchase(Order orderWithAvailability,String auth) {
         HttpHeaders authHeader = new HttpHeaders();
-        authHeader.add(HttpHeaders.AUTHORIZATION, auth);
-        HttpEntity<Order> postRequest = new HttpEntity<>(orderWithAvailability, authHeader);
+        authHeader.add(HttpHeaders.AUTHORIZATION,auth);
+        HttpEntity<Order> postRequest = new HttpEntity<>(orderWithAvailability);
 
         return new RestTemplate()
                 .exchange("http://localhost:8765/selling/submit-order", HttpMethod.POST, postRequest, HttpStatus.class)
