@@ -45,7 +45,7 @@ public class ProductService {
 
        Optional<Product> product =  productRepository.findById(id);
        return  product.map(value-> new ProductDto(value.getId(),value.getName(),value.getDescription(),value.getCategory()
-       ,value.getPrice(),value.getQuantity())).orElse(null);
+       ,value.getPrice(),value.getQuantity() ,value.getImage())).orElse(null);
 
     }
 
@@ -66,6 +66,7 @@ public class ProductService {
            productToEdit.get().setName(productDto.getName());
            productToEdit.get().setQuantity(productDto.getQuantity());
            productToEdit.get().setDescription(productDto.getDescription());
+           productToEdit.get().setImage(productDto.getImage());
          productRepository.save((productToEdit.get()));
        }
 
@@ -78,7 +79,7 @@ public class ProductService {
     public ProductDto getProductByName(String name) {
         Optional<Product> product =  productRepository.findByName(name);
         return  product.map(value-> new ProductDto(value.getId(),value.getName(),value.getDescription(),value.getCategory()
-                ,value.getPrice(),value.getQuantity())).orElse(null);
+                ,value.getPrice(),value.getQuantity(), value.getImage())).orElse(null);
     }
 
     public void increaseQuantityWhenBuying(ProductDto product) {
@@ -96,10 +97,8 @@ public class ProductService {
     public void deductQuantityWhenSelling(ProductDto product) {
         Optional<Product> productToEdit = productRepository.findByName(product.getName());
         if (productToEdit.isPresent()) {
-            productToEdit.get().setCategory(productToEdit.get().getCategory());
             productToEdit.get().setPrice(product.getPrice());
             productToEdit.get().setName(product.getName());
-            productToEdit.get().setDescription(product.getDescription());
             productToEdit.get().setQuantity(productToEdit.get().getQuantity()-product.getQuantity());
             productRepository.save(productToEdit.get());
 
@@ -112,7 +111,7 @@ public class ProductService {
             productDtoList.add(new ProductDto(product.getId(),
                     product.getName(),product.getDescription()
                     ,product.getCategory(),product.getPrice()
-                    ,product.getQuantity()));
+                    ,product.getQuantity(),product.getImage()));
 
         }
         return productDtoList;
@@ -148,8 +147,8 @@ public class ProductService {
             if(productInStock!=null){
                 if (productInStock.getQuantity() > 0) {
                     deductQuantityWhenSelling(product);
-                    product.setId(productInStock.getId());
-                    product.setCategory(productInStock.getCategory());
+//                    product.setId(productInStock.getId());
+//                    product.setCategory(productInStock.getCategory());
                 } else {
                     products.remove(product);
                 }

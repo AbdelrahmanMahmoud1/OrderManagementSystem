@@ -8,6 +8,7 @@ import com.headwayproject.inventoryservice.response.InventoryResponse;
 import com.headwayproject.inventoryservice.service.CategoryService;
 import com.headwayproject.inventoryservice.service.ProductService;
 import lombok.AllArgsConstructor;
+import org.hibernate.mapping.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,7 @@ public class ProductController {
    CategoryService categoryService;
 
 
+    @CrossOrigin()
     @GetMapping()
     public List<ProductDto> getAll(){
        return productService.getAllProducts();
@@ -41,6 +43,8 @@ public class ProductController {
 
     }
 
+
+    @CrossOrigin()
     @PostMapping("/purchased")
     public ResponseEntity<InventoryResponse> addPurchasedItems(@RequestBody List<ProductDto> products){
         InventoryResponse response = new InventoryResponse();
@@ -48,27 +52,32 @@ public class ProductController {
         return ResponseEntity.ok().body(response);
     }
 
+    @CrossOrigin()
     @PostMapping("/selling")
     public InventoryResponse checkItemsAvailability(@RequestBody List<ProductDto> products){
-       List<ProductDto> productDto = productService.checkAvailabilityOfOrderedItems(products);
-       InventoryResponse inventoryResponse = new InventoryResponse();
-       inventoryResponse.setProducts(productDto);
+        List<ProductDto> productDto = productService.checkAvailabilityOfOrderedItems(products);
+        InventoryResponse inventoryResponse = new InventoryResponse();
+        inventoryResponse.setProducts(productDto);
         return inventoryResponse;
     }
+    @CrossOrigin()
     @PostMapping
-    public String saveProduct(@RequestBody ProductDto product){
+    public ResponseEntity<String> saveProduct(@RequestBody ProductDto product){
         productService.addProduct(product);
-        return "Product is added";
+        return ResponseEntity.ok().body("{\"message\": \"Product is added\"}");
     }
 
+    @CrossOrigin()
     @DeleteMapping("/{id}")
-    public String deleteProduct(@PathVariable int id){
+    public ResponseEntity<String> deleteProduct(@PathVariable int id){
         productService.deleteById(id);
-        return "Deleted Successfully";
+        return ResponseEntity.ok().body("{\"message\": \"Product is deleted\"}");
     }
+
+    @CrossOrigin()
     @PutMapping("/{id}")
-    public String editProduct(@PathVariable int id,@RequestBody ProductDto product){
+    public ResponseEntity<String> editProduct(@PathVariable int id, @RequestBody ProductDto product){
         productService.editById(id,product);
-        return "Edited Successfully";
+        return ResponseEntity.ok().body("{\"message\": \"Product is updated\"}");
     }
 }

@@ -33,4 +33,7 @@ public class Product {
     @Column(name = "quantity")
     private int quantity;
 
+    @Column(name="image")
+    private String image;
+
 }

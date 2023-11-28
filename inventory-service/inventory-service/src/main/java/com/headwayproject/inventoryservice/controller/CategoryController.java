@@ -5,6 +5,7 @@ import com.headwayproject.inventoryservice.dto.CategoryDto;
 import com.headwayproject.inventoryservice.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,10 +20,13 @@ public class CategoryController {
 
 
     @GetMapping
+    @CrossOrigin()
     public List<CategoryDto> getAll(){
        return categoryService.findAll();
 
     }
+
+
     @GetMapping("/{id}")
     public CategoryDto findById(@PathVariable int id){
      return categoryService.findById(id);
@@ -31,14 +35,16 @@ public class CategoryController {
 
 
     @PostMapping
-    public String addCategory(@RequestBody CategoryDto categoryDto){
+    @CrossOrigin
+    public ResponseEntity<String> addCategory(@RequestBody CategoryDto categoryDto){
         categoryService.addCategory(categoryDto);
-        return "Category Added Successfully";
+        return ResponseEntity.ok().body("{\"message\": \"Category is added\"}");
     }
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable int id){
+    @CrossOrigin
+    public ResponseEntity<String> delete(@PathVariable int id){
         categoryService.delete(id);
-        return "Deleted Successfully";
+        return ResponseEntity.ok().body("{\"message\": \"Category is deleted\"}");
 
     }
 
