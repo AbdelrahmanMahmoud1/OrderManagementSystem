@@ -38,13 +38,13 @@ public class SellingController {
     public ResponseEntity<PurchaseDetailsResponse> getPurchaseDetails() {
         logger.info("Selling: Getting purchase details");
         PurchaseDetailsResponse response = sellingService.getPurchaseDetails();
-        return ResponseEntity.status(HttpStatus.FOUND).body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/get-revenue-summary")
     public ResponseEntity<RevenueSummaryResponse> getRevenueSummary() {
         logger.info("Getting revenue summary");
         RevenueSummaryResponse response = revenueService.getRevenueSummary();
-        return new ResponseEntity<>(response, HttpStatus.FOUND);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
