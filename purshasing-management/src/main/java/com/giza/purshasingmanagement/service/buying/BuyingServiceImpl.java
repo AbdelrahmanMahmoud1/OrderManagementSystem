@@ -14,6 +14,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.antlr.v4.runtime.misc.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,7 @@ import static com.giza.purshasingmanagement.AppConstants.INVENTORY_BASE_URL;
 @Setter
 @RequiredArgsConstructor
 public class BuyingServiceImpl implements BuyingService {
+    private final Logger logger = LoggerFactory.getLogger(BuyingServiceImpl.class);
 
     private final BuyingRepository buyingRepository;
     private final CostService costService;

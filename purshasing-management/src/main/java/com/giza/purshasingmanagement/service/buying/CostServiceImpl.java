@@ -1,9 +1,9 @@
 package com.giza.purshasingmanagement.service.buying;
 
 import com.giza.purshasingmanagement.controller.buying.response.CostSummaryResponse;
+import com.giza.purshasingmanagement.dto.buying.BuyingProductDTO;
 import com.giza.purshasingmanagement.dto.buying.BuyingPurchaseDTO;
 import com.giza.purshasingmanagement.dto.buying.CostDTO;
-import com.giza.purshasingmanagement.entity.Product;
 import com.giza.purshasingmanagement.entity.buying.ProductCost;
 import com.giza.purshasingmanagement.repository.buying.CostRepository;
 import lombok.Getter;
@@ -41,7 +41,7 @@ public class CostServiceImpl implements CostService {
     }
 
     @Override
-    public void save(Product product) {
+    public void save(BuyingProductDTO product) {
         ProductCost productCost = findByName(product.getName());
         if (productCost == null){
             productCost = new ProductCost();
