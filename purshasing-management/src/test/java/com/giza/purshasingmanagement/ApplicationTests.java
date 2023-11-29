@@ -1,11 +1,11 @@
 package com.giza.purshasingmanagement;
-
 import com.giza.purshasingmanagement.controller.buying.BuyingController;
 import com.giza.purshasingmanagement.controller.buying.response.BuyItemsResponse;
 import com.giza.purshasingmanagement.controller.buying.response.InventoryStockResponse;
 import com.giza.purshasingmanagement.controller.buying.response.PurchaseDetailsResponse;
 import com.giza.purshasingmanagement.controller.selling.SellingController;
 import com.giza.purshasingmanagement.controller.selling.response.SellItemsResponse;
+import com.giza.purshasingmanagement.dto.buying.BuyingProductDTO;
 import com.giza.purshasingmanagement.dto.buying.BuyingPurchaseDTO;
 import com.giza.purshasingmanagement.dto.buying.OrderDTO;
 import com.giza.purshasingmanagement.dto.selling.SellingProductDTO;
@@ -14,6 +14,7 @@ import com.giza.purshasingmanagement.entity.Product;
 import com.giza.purshasingmanagement.service.buying.BuyingService;
 import com.giza.purshasingmanagement.service.selling.SellingService;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -44,8 +45,8 @@ class ApplicationTests {
     BuyingService buyingService;
     @MockBean
     SellingService sellingService;
-    @MockBean
-    private RestTemplate restTemplate;
+    @Mock
+    private final RestTemplate restTemplate = new RestTemplate();
 
     @Test
     void submitOrderInventoryErrorTest() {
@@ -54,7 +55,7 @@ class ApplicationTests {
                 INVENTORY_BASE_URL + INVENTORY_ADD_PRODUCTS, order.getProducts(), InventoryStockResponse.class)
         ).thenReturn(ResponseEntity.internalServerError().body(null));
 
-        ResponseEntity<BuyItemsResponse> actualResponse = buyingController.submitOrder(order);
+        ResponseEntity<BuyItemsResponse> actualResponse = buyingController.submitOrder(order, "test");
 
         BuyItemsResponse expectedResponse = new BuyItemsResponse();
         expectedResponse.setInventoryMessage("Internal Server Error from Inventory");
@@ -71,7 +72,7 @@ class ApplicationTests {
                 INVENTORY_BASE_URL + INVENTORY_ADD_PRODUCTS, order.getProducts(), InventoryStockResponse.class)
         ).thenReturn(ResponseEntity.badRequest().body(null));
 
-        ResponseEntity<BuyItemsResponse> actualResponse = buyingController.submitOrder(order);
+        ResponseEntity<BuyItemsResponse> actualResponse = buyingController.submitOrder(order,"test");
 
         BuyItemsResponse expectedResponse = new BuyItemsResponse();
         expectedResponse.setInventoryMessage("Bad Request to Inventory");
@@ -90,7 +91,7 @@ class ApplicationTests {
                 INVENTORY_BASE_URL + INVENTORY_ADD_PRODUCTS, order.getProducts(), InventoryStockResponse.class)
         ).thenReturn(ResponseEntity.ok().body(inventoryResponse));
 
-        ResponseEntity<BuyItemsResponse> actualResponse = buyingController.submitOrder(order);
+        ResponseEntity<BuyItemsResponse> actualResponse = buyingController.submitOrder(order, "test");
 
         BuyItemsResponse expectedResponse = new BuyItemsResponse();
         expectedResponse.setInventoryMessage("Successfully added to Inventory");
@@ -108,7 +109,7 @@ class ApplicationTests {
         when(buyingService.getPurchaseDetails()).thenReturn(expectedResponse);
 
         ResponseEntity<PurchaseDetailsResponse> actualResponse = buyingController.getPurchaseDetails();
-        assertEquals(HttpStatus.FOUND, actualResponse.getStatusCode());
+        assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
         if (actualResponse.getBody() != null) {
             assertEquals(expectedResponse.getPurchaseCount(), actualResponse.getBody().getPurchaseCount());
             assertEquals(expectedResponse.getTotalCost(), actualResponse.getBody().getTotalCost());
@@ -121,9 +122,9 @@ class ApplicationTests {
         List<BuyingPurchaseDTO> purchaseDTOList = new ArrayList<>();
 
         BuyingPurchaseDTO purchase = new BuyingPurchaseDTO();
-        List<Product> products = new ArrayList<>();
-        products.add(new Product("Milk", 5, 20.0f));
-        products.add(new Product("Meat", 10, 100.0f));
+        List<BuyingProductDTO> products = new ArrayList<>();
+        products.add(new BuyingProductDTO("Milk", 5, 20.0f));
+        products.add(new BuyingProductDTO("Meat", 10, 100.0f));
         purchase.setProducts(products);
 
         purchaseDTOList.add(purchase);
@@ -134,7 +135,7 @@ class ApplicationTests {
         when(buyingService.getPurchaseDetails()).thenReturn(expectedResponse);
 
         ResponseEntity<PurchaseDetailsResponse> actualResponse = buyingController.getPurchaseDetails();
-        assertEquals(HttpStatus.FOUND, actualResponse.getStatusCode());
+        assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
         if (actualResponse.getBody() != null) {
             assertEquals(expectedResponse.getPurchaseCount(), actualResponse.getBody().getPurchaseCount());
             assertEquals(expectedResponse.getTotalCost(), actualResponse.getBody().getTotalCost());
@@ -142,14 +143,7 @@ class ApplicationTests {
         }
     }
 
-    @Test
-    void submitSellingOrderTest() {
-        OrderDTO order = buildValidMockOrder();
 
-//        ResponseEntity<SellItemsResponse> actualResponse = sellingController.submitOrder(order);
-
-//        assertEquals(HttpStatus.ACCEPTED, actualResponse.getStatusCode());
-    }
 
     @Test
     void getSellingPurchaseDetailsEmptyTest() {
@@ -159,7 +153,7 @@ class ApplicationTests {
         when(sellingService.getPurchaseDetails()).thenReturn(expectedResponse);
 
         ResponseEntity<com.giza.purshasingmanagement.controller.selling.response.PurchaseDetailsResponse> actualResponse = sellingController.getPurchaseDetails();
-        assertEquals(HttpStatus.FOUND, actualResponse.getStatusCode());
+        assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
         if (actualResponse.getBody() != null) {
             assertEquals(expectedResponse.getPurchaseCount(), actualResponse.getBody().getPurchaseCount());
             assertEquals(expectedResponse.getTotalRevenue(), actualResponse.getBody().getTotalRevenue());
@@ -185,7 +179,7 @@ class ApplicationTests {
         when(sellingService.getPurchaseDetails()).thenReturn(expectedResponse);
 
         ResponseEntity<com.giza.purshasingmanagement.controller.selling.response.PurchaseDetailsResponse> actualResponse = sellingController.getPurchaseDetails();
-        assertEquals(HttpStatus.FOUND, actualResponse.getStatusCode());
+        assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
         if (actualResponse.getBody() != null) {
             assertEquals(expectedResponse.getPurchaseCount(), actualResponse.getBody().getPurchaseCount());
             assertEquals(expectedResponse.getTotalRevenue(), actualResponse.getBody().getTotalRevenue());

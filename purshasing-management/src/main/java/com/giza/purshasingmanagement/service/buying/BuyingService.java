@@ -15,7 +15,7 @@ public interface BuyingService {
 
     BuyingPurchase save(BuyingPurchase purchase);
 
-    BuyItemsResponse checkAndSubmitOrder(OrderDTO order);
+    BuyItemsResponse checkAndSubmitOrder(OrderDTO order, String auth);
 
     PurchaseDetailsResponse getPurchaseDetails();
 }

@@ -11,10 +11,13 @@ import com.giza.purshasingmanagement.entity.Product;
 import com.giza.purshasingmanagement.entity.buying.BuyingPurchase;
 import com.giza.purshasingmanagement.repository.buying.BuyingRepository;
 import lombok.Getter;
+
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.antlr.v4.runtime.misc.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -36,11 +39,14 @@ public class BuyingServiceImpl implements BuyingService {
     private final RestTemplate restTemplate;
 
     @Override
-    public BuyItemsResponse checkAndSubmitOrder(OrderDTO order) {
+    public BuyItemsResponse checkAndSubmitOrder(OrderDTO order, String auth) {
         Utils.checkOrderValidity(order);
+        HttpHeaders authHeader = new HttpHeaders();
+        authHeader.add(HttpHeaders.AUTHORIZATION,auth);
+        HttpEntity<List<BuyingProductDTO>> postRequest = new HttpEntity<>(order.getProducts(),authHeader);
         ResponseEntity<InventoryStockResponse> inventoryResponse = restTemplate.postForEntity(
                 INVENTORY_BASE_URL + INVENTORY_ADD_PRODUCTS,
-                order.getProducts(),
+                postRequest,
                 InventoryStockResponse.class);
 
         BuyItemsResponse response = new BuyItemsResponse();

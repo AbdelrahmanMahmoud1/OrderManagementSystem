@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,23 +29,25 @@ public class BuyingController {
     private final BuyingService buyingService;
 
     @PostMapping("/submit-order")
-    public ResponseEntity<BuyItemsResponse> submitOrder(@RequestBody OrderDTO order) {
+    public ResponseEntity<BuyItemsResponse> submitOrder(@RequestBody OrderDTO order, @RequestHeader(HttpHeaders.AUTHORIZATION) String auth) {
         logger.info("Order received");
-        BuyItemsResponse response = buyingService.checkAndSubmitOrder(order);
+        BuyItemsResponse response = buyingService.checkAndSubmitOrder(order, auth);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
+
+
 
     @GetMapping("/get-purchase-details")
     public ResponseEntity<PurchaseDetailsResponse> getPurchaseDetails() {
         logger.info("Buying: Getting purchase details");
         PurchaseDetailsResponse response = buyingService.getPurchaseDetails();
-        return ResponseEntity.status(HttpStatus.FOUND).body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/get-cost-summary")
     public ResponseEntity<CostSummaryResponse> getCostSummary() {
         logger.info("Getting cost summary");
         CostSummaryResponse response = costService.getCostSummary();
-        return ResponseEntity.status(HttpStatus.FOUND).body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
